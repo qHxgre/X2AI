@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <title>白糖期货分析平台</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --background: #f5f6fa;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui;
+            margin: 0;
+            padding: 20px;
+            background: var(--background);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 20px;
+        }
+
+        .control-panel {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .news-list {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .news-item {
+            border: 1px solid #eee;
+            border-radius: 6px;
+            margin-bottom: 10px;
+            overflow: hidden;
+        }
+
+        /* 添加展开箭头动画 */
+        .news-header {
+            position: relative;
+            padding-right: 40px;
+        }
+        .news-header::after {
+            content: '▼';
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            transition: transform 0.3s;
+            font-size: 0.8em;
+            color: #666;
+        }
+
+        .news-item.active .news-content {
+            max-height: 1000px;
+            padding: 16px;
+        }
+        .news-content.active + .news-header::after {
+            transform: translateY(-50%) rotate(180deg);
+        }
+
+        /* 保持原有的过渡动画 */
+        .news-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            padding: 0 16px;
+            border-top: 1px solid #eee;
+        }
+
+        /* 优化Markdown显示 */
+        .markdown-body {
+            font-size: 14px;
+        }
+        .markdown-body h3 {
+            color: var(--primary-color);
+            margin: 15px 0 10px;
+        }
+        .markdown-body p {
+            margin: 8px 0;
+        }
+
+        .date-picker {
+            display: grid;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        input,
+        textarea,
+        button {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        button {
+            background: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 12px;
+            cursor: pointer;
+            transition: opacity 0.3s;
+        }
+
+        button:hover {
+            opacity: 0.9;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <!-- 左侧控制区 -->
+        <div class="control-panel">
+            <h2>分析控制</h2>
+            <div class="date-picker">
+                <label>开始日期</label>
+                <input type="date" id="startDate">
+                <label>结束日期</label>
+                <input type="date" id="endDate">
+            </div>
+            <div>
+                <label>您的观点</label>
+                <textarea id="userOpinion" rows="5" placeholder="输入您的初步分析观点..."></textarea>
+            </div>
+            <button onclick="get_article()">获取文章</button>
+        </div>
+
+        <!-- 新闻列表区 -->
+        <div class="news-list">
+            <h2>舆情文章</h2>
+            <div id="newsContainer"></div>
+        </div>
+    </div>
+
+    <script>
+        // 替换原来的按钮点击事件
+        async function get_article() {
+            const payload = {
+                startDate: document.getElementById('startDate').value,
+                endDate: document.getElementById('endDate').value,
+                userOpinion: document.getElementById('userOpinion').value
+            };
+
+            try {
+                const response = await fetch('/get_article', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(payload)
+                });
+                
+                const result = await response.json();
+                if (result.status === 'success') {
+                    renderNews(result.data);
+                }
+                
+            } catch (error) {
+                console.error('请求失败:', error);
+            }
+        }
+
+        function renderNews(articles) {
+            const container = document.getElementById('newsContainer');
+            container.innerHTML = ''; // 清空现有内容
+
+            articles.forEach(article => {
+                const newsItem = document.createElement('div');
+                newsItem.className = 'news-item';
+                
+                // 新闻标题头
+                const header = document.createElement('div');
+                header.className = 'news-header';
+                header.innerHTML = `
+                    <div style="flex-grow: 1">${article.title}</div>
+                `;
+
+                // 新闻内容区
+                const content = document.createElement('div');
+                content.className = 'news-content';
+                content.innerHTML = `
+                    <div class="markdown-body">
+                        ${DOMPurify.sanitize(marked.parse(article.content))}
+                    </div>
+                `;
+
+                // 点击交互
+                header.addEventListener('click', () => {
+                    // 关闭其他所有新闻项
+                    document.querySelectorAll('.news-item').forEach(item => {
+                        if (item !== newsItem) {
+                            item.classList.remove('active');
+                            item.querySelector('.news-content').classList.remove('active');
+                        }
+                    });
+                    
+                    // 切换当前项状态
+                    newsItem.classList.toggle('active');
+                    content.classList.toggle('active');
+                });
+
+                newsItem.append(header, content);
+                container.appendChild(newsItem);
+            });
+        }
+        // 初始化日期
+        document.getElementById('startDate').value =
+            new Date(Date.now() - 7 * 86400000).toISOString().split('T')[0];
+        document.getElementById('endDate').value =
+            new Date().toISOString().split('T')[0];
+
+        initNews();
+    </script>
+
+    <!-- Markdown 解析库 -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.0.5/purify.min.js"></script>
+</body>
+
+</html>
