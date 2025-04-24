@@ -1,3 +1,35 @@
+
+    #     # 分阶段处理流程
+    #     processed = []
+    #     total = len(articles)
+    #     for idx, article in enumerate(articles): 
+    #         app.logger.debug(f"分析文章: {article['title']}")
+    #         progress = {
+    #             'status': 'processing',
+    #             'current': idx + 1,
+    #             'total': total,
+    #             'title': article.get('title', '无标题')
+    #         }
+    #         yield json.dumps(progress) + "\n"
+
+    #         buffer, temp = bot.analyzing_article(article)
+    #         processed.append(temp)
+
+    #     # 生成最终报告
+    #     final_report = bot.researcher(processed)
+    #     # yield json.dumps({
+    #     #     'status': 'success',
+    #     #     'data': final_report
+    #     # })
+
+    # except GeneratorExit:
+    #     # 当客户端断开连接时触发
+    #     app.logger.info("客户端中止了请求")
+    # except Exception as e:
+    #     app.logger.error(f'处理失败: {str(e)}')
+    #     # yield json.dumps({'status': 'error', 'message': str(e)})
+
+前端代码：
 <!DOCTYPE html>
 <html lang="zh-CN">
 
@@ -334,82 +366,52 @@
 
 
         // AI 分析
+        let isProcessing = false;
+        let checkInterval = null;
+        const progress = document.getElementById('progress');
+
         async function handleStart() {
-            if (!currentArticles.length) {
-                alert('请先获取文章');
-                return;
-            }
+            if (isProcessing) return;
             
-            // 创建新的AbortController用于中断请求
-            abortController = new AbortController();
-            const progressDiv = document.getElementById('progress');
-            const analysisContent = document.getElementById('analysisContent');
+            isProcessing = true;
+            progress.innerHTML = '正在初始化...';
             
             try {
-                const payload = {
-                    articles: currentArticles,
-                    userOpinion: document.getElementById('userOpinion').value
-                };
-
-                const response = await fetch('/analyze', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload),
-                    signal: abortController.signal
-                });
-
-                const reader = response.body.getReader();
-                const decoder = new TextDecoder();
-                let buffer = '';
-
-                while (true) {
-                    const { done, value } = await reader.read();
-                    if (done) break;
-                    
-                    buffer += decoder.decode(value, { stream: true });
-                    const parts = buffer.split('\n');
-                    
-                    buffer = parts.pop(); // 保留未完成部分
-                    
-                    for (const part of parts) {
-                        if (part.trim() === '') continue;
-                        try {
-                            const data = JSON.parse(part);
-                            
-                            if (data.status === 'processing') {
-                                progressDiv.innerHTML = `
-                                    <div class="progress-info highlight">
-                                        正在分析：${data.current}/${data.total} 
-                                        标题：${data.title}
-                                    </div>
-                                `;
-                            }
-                            else if (data.status === 'success') {
-                                analysisContent.innerHTML = DOMPurify.sanitize(marked.parse(data.report));
-                                progressDiv.innerHTML = '<div class="progress-info">分析完成！</div>';
-                            }
-                        } catch (e) {
-                            console.error('解析错误:', e);
-                        }
-                    }
-                }
+                const res = await fetch('/start', {method: 'POST'});
+                const data = await res.json();
+                startCheckingProgress(data.total);
             } catch (error) {
-                if (error.name === 'AbortError') {
-                    progressDiv.innerHTML = '<div class="progress-info">用户中止了分析</div>';
-                } else {
-                    console.error('分析失败:', error);
-                    progressDiv.innerHTML = `<div class="progress-info">分析失败: ${error.message}</div>`;
-                }
-            } finally {
-                abortController = null;
+                console.error('启动失败:', error);
+                isProcessing = false;
             }
         }
 
-        // 添加中止按钮功能
-        function handleAbort() {
-            if (abortController) {
-                abortController.abort();
-            }
+        function startCheckingProgress(total) {
+            checkInterval = setInterval(async () => {
+                try {
+                    const res = await fetch('/get_progress');
+                    const data = await res.json();
+                    
+                    progress.innerHTML = `处理进度: ${data.current}/${total}`;
+                    
+                    if (data.row) {
+                        output.innerHTML = 
+                            `最新处理文章：
+ID: ${data.row.id}
+标题: ${data.row.title}
+内容: ${data.row.content}
+时间: ${data.row.time}\n` + output.innerHTML;
+                    }
+
+                    if (data.current >= total) {
+                        clearInterval(checkInterval);
+                        isProcessing = false;
+                        progress.innerHTML += ' - 处理完成！';
+                    }
+                } catch (error) {
+                    console.error('获取进度失败:', error);
+                }
+            }, 500);
         }
 
         // 初始化日期
@@ -417,6 +419,8 @@
             new Date(Date.now() - 7 * 86400000).toISOString().split('T')[0];
         document.getElementById('endDate').value =
             new Date().toISOString().split('T')[0];
+
+        initNews();
     </script>
     <!-- Markdown 解析库 -->
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
@@ -425,3 +429,93 @@
 
 </html>
 
+
+
+后端代码：
+
+import sys
+from pathlib import Path
+project_root = Path(__file__).resolve().parent.parent
+sys.path.append(str(project_root))
+
+import json
+import logging
+import numpy as np
+import pandas as pd
+from datetime import datetime, timedelta
+from flask import Flask, jsonify, request
+from threading import Thread, Event, Lock
+from AIBots.SentimentalBot.robot import SentimentalBot
+
+app = Flask(__name__)
+
+bot = SentimentalBot()
+current_index = 0
+stop_event = Event()
+data_lock = Lock()
+
+
+@app.route('/')
+def index():
+    return app.send_static_file('index.html')
+
+@app.route('/get_article', methods=['POST'])
+def get_article():
+    global bot
+
+    data = request.json
+    start_date = data.get('startDate')
+    end_date = data.get('endDate')
+    user_opinion = data.get('userOpinion')
+
+    # print(f"收到请求参数：开始日期={start_date}, 结束日期={end_date}, 用户观点={user_opinion}")
+    
+    data = bot.get_articles(start_date, end_date)
+    articles_data = data
+    return jsonify({
+        'status': 'success',
+        'data': data
+    })
+
+
+@app.route('/start', methods=['POST'])
+def start_process():
+    app.logger.debug("收到 AI 分析请求")
+    global current_index
+    
+    data = request.json
+    articles = data.get('articles', [])
+    user_opinion = data.get('userOpinion', '')
+    
+    if not articles:
+        return json.dumps({'status': 'error', 'message': '没有可分析的文章数据'})
+
+    with data_lock:
+        current_index = 0
+
+    def process():
+        global current_index
+        while True:
+            with data_lock:
+                if stop_event.is_set() or current_index >= len(data):
+                    break
+                row = data[current_index].to_dict()
+                current_index += 1
+    
+    Thread(target=process).start()
+    return jsonify({'status': 'started', 'total': len(data)})
+
+@app.route('/get_progress', methods=['GET'])
+def get_progress():
+    with data_lock:
+        return jsonify({
+            'current': current_index,
+            'total': len(df),
+            'row': df.iloc[current_index-1].to_dict() if current_index > 0 else None
+        })
+
+if __name__ == '__main__':
+    app.run(debug=True)
+
+
+优化上述前端代码和后端代码，使点击“AI分析“按钮后功能能实现

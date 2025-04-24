@@ -2,7 +2,7 @@ import json
 import numpy as np
 import pandas as pd
 from datetime import datetime, timedelta
-from typing import Optional
+from typing import Optional, Union
 from base import PARENT_PATH, AIBase
 
 
@@ -31,60 +31,52 @@ class SentimentalBot(AIBase):
         data = data.to_dict(orient='records')
         return data
 
+    def analyzing_article(self, article: dict) -> Union[bool, str]:
+        """分析一篇文章"""
+        # 先读取缓存
+        cache_id = f"{self.today}_{article['category'].replace('/', '')}_{article['sub_category'].replace('/', '')}_{article['title'].replace('/', '')}.pkl"
+        temp = self.cache(self.filepath_cache+cache_id)
+        if temp is not None:
+            return True, temp
+        
+        # 无缓存内容则用AI分析
+        user_prompt = """
+        * 文章标题: {title}
+        * 发布时间: {publish_date}
+        * 发布分类: {category}
+        * 子分类: {sub_category}
+        * 内容简介: {brief}
+        * 正文: {content}
+        """.format(
+            title = article["title"],
+            publish_date = article["date"],
+            category = article["category"],
+            sub_category = article["sub_category"],
+            brief = article["brief"],
+            content = article["content"],
+        )
+
+        # 通过AI给出分析结论
+        system_prompt = self.read_md(self.filepath_prompt+"assistant.md")
+        answer = self.api_deepseek(user_prompt, system_prompt, True)
+        
+        # 缓存内容
+        temp = json.loads(answer)
+        self.cache(self.filepath_cache+cache_id, temp)
+        return False, temp
+
     def assistant(self, data: dict) -> list:
         """研究助理: 收集文章, 总结内容, 给出初步判断"""
         # 逐篇文章分析
         result = []
         article_nums = len(data)
         for i, article in enumerate(data):
-            # 生成进度信息
-            progress = {
-                'type': 'progress',
-                'current': i+1,
-                'total': article_nums,
-                'title': article['title']
-            }
-            yield progress
-
-            # 先读取缓存
-            cache_id = f"{self.today}_{article['category'].replace('/', '')}_{article['sub_category'].replace('/', '')}_{article['title'].replace('/', '')}.pkl"
-            temp = self.cache(self.filepath_cache+cache_id)
-            if temp is not None:
-                print(f"总共 {article_nums} 篇文章, 第 {i+1} 篇命中缓存, 标题: {article['title']}")
-                result.append(temp)
-                continue
-            
-            # 无缓存内容则用AI分析
-            user_prompt = """
-            * 文章标题: {title}
-            * 发布时间: {publish_date}
-            * 发布分类: {category}
-            * 子分类: {sub_category}
-            * 内容简介: {brief}
-            * 正文: {content}
-            """.format(
-                title = article["title"],
-                publish_date = article["date"],
-                category = article["category"],
-                sub_category = article["sub_category"],
-                brief = article["brief"],
-                content = article["content"],
-            )
-
-            # 通过AI给出分析结论
-            system_prompt = self.read_md(self.filepath_prompt+"assistant.md")
-            print(f"总共 {article_nums} 篇文章, 现分析第 {i+1} 篇, 标题: {article['title']}")
-
-            answer = self.api_deepseek(user_prompt, system_prompt, True)
-            
-            # 缓存内容
-            temp = json.loads(answer)
+            buffer, temp = self.analyzing_article(article)
             result.append(temp)
-            self.cache(self.filepath_cache+cache_id, temp)
-
-        # 返回最终结果
-        yield {'type': 'complete', 'data': result}
-
+            if buffer is True:
+                print(f"命中缓存: ({i+1} / {article_nums}), 标题: {article['title']}")
+            else:
+                print(f"AI分析: ({i+1} / {article_nums}), 标题: {article['title']}") 
         return result
 
     def researcher(self, reports: list) -> str:
@@ -117,6 +109,6 @@ class SentimentalBot(AIBase):
 
     def analyzing(self) -> None:
         data = self.get_articles()
-        assistant_reports = self.assistant()
+        assistant_reports = self.assistant(data)
         research_report = self.researcher(assistant_reports)
         self.email_sending(f"SR 舆情分析报告_{self.end_date}", research_report)
