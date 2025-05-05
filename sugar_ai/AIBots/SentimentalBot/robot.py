@@ -12,7 +12,7 @@ class SentimentalBot(AIBase):
     1. 输入单篇文章进行总结和分析
     2. 将第1步的结论进行最后总结
     """
-    def __init__(self, n_days: int=3, db=None) -> None:
+    def __init__(self, n_days: int=7, db=None) -> None:
         super().__init__()
         self.handler = DBSQL() if db is None else db
         date_format = "%Y-%m-%d"
@@ -33,7 +33,7 @@ class SentimentalBot(AIBase):
         data = data.to_dict(orient='records')
         return data
 
-    def analyzing_article(self, article: dict) -> Union[bool, str]:
+    def analyzing_article(self, article: dict):
         """分析一篇文章"""
         # 先读取缓存
         cache_id = f"{self.today}_{article['category'].replace('/', '')}_{article['sub_category'].replace('/', '')}_{article['title'].replace('/', '')}.pkl"

@@ -3,6 +3,7 @@ from pathlib import Path
 project_root = Path(__file__).resolve().parent.parent
 sys.path.append(str(project_root))
 
+import time
 import json
 import logging
 import numpy as np
@@ -14,7 +15,8 @@ from AIBots.SentimentalBot.robot import SentimentalBot
 
 app = Flask(__name__)
 
-bot = SentimentalBot()
+from base import DBFile, DBSQL
+bot = SentimentalBot(db=DBFile())
 current_index = 0
 stop_event = Event()
 data_lock = Lock()
@@ -34,7 +36,7 @@ def get_article():
 
     print(f"收到请求参数：开始日期={start_date}, 结束日期={end_date}")
     
-    data = bot.get_articles(start_date, end_date)
+    data = bot.get_articles(start_date, end_date)[:3]
     print(f"获取到文章数量: {len(data)}")
     return jsonify({
         'status': 'success',
@@ -63,13 +65,18 @@ def analyze_articles():
                 yield json.dumps(progress) + "\n"
                 
                 # 调用分析模块
-                analysis_result = bot.analyzing_article(article)
+                buffer, analysis_result = bot.analyzing_article(article)
                 processed.append(analysis_result)
+                if buffer is True:
+                    app.logger.info(f"命中缓存: ({idx + 1} / {total}), 标题: {article.get('title', '无标题')}")
+                    time.sleep(2)
+                else:
+                    app.logger.info(f"AI分析: ({idx + 1} / {total}), 标题: {article.get('title', '无标题')}") 
             
             # 生成最终报告
-            app.logger.info(processed)
             final_report = bot.researcher(processed)
             
+            # app.logger.info(final_report)
             yield json.dumps({
                 'status': 'success',
                 'report': final_report
@@ -86,3 +93,4 @@ def analyze_articles():
 
 if __name__ == '__main__':
     app.run(debug=True)
+    # app.run(port=5001)

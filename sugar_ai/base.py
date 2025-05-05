@@ -27,8 +27,17 @@ from sqlalchemy.exc import SQLAlchemyError
 
 class DBFile:
     """文件类型数据库"""
-    def __init__(self, filepath: str=None):
-        self.base_path = '/Users/xiehao/Desktop/workspace/X2AI/sugar_ai/DataBase/aisugar_hisugar' if filepath is None else filepath
+    def __init__(self):
+        try:
+            current_path = Path(__file__).resolve()  # 获取当前文件的绝对路径
+            # 遍历所有父目录，查找名为 'sugar_ai' 的目录
+            for parent in current_path.parents:
+                if parent.name == 'sugar_ai':
+                    self.parent_path = str(parent.parent) + "/sugar_ai"  # 返回其父目录的路径
+        except:
+            raise FileNotFoundError("sugar_ai directory not found in the path hierarchy.")
+    
+        self.base_path = self.parent_path + '/DataBase/'
         self.category_structure = {
             "国内新闻": [
                 '最新资讯', '糖料生产', '食糖生产', '糖厂开工', '食糖产销',
@@ -87,20 +96,20 @@ class DBFile:
             sub_categories: Optional[List[str]] = None
         ) -> pd.DataFrame:
         """根据条件加载数据"""
-        start_date = pd.to_datetime(start_date).date() if start_date else None
-        end_date = pd.to_datetime(end_date).date() if end_date else None
+        base_path = self.base_path + table
+        start_date = pd.to_datetime(start_date).date()
+        end_date = pd.to_datetime(end_date).date()
         
         collected_files = []
         
         # 遍历目录结构
-        for root, dirs, files in os.walk(self.base_path):
+        for root, dirs, files in os.walk(base_path):
             # 解析路径要素
-            path_parts = os.path.relpath(root, self.base_path).split(os.sep)
+            path_parts = os.path.relpath(root, base_path).split(os.sep)
             
             # 验证路径深度
             if len(path_parts) != 3 or path_parts[0] == '.':
                 continue
-                
             date_str, category, sub_category = path_parts
             
             # 日期过滤
@@ -108,7 +117,7 @@ class DBFile:
                 current_date = pd.to_datetime(date_str).date()
             except ValueError:
                 continue
-                
+            
             if (start_date and current_date < start_date) or (end_date and current_date > end_date):
                 continue
                 
