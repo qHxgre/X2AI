@@ -1,4 +1,3 @@
-import dai
 import time
 import random
 import numpy as np
@@ -128,8 +127,9 @@ class HigSugarCrawler(BaseCrawler):
         if isprint is True: 
             print(msg)
 
-    def crawl_category(self, category: dict) -> None:
+    def crawl_category(self, category: dict) -> list:
         """爬取某一大类的数据"""
+        df_list = []
         category_name = category['caName']
         for sub_info, sub_name in category['pageCurInfo'].items():
             # 获取原始数据中的已存在文章ID
@@ -161,9 +161,12 @@ class HigSugarCrawler(BaseCrawler):
                 continue
 
             # 存储数据
-            normalized_df = self.normalize(data)
-            self.dai_write(normalized_df)
+            # normalized_df = self.normalize(data)
+            # self.dai_write(normalized_df)
             self.write_log(f"爬取完成: {category_name} - {sub_name}, 数据大小: {data.shape}, 耗时: {datetime.now() - now}", True)
+            df_list.append(data)
+        df = pd.concat(df_list, axis=0)
+        return df
 
     def crawl_page(self, hearders: dict, input_params: dict) -> pd.DataFrame:
         """循环遍历每一页爬取数据"""
@@ -265,6 +268,7 @@ class HigSugarCrawler(BaseCrawler):
         return content
 
     def crawl(self):
-        self.crawl_category(self.article_categories["国内新闻"])
+        df = self.crawl_category(self.article_categories["国内新闻"])
         self.crawl_category(self.article_categories["国际新闻"])
         self.crawl_category(self.article_categories["行业研究"])
+        return df

@@ -35,7 +35,7 @@ def get_article():
 
     # print(f"收到请求参数：开始日期={start_date}, 结束日期={end_date}, 用户观点={user_opinion}")
     
-    data = bot.get_articles(start_date, end_date)
+    data = bot.get_articles(start_date, end_date)[:2]
     articles_data = data
     return jsonify({
         'status': 'success',
@@ -68,10 +68,8 @@ def analyze_articles():
                 processed.append(analysis_result)
             
             # 生成最终报告
-            final_report = bot.generate_report(
-                processed_data=processed,
-                user_opinion=user_opinion
-            )
+            app.logger.info(processed)
+            final_report = bot.researcher(processed)
             
             yield json.dumps({
                 'status': 'success',
@@ -88,4 +86,4 @@ def analyze_articles():
         }), 500
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()
