@@ -164,7 +164,6 @@ class HigSugarCrawler(BaseCrawler):
             normalized_df = self.normalize(data)
             self.write(normalized_df)
             self.write_log(f"爬取完成: {category_name} - {sub_name}, 数据大小: {data.shape}, 耗时: {datetime.now() - now}", True)
-        return normalized_df
 
     def crawl_page(self, hearders: dict, input_params: dict) -> pd.DataFrame:
         """循环遍历每一页爬取数据"""
@@ -266,6 +265,6 @@ class HigSugarCrawler(BaseCrawler):
         return content
 
     def crawl(self):
-        # self.crawl_category(self.article_categories["国内新闻"])
-        # self.crawl_category(self.article_categories["国际新闻"])
+        self.crawl_category(self.article_categories["国内新闻"])
+        self.crawl_category(self.article_categories["国际新闻"])
         self.crawl_category(self.article_categories["行业研究"])

@@ -3,7 +3,8 @@ import numpy as np
 import pandas as pd
 from datetime import datetime, timedelta
 from typing import Optional, Union
-from base import PARENT_PATH, AIBase
+from base import AIBase
+from base import DBFile, DBSQL
 
 
 class SentimentalBot(AIBase):
@@ -11,15 +12,16 @@ class SentimentalBot(AIBase):
     1. 输入单篇文章进行总结和分析
     2. 将第1步的结论进行最后总结
     """
-    def __init__(self, n_days: int=3) -> None:
+    def __init__(self, n_days: int=3, db=None) -> None:
         super().__init__()
+        self.handler = DBSQL() if db is None else db
         date_format = "%Y-%m-%d"
         self.start_date = (datetime.now() - timedelta(days=n_days)).strftime(date_format)
         self.end_date = datetime.now().strftime(date_format)
 
-        self.filepath_prompt = PARENT_PATH + "AIBots/SentimentalBot/prompts/"
-        self.filepath_cache = PARENT_PATH + "AIBots/SentimentalBot/cache/"
-        self.filepath_save = PARENT_PATH + "Reports/"
+        self.filepath_prompt = self.parent_path + "/AIBots/SentimentalBot/prompts/"
+        self.filepath_cache = self.parent_path + "/AIBots/SentimentalBot/cache/"
+        self.filepath_save = self.parent_path + "/Reports/"
 
     def get_articles(self, start_date: Optional[str] = None, end_date: Optional[str]=None) -> list:
         """获取文章数据"""

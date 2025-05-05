@@ -31,12 +31,11 @@ def get_article():
     data = request.json
     start_date = data.get('startDate')
     end_date = data.get('endDate')
-    user_opinion = data.get('userOpinion')
 
-    # print(f"收到请求参数：开始日期={start_date}, 结束日期={end_date}, 用户观点={user_opinion}")
+    print(f"收到请求参数：开始日期={start_date}, 结束日期={end_date}")
     
-    data = bot.get_articles(start_date, end_date)[:2]
-    articles_data = data
+    data = bot.get_articles(start_date, end_date)
+    print(f"获取到文章数量: {len(data)}")
     return jsonify({
         'status': 'success',
         'data': data
@@ -86,4 +85,4 @@ def analyze_articles():
         }), 500
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)

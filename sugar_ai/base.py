@@ -6,6 +6,7 @@ import numpy as np
 import pandas as pd
 import requests
 import pydantic
+from pathlib import Path
 from requests import Response
 from datetime import datetime, timedelta
 from typing import Any, Dict, List, Union, Optional
@@ -22,112 +23,6 @@ from sqlalchemy import create_engine, text
 from sqlalchemy import inspect, MetaData, Table, text
 from sqlalchemy.dialects.postgresql import insert
 from sqlalchemy.exc import SQLAlchemyError
-
-
-
-class AIBase:
-    def __init__(self) -> None:
-        """初始化"""
-        self.today = datetime.now().strftime("%Y%m%d")
-        self.time = datetime.now().strftime("%H%M%S")
-
-    def get_data(self, table: str, start_date: str, end_date: str) -> pd.DataFrame:
-        """获取数据"""
-        data = DataTransfer(f"/Users/xiehao/Desktop/workspace/X2AI/sugar_ai/DataBase/{table}").load(
-            start_date=start_date,
-            end_date=end_date,
-        ).sort_values("date", ascending=False)
-        return data
-
-    def api_deepseek(self, user_prompt: str, sys_prompt: str, json_output: bool=False) -> str:
-        client = OpenAI(api_key="sk-7e0d7d183ae84e08b8579a537feff921", base_url="https://api.deepseek.com")
-
-        if json_output is True:
-            response = client.chat.completions.create(
-                model="deepseek-chat",
-                messages=[
-                    {"role": "system", "content": sys_prompt},
-                    {"role": "user", "content": user_prompt},
-                ],
-                stream=False,
-                response_format={'type': 'json_object'}
-            )
-        else:
-            response = client.chat.completions.create(
-                model="deepseek-chat",
-                messages=[
-                    {"role": "system", "content": sys_prompt},
-                    {"role": "user", "content": user_prompt},
-                ],
-                stream=False
-            )
-
-        answer = response.choices[0].message.content
-        return answer
-
-    def read_md(self, filepath: str) -> str:
-        """读取指定 Markdown 文件"""
-        with open(filepath, 'r', encoding='utf-8') as file:
-            content = file.read()
-        return content
-
-    def save_md(self, filepath: str, category: str, content: str) -> str:
-        """保存内容到指定 Markdown 文件"""
-        report_id = "{today}_{category}_{report_id}.md".format(
-            today=self.today,
-            category=category,
-            report_id=str(uuid.uuid4())
-        )
-        with open(filepath+report_id, 'w', encoding='utf-8') as file:
-            file.write(content)
-
-    def cache(self, filepath: str, content: Optional[Union[str, dict]]=None):
-        """
-        加载缓存或生成数据并保存
-        :param content: 缓存内容
-        :param filepath: 缓存文件名
-        """
-        # 加载缓存
-        if os.path.exists(filepath):
-            try:
-                with open(filepath, 'rb') as f:
-                    return pickle.load(f)
-            except (FileNotFoundError, pickle.UnpicklingError, EOFError) as e:
-                print(f"缓存加载失败，重新生成: {e}")
-        
-        # 保存缓存
-        if content is not None:
-            try:
-                with open(filepath, 'wb') as f:
-                    pickle.dump(content, f)
-            except IOError as e:
-                print(f"缓存保存失败: {e}")
-
-    def email_sending(self, title: str, content: str) -> None:
-        """发送邮件"""
-        sender_email = "253950805@qq.com"
-        sender_password = "xhpwvoopregscagj"
-        receiver_email = "253950805@qq.com"
-
-        # 构建邮件内容
-        msg = MIMEMultipart("alternative")
-        msg["Subject"] = Header(title, "utf-8")
-        msg["From"] = sender_email
-        msg["To"] = receiver_email
-        html_message = MIMEText(content, "plain", "utf-8")
-        html_message["Accept-Language"] = "zh-CN"
-        html_message["Aceept-CHarset"] = "ISO-8859-1, utf-8"
-        msg.attach(html_message)
-
-        try:
-            server = smtplib.SMTP_SSL('smtp.qq.com', 465, timeout=10)
-            server.login(sender_email, sender_password)
-            server.sendmail(sender_email, receiver_email, msg.as_string())
-            print(f"{self.today} 研究报告, 邮件发送成功!")
-        except Exception as e:
-            print(f"{self.today} 研究报告, 邮件发送失败: ", e)
-        finally:
-            server.quit()
 
 
 class DBFile:
@@ -474,3 +369,114 @@ class BaseCrawler(BaseBuilder):
     
     def request(self, url, params, headers):
         return requests.get(url, params=params, headers=headers)
+    
+
+
+class AIBase:
+    def __init__(self) -> None:
+        """初始化"""
+        try:
+            current_path = Path(__file__).resolve()  # 获取当前文件的绝对路径
+            # 遍历所有父目录，查找名为 'sugar_ai' 的目录
+            for parent in current_path.parents:
+                if parent.name == 'sugar_ai':
+                    self.parent_path = str(parent.parent) + "/sugar_ai"  # 返回其父目录的路径
+        except:
+            raise FileNotFoundError("sugar_ai directory not found in the path hierarchy.")
+
+        self.today = datetime.now().strftime("%Y%m%d")
+        self.time = datetime.now().strftime("%H%M%S")
+
+    def get_data(self, table: str, start_date: str, end_date: str) -> pd.DataFrame:
+        """获取数据"""
+        return self.handler.read_data(table=table, start_date=start_date, end_date=end_date)
+
+    def api_deepseek(self, user_prompt: str, sys_prompt: str, json_output: bool=False) -> str:
+        client = OpenAI(api_key="sk-7e0d7d183ae84e08b8579a537feff921", base_url="https://api.deepseek.com")
+
+        if json_output is True:
+            response = client.chat.completions.create(
+                model="deepseek-chat",
+                messages=[
+                    {"role": "system", "content": sys_prompt},
+                    {"role": "user", "content": user_prompt},
+                ],
+                stream=False,
+                response_format={'type': 'json_object'}
+            )
+        else:
+            response = client.chat.completions.create(
+                model="deepseek-chat",
+                messages=[
+                    {"role": "system", "content": sys_prompt},
+                    {"role": "user", "content": user_prompt},
+                ],
+                stream=False
+            )
+
+        answer = response.choices[0].message.content
+        return answer
+
+    def read_md(self, filepath: str) -> str:
+        """读取指定 Markdown 文件"""
+        with open(filepath, 'r', encoding='utf-8') as file:
+            content = file.read()
+        return content
+
+    def save_md(self, filepath: str, category: str, content: str) -> str:
+        """保存内容到指定 Markdown 文件"""
+        report_id = "{today}_{category}_{report_id}.md".format(
+            today=self.today,
+            category=category,
+            report_id=str(uuid.uuid4())
+        )
+        with open(filepath+report_id, 'w', encoding='utf-8') as file:
+            file.write(content)
+
+    def cache(self, filepath: str, content: Optional[Union[str, dict]]=None):
+        """
+        加载缓存或生成数据并保存
+        :param content: 缓存内容
+        :param filepath: 缓存文件名
+        """
+        # 加载缓存
+        if os.path.exists(filepath):
+            try:
+                with open(filepath, 'rb') as f:
+                    return pickle.load(f)
+            except (FileNotFoundError, pickle.UnpicklingError, EOFError) as e:
+                print(f"缓存加载失败，重新生成: {e}")
+        
+        # 保存缓存
+        if content is not None:
+            try:
+                with open(filepath, 'wb') as f:
+                    pickle.dump(content, f)
+            except IOError as e:
+                print(f"缓存保存失败: {e}")
+
+    def email_sending(self, title: str, content: str) -> None:
+        """发送邮件"""
+        sender_email = "253950805@qq.com"
+        sender_password = "xhpwvoopregscagj"
+        receiver_email = "253950805@qq.com"
+
+        # 构建邮件内容
+        msg = MIMEMultipart("alternative")
+        msg["Subject"] = Header(title, "utf-8")
+        msg["From"] = sender_email
+        msg["To"] = receiver_email
+        html_message = MIMEText(content, "plain", "utf-8")
+        html_message["Accept-Language"] = "zh-CN"
+        html_message["Aceept-CHarset"] = "ISO-8859-1, utf-8"
+        msg.attach(html_message)
+
+        try:
+            server = smtplib.SMTP_SSL('smtp.qq.com', 465, timeout=10)
+            server.login(sender_email, sender_password)
+            server.sendmail(sender_email, receiver_email, msg.as_string())
+            print(f"{self.today} 研究报告, 邮件发送成功!")
+        except Exception as e:
+            print(f"{self.today} 研究报告, 邮件发送失败: ", e)
+        finally:
+            server.quit()

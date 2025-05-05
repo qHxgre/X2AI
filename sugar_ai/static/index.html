@@ -221,6 +221,10 @@
 </head>
 
 <body>
+    <!-- Markdown 解析库 -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/lib/marked.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.0.5/purify.min.js"></script>
+
     <div class="container">
         <!-- 左侧控制区 -->
         <div class="control-panel">
@@ -288,6 +292,8 @@
 
         // 展示文章
         function renderNews(articles) {
+            // console.log("[DEBUG] Received articles:", articles);  // 新增调试日志
+            // console.info('文章数量:', articles.length);          // 修正原代码中的 len 错误
             currentArticles = articles; // 保存文章数据
             const container = document.getElementById('newsContainer');
             container.innerHTML = ''; // 清空现有内容
@@ -418,9 +424,6 @@
         document.getElementById('endDate').value =
             new Date().toISOString().split('T')[0];
     </script>
-    <!-- Markdown 解析库 -->
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.0.5/purify.min.js"></script>
 </body>
 
 </html>
