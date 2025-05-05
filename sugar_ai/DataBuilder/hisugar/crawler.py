@@ -3,10 +3,10 @@ import random
 import numpy as np
 import pandas as pd
 from datetime import datetime, timedelta
-from typing import Optional
 from bs4 import BeautifulSoup
 from base import BaseCrawler
 from DataBuilder.hisugar.schema import HisugarSchema
+from base import DBFile, DBSQL
 
 class HigSugarCrawler(BaseCrawler):
     '目标网址（泛糖科技）：https://www.hisugar.com/home/newListMore?parentId=57&level=3&childId=151&menuTap3'
@@ -16,16 +16,20 @@ class HigSugarCrawler(BaseCrawler):
     indexes = ["date"]
     schema = HisugarSchema
 
-    def __init__(self, today: Optional[str]=None, n: Optional[int]=3) -> None:
-        date_format = "%Y-%m-%d"
-        self.end_date = today if today is not None else datetime.now().strftime(date_format)
-        self.start_date = (datetime.strptime(self.end_date, date_format) - timedelta(days=n)).strftime(date_format)
+    def __init__(self, start_date: str, end_date: str, db=None) -> None:
+        # 开始时间和结束时间
+        self.start_date, self.end_date = start_date, end_date
+        # 数据库：默认为 PostgresSQL
+        self.handler = DBSQL() if db is None else db
+        # 原始数据
+        self.raw_data = self.handler.read_data(table=self.datasource_id, start_date=self.start_date, end_date=self.end_date)
+
         # 增量更新时每页 10 条，获取历史数据时每页50条
+        date_format = "%Y-%m-%d"
         date_delta = (datetime.strptime(self.end_date, date_format) - datetime.strptime(self.start_date, date_format)).days
         self.pageSize = 10 if date_delta <= 20 else 30
-        print(f"初始化: {self.end_date}, 爬取周期: {self.start_date} 至 {self.end_date}, 每页大小: {self.pageSize}")
+        print(f"初始化! 爬取周期: {self.start_date} 至 {self.end_date}, 每页大小: {self.pageSize}")
 
-        self.RETRIES = 5
         # 文章分类
         self.article_categories = {
             "国内新闻": {
@@ -124,22 +128,19 @@ class HigSugarCrawler(BaseCrawler):
 
     def write_log(self, msg: str, isprint: bool=True) -> None:
         """日志打印"""
-        if isprint is True: 
+        if isprint is True:
             print(msg)
 
     def crawl_category(self, category: dict) -> list:
         """爬取某一大类的数据"""
-        df_list = []
         category_name = category['caName']
         for sub_info, sub_name in category['pageCurInfo'].items():
             # 获取原始数据中的已存在文章ID
-            raw_data = dai.query(f"""
-            SELECT * FROM {self.datasource_id}
-            WHERE category = '{category_name}'
-            AND sub_category = '{sub_name}'
-            """, filters={'date': [self.start_date, self.end_date]}).df()
+            raw_data = self.raw_data[
+                (self.raw_data["category"] == category_name)
+                & (self.raw_data["sub_category"] == sub_name)
+            ]
             self.existing_article = raw_data['article_id'].unique().tolist()
-
             # 爬取该大类的文章
             now = datetime.now()
             input_params = {
@@ -160,13 +161,10 @@ class HigSugarCrawler(BaseCrawler):
             if data.shape[0] == 0:
                 continue
 
-            # 存储数据
-            # normalized_df = self.normalize(data)
-            # self.dai_write(normalized_df)
+            normalized_df = self.normalize(data)
+            self.write(normalized_df)
             self.write_log(f"爬取完成: {category_name} - {sub_name}, 数据大小: {data.shape}, 耗时: {datetime.now() - now}", True)
-            df_list.append(data)
-        df = pd.concat(df_list, axis=0)
-        return df
+        return normalized_df
 
     def crawl_page(self, hearders: dict, input_params: dict) -> pd.DataFrame:
         """循环遍历每一页爬取数据"""
@@ -183,7 +181,7 @@ class HigSugarCrawler(BaseCrawler):
             params['pageNo'] = str(pageNo)          # 修改爬取的页面
             self.write_log(f"爬取 [{category} - {sub_category}]: 第 {pageNo} 页")
             response = self.request('https://www.hisugar.com/home/getQureyArticleList', params=params, headers=hearders)
-            soup = BeautifulSoup(response.text)
+            soup = BeautifulSoup(response.text, "lxml")
             # 获取所有文章的内容
             articles_list = soup.find_all('li')      # 找到所有<li>元素
             if len(articles_list) == 0:      # 若当页未找到内容则返回
@@ -248,7 +246,7 @@ class HigSugarCrawler(BaseCrawler):
     def check_before(self, date: str, title: str) -> bool:
         """判断该文章的时间是否早于开始时间"""
         if pd.to_datetime(date) < pd.to_datetime(self.start_date):
-            self.write_log(f"[WARNING] 当前文章发布时间超过开始时间，退出: {title}, {date}", self.pageSize == 10)
+            self.write_log(f"[WARNING] 当前文章发布时间超过开始时间，退出: {title}, {date}", self.pageSize != 10)
             return True
         else:
             return False
@@ -256,7 +254,7 @@ class HigSugarCrawler(BaseCrawler):
     def crawl_content(self, headers: dict, article_id: str) -> str:
         params = {'id': article_id}
         response = self.request('https://www.hisugar.com/home/articleContent', params=params, headers=headers)
-        soup = BeautifulSoup(response.text)
+        soup = BeautifulSoup(response.text, "lxml")
         content_divs = soup.find_all("div", class_="content")
         content = "".join([div.get_text(strip=True) for div in content_divs])
 
@@ -268,7 +266,6 @@ class HigSugarCrawler(BaseCrawler):
         return content
 
     def crawl(self):
-        df = self.crawl_category(self.article_categories["国内新闻"])
-        self.crawl_category(self.article_categories["国际新闻"])
+        # self.crawl_category(self.article_categories["国内新闻"])
+        # self.crawl_category(self.article_categories["国际新闻"])
         self.crawl_category(self.article_categories["行业研究"])
-        return df

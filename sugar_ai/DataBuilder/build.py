@@ -1,8 +1,7 @@
-import numpy as np
 import pandas as pd
 from base import DBFile, DBSQL
 
-class DBSugar:
+class DataBuilder(Base):
     def __init__(self, source_type: str="postgresql"):
         self.handler = None
         self.source_type = source_type

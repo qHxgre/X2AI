@@ -5,9 +5,11 @@ import pickle
 import numpy as np
 import pandas as pd
 import requests
+import pydantic
 from requests import Response
 from datetime import datetime, timedelta
 from typing import Any, Dict, List, Union, Optional
+
 
 from openai import OpenAI
 
@@ -22,20 +24,6 @@ from sqlalchemy.dialects.postgresql import insert
 from sqlalchemy.exc import SQLAlchemyError
 
 
-class BaseCrawler:
-    """爬虫基础类"""
-    def __init__(self) -> None:
-        pass
-
-    def get_old_data(self, table: str, category_name: str, sub_name: str, sd: str, ed: str) -> pd.DataFrame:
-        """获取已有数据"""
-        data = dai.query(f"""
-        SELECT *
-        FROM {table}
-        WHERE category = '{category_name}'
-        AND sub_category = '{sub_name}'
-        """, filters={'date': [sd, ed]}).df()
-        return data
 
 class AIBase:
     def __init__(self) -> None:
@@ -191,7 +179,7 @@ class DBFile:
             dir_path = os.path.join(self.base_path, str(date_val.strftime("%Y-%m-%d")), category, sub_category)
             os.makedirs(dir_path, exist_ok=True)
             
-            timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
             file_path = os.path.join(dir_path, f"data_{timestamp}.parquet")
             group_df.to_parquet(file_path)
 
@@ -386,17 +374,17 @@ class DBSQL:
     def read_data(
             self,
             table: str,
-            start_time: str,
-            end_time: str,
-            time_column=None, 
+            start_date: str,
+            end_date: str,
+            time_column: str="date", 
             schema=None
         ) -> pd.DataFrame:
         """
         从数据库读取数据
         :param table: 要读取的表名
         :param time_column: 时间列名（可选）
-        :param start_time: 开始时间（可选）
-        :param end_time: 结束时间（可选）
+        :param start_date: 开始时间（可选）
+        :param end_date: 结束时间（可选）
         :param schema: 数据库模式名（可选）
         :return: 包含查询结果的DataFrame
         """
@@ -409,13 +397,13 @@ class DBSQL:
 
             # 添加时间过滤条件
             if time_column:
-                if start_time or end_time:
-                    if start_time:
-                        conditions.append(f"{time_column} >= :start_time")
-                        params['start_time'] = start_time
-                    if end_time:
-                        conditions.append(f"{time_column} <= :end_time")
-                        params['end_time'] = end_time
+                if start_date or end_date:
+                    if start_date:
+                        conditions.append(f"{time_column} >= :start_date")
+                        params['start_date'] = start_date
+                    if end_date:
+                        conditions.append(f"{time_column} <= :end_date")
+                        params['end_date'] = end_date
                 else:
                     print("警告：已指定时间列但未设置时间范围，将返回全部数据")
 
@@ -434,3 +422,55 @@ class DBSQL:
         except SQLAlchemyError as e:
             raise RuntimeError(f"数据读取失败: {str(e)}")
         
+
+class BaseBuilder:
+    """数据构建类"""
+    def normalize(self, df: pd.DataFrame) -> pd.DataFrame:
+        df = df.reindex(columns=self.schema.columns())
+        df = df.astype(self.schema.field_type_mapping())
+        df = df.fillna(self.schema.field_default_mapping())
+        return df
+
+    def write(self, df: pd.DataFrame) -> None:
+        self.handler.save_data(df=df, table=self.datasource_id)
+
+
+class BaseSchema(pydantic.BaseModel):
+    """数据描述"""
+    @classmethod
+    def field_type_mapping(cls) -> Dict[str, Any]:
+        """字段和类型的映射: df.astype(field_type_mapping)
+        """
+        fields = cls.model_fields  # type: ignore
+        schema = {}
+        for field, fieldinfo in fields.items():
+            value = fieldinfo.annotation
+            if hasattr(pd, fieldinfo.annotation.__name__):  # type: ignore
+                value = fieldinfo.annotation()  # type: ignore
+            if value is np.datetime64:
+                value = "datetime64[ns]"
+            schema[field] = value
+        return schema
+
+    @classmethod
+    def columns(cls) -> List[str]:
+        """所有字段列表"""
+        return list(cls.model_fields.keys())  # type: ignore
+
+    @classmethod
+    def field_default_mapping(cls) -> Dict[str, Any]:
+        """字段和默认值的映射
+
+        使用场景: df.fillna(field_default_mapping)
+        """
+        fields = cls.model_fields  # type: ignore
+        return {field: fieldinfo.get_default() for field, fieldinfo in fields.items()}
+
+
+class BaseCrawler(BaseBuilder):
+    """爬虫基础类"""
+    def __init__(self) -> None:
+        pass
+    
+    def request(self, url, params, headers):
+        return requests.get(url, params=params, headers=headers)

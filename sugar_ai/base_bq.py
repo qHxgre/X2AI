@@ -2,17 +2,11 @@ import dai
 import numpy as np
 import pandas as pd
 import pydantic
-import requests
 from typing import Any, Dict, List
-from requests import Response
-from warehouse.crawler.proxies import proxypool
 
 
 class BaseBuilder:
     """数据构建类"""
-    def __init__(self) -> None:
-        pass
-
     def normalize(self, df: pd.DataFrame) -> pd.DataFrame:
         df = df.reindex(columns=self.schema.columns())
         df = df.astype(self.schema.field_type_mapping())
@@ -74,38 +68,3 @@ class BaseSchema(pydantic.BaseModel):
                 for rank, (field, fieldinfo) in enumerate(fields.items())
             }
         }
-
-
-class BaseCrawler:
-    """爬虫基础类"""
-    def __init__(self) -> None:
-        pass
-
-    def get_old_data(self, table: str, category_name: str, sub_name: str, sd: str, ed: str) -> pd.DataFrame:
-        """获取已有数据"""
-        data = dai.query(f"""
-        SELECT *
-        FROM {table}
-        WHERE category = '{category_name}'
-        AND sub_category = '{sub_name}'
-        """, filters={'date': [sd, ed]}).df()
-        return data
-
-    def get_proxies(self) -> Dict[str, str]:
-        """随机获取两个代理"""
-        return proxypool.random()
-
-    def request(self, url, params=None, headers=None,) -> Response:
-        tried = 0       # 已尝试次数
-        exception = None
-        proxies = self.get_proxies()
-        while tried < self.RETRIES:
-            try:
-                return requests.get(url, params=params, headers=headers, proxies=proxies)
-            except Exception as e:
-                exception = e
-                tried = tried + 1
-                proxies = self.get_proxies()
-        if exception:
-            raise exception
-        return Response()
