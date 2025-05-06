@@ -6,9 +6,7 @@ import numpy as np
 import pandas as pd
 import requests
 import pydantic
-from pathlib import Path
-from requests import Response
-from datetime import datetime, timedelta
+from datetime import datetime
 from typing import Any, Dict, List, Union, Optional
 
 
@@ -28,15 +26,8 @@ from sqlalchemy.exc import SQLAlchemyError
 class DBFile:
     """文件类型数据库"""
     def __init__(self):
-        try:
-            current_path = Path(__file__).resolve()  # 获取当前文件的绝对路径
-            # 遍历所有父目录，查找名为 'sugar_ai' 的目录
-            for parent in current_path.parents:
-                if parent.name == 'sugar_ai':
-                    self.parent_path = str(parent.parent) + "/sugar_ai"  # 返回其父目录的路径
-        except:
-            raise FileNotFoundError("sugar_ai directory not found in the path hierarchy.")
-    
+        self.parent_path = os.path.dirname(os.path.abspath(__file__))
+
         self.base_path = self.parent_path + '/DataBase/'
         self.category_structure = {
             "国内新闻": [
@@ -384,14 +375,7 @@ class BaseCrawler(BaseBuilder):
 class AIBase:
     def __init__(self) -> None:
         """初始化"""
-        try:
-            current_path = Path(__file__).resolve()  # 获取当前文件的绝对路径
-            # 遍历所有父目录，查找名为 'sugar_ai' 的目录
-            for parent in current_path.parents:
-                if parent.name == 'sugar_ai':
-                    self.parent_path = str(parent.parent) + "/sugar_ai"  # 返回其父目录的路径
-        except:
-            raise FileNotFoundError("sugar_ai directory not found in the path hierarchy.")
+        self.parent_path = os.path.dirname(os.path.abspath(__file__))
 
         self.today = datetime.now().strftime("%Y%m%d")
         self.time = datetime.now().strftime("%H%M%S")

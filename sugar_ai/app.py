@@ -5,17 +5,13 @@ sys.path.append(str(project_root))
 
 import time
 import json
-import logging
-import numpy as np
-import pandas as pd
-from datetime import datetime, timedelta
 from flask import Flask, jsonify, request, Response
-from threading import Thread, Event, Lock
+from threading import Event, Lock
 from AIBots.SentimentalBot.robot import SentimentalBot
+from base import DBFile, DBSQL
 
 app = Flask(__name__)
 
-from base import DBFile, DBSQL
 bot = SentimentalBot(db=DBFile())
 current_index = 0
 stop_event = Event()
@@ -36,7 +32,7 @@ def get_article():
 
     print(f"收到请求参数：开始日期={start_date}, 结束日期={end_date}")
     
-    data = bot.get_articles(start_date, end_date)[:3]
+    data = bot.get_articles(start_date, end_date)
     print(f"获取到文章数量: {len(data)}")
     return jsonify({
         'status': 'success',
