@@ -1,4 +1,5 @@
 import time
+import schedule
 import random
 import numpy as np
 import pandas as pd
@@ -136,11 +137,14 @@ class HigSugarCrawler(BaseCrawler):
         category_name = category['caName']
         for sub_info, sub_name in category['pageCurInfo'].items():
             # 获取原始数据中的已存在文章ID
-            raw_data = self.raw_data[
-                (self.raw_data["category"] == category_name)
-                & (self.raw_data["sub_category"] == sub_name)
-            ]
-            self.existing_article = raw_data['article_id'].unique().tolist()
+            if self.raw_data.shape[0] != 0:
+                raw_data = self.raw_data[
+                    (self.raw_data["category"] == category_name)
+                    & (self.raw_data["sub_category"] == sub_name)
+                ]
+                self.existing_article = raw_data['article_id'].unique().tolist()
+            else:
+                self.existing_article = []
             # 爬取该大类的文章
             now = datetime.now()
             input_params = {

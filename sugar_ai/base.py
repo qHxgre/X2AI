@@ -71,7 +71,7 @@ class DBFile:
         self._validate_data(df)
         
         for (date_val, category, sub_category), group_df in df.groupby(['date', 'category', 'sub_category']):
-            dir_path = os.path.join(self.base_path, str(date_val.strftime("%Y-%m-%d")), category, sub_category)
+            dir_path = os.path.join(self.base_path+f"{table}/", str(date_val.strftime("%Y-%m-%d")), category, sub_category)
             os.makedirs(dir_path, exist_ok=True)
             
             timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
