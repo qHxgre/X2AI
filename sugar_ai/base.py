@@ -387,25 +387,29 @@ class AIBase:
     def api_deepseek(self, user_prompt: str, sys_prompt: str, json_output: bool=False) -> str:
         client = OpenAI(api_key="sk-7e0d7d183ae84e08b8579a537feff921", base_url="https://api.deepseek.com")
 
-        if json_output is True:
-            response = client.chat.completions.create(
-                model="deepseek-chat",
-                messages=[
-                    {"role": "system", "content": sys_prompt},
-                    {"role": "user", "content": user_prompt},
-                ],
-                stream=False,
-                response_format={'type': 'json_object'}
-            )
-        else:
-            response = client.chat.completions.create(
-                model="deepseek-chat",
-                messages=[
-                    {"role": "system", "content": sys_prompt},
-                    {"role": "user", "content": user_prompt},
-                ],
-                stream=False
-            )
+        try:
+            if json_output is True:
+                response = client.chat.completions.create(
+                    model="deepseek-chat",
+                    messages=[
+                        {"role": "system", "content": sys_prompt},
+                        {"role": "user", "content": user_prompt},
+                    ],
+                    stream=False,
+                    response_format={'type': 'json_object'}
+                )
+            else:
+                response = client.chat.completions.create(
+                    model="deepseek-chat",
+                    messages=[
+                        {"role": "system", "content": sys_prompt},
+                        {"role": "user", "content": user_prompt},
+                    ],
+                    stream=False
+                )
+        except Exception as e:
+            print(e)
+            return None
 
         answer = response.choices[0].message.content
         return answer

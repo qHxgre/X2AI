@@ -12,12 +12,12 @@ class SentimentalBot(AIBase):
     1. 输入单篇文章进行总结和分析
     2. 将第1步的结论进行最后总结
     """
-    def __init__(self, n_days: int=7, db=None) -> None:
+    def __init__(self, start_date: Optional[str]=None, end_date: Optional[str]=None, n_days: int=7, db=None) -> None:
         super().__init__()
         self.handler = DBSQL() if db is None else db
         date_format = "%Y-%m-%d"
-        self.start_date = (datetime.now() - timedelta(days=n_days)).strftime(date_format)
-        self.end_date = datetime.now().strftime(date_format)
+        self.start_date = (datetime.now() - timedelta(days=n_days)).strftime(date_format) if start_date is None else start_date
+        self.end_date = datetime.now().strftime(date_format) if end_date is None else end_date
 
         self.filepath_prompt = self.parent_path + "/AIBots/SentimentalBot/prompts/"
         self.filepath_cache = self.parent_path + "/AIBots/SentimentalBot/cache/"
@@ -29,6 +29,7 @@ class SentimentalBot(AIBase):
         ed = self.end_date if end_date is None else end_date
         data = self.get_data("aisugar_hisugar", sd, ed)
         data = data.drop_duplicates(subset=["date", "article_id", "title"])     # 删除重复的文章
+        data = data.sort_values(["date", "article_id"], ascending=[False, False])  # 按照日期和文章ID排序
         data["date"] = data["date"].dt.strftime("%Y-%m-%d")
         data = data.to_dict(orient='records')
         return data
@@ -36,7 +37,7 @@ class SentimentalBot(AIBase):
     def analyzing_article(self, article: dict):
         """分析一篇文章"""
         # 先读取缓存
-        cache_id = f"{self.today}_{article['category'].replace('/', '')}_{article['sub_category'].replace('/', '')}_{article['title'].replace('/', '')}.pkl"
+        cache_id = f"{article['date'].replace('-', '')}_{article['category'].replace('/', '')}_{article['sub_category'].replace('/', '')}_{article['title'].replace('/', '')}.pkl"
         temp = self.cache(self.filepath_cache+cache_id)
         if temp is not None:
             return True, temp
@@ -63,7 +64,16 @@ class SentimentalBot(AIBase):
         answer = self.api_deepseek(user_prompt, system_prompt, True)
         
         # 缓存内容
-        temp = json.loads(answer)
+        if answer is not None:
+            temp = json.loads(answer)
+        else:
+            # 若deepseek无法回答，则为空
+            temp = {
+                'title': article["title"],
+                'date': article["date"],
+                'summary': '',
+                'opinion': ''
+            }
         self.cache(self.filepath_cache+cache_id, temp)
         return False, temp
 
@@ -89,13 +99,14 @@ class SentimentalBot(AIBase):
         ##  文章标题: {title}
         * 发布时间: {publish_report}
         * 内容总结: {summary}
-        * 投资建议: {suggestion}
+        * 个人观点: {suggestion}
         """
-        for report in reports:
+        reports = [i for i in reports if i["summary"] != "" and i["opinion"] != ""]
+        for i, report in enumerate(reports):
             report_str = report_prompt.format(
                 title=report["title"],
                 summary=report["summary"],
-                suggestion=report["proposal"],
+                suggestion=report["opinion"],
                 publish_report=report["date"],
             )
             user_prompt += report_str
@@ -112,5 +123,6 @@ class SentimentalBot(AIBase):
     def analyzing(self) -> None:
         data = self.get_articles()
         assistant_reports = self.assistant(data)
+        return assistant_reports
         research_report = self.researcher(assistant_reports)
-        self.email_sending(f"SR 舆情分析报告_{self.end_date}", research_report)
+        # self.email_sending(f"SR 舆情分析报告_{self.end_date}", research_report)
