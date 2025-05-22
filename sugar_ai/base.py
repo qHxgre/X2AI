@@ -377,9 +377,6 @@ class AIBase:
         """初始化"""
         self.parent_path = os.path.dirname(os.path.abspath(__file__))
 
-        self.today = datetime.now().strftime("%Y%m%d")
-        self.time = datetime.now().strftime("%H%M%S")
-
     def get_data(self, table: str, start_date: str, end_date: str) -> pd.DataFrame:
         """获取数据"""
         return self.handler.read_data(table=table, start_date=start_date, end_date=end_date)
@@ -422,8 +419,9 @@ class AIBase:
 
     def save_md(self, filepath: str, category: str, content: str) -> str:
         """保存内容到指定 Markdown 文件"""
-        report_id = "{today}_{category}_{report_id}.md".format(
-            today=self.today,
+        report_id = "{date}{time}_{category}_{report_id}.md".format(
+            date=self.today,
+            time=self.time,
             category=category,
             report_id=str(uuid.uuid4())
         )
