@@ -3,12 +3,16 @@ from pathlib import Path
 project_root = Path(__file__).resolve().parent.parent
 sys.path.append(str(project_root))
 
+import os
 import time
 import json
 from flask import Flask, jsonify, request, Response
 from threading import Event, Lock
 from AIBots.SentimentalBot.robot import SentimentalBot
 from base import DBFile, DBSQL
+
+# 图片目录配置
+IMAGE_BASE = os.path.join(os.path.dirname(__file__), 'static', 'images')
 
 app = Flask(__name__)
 
@@ -86,6 +90,21 @@ def analyze_articles():
             'status': 'error',
             'message': f'分析过程中出现错误: {str(e)}'
         }), 500
+
+@app.route('/get_images')
+def get_images():
+    try:
+        images = []
+        for filename in os.listdir(IMAGE_BASE):
+            if filename.lower().endswith(('.png', '.jpg', '.jpeg', '.gif')):
+                images.append({
+                    'url': f'/static/images/{filename}',
+                    'name': os.path.splitext(filename)[0]
+                })
+        return jsonify({'status': 'success', 'images': images})
+    except Exception as e:
+        return jsonify({'status': 'error', 'message': str(e)}), 500
+
 
 if __name__ == '__main__':
     app.run(debug=True)

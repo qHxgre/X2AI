@@ -3,6 +3,7 @@ import numpy as np
 import pandas as pd
 from datetime import datetime, timedelta
 from typing import Optional, Union
+from joblib import Parallel, delayed
 from base import AIBase
 from base import DBFile, DBSQL
 
@@ -84,6 +85,8 @@ class SentimentalBot(AIBase):
         sd = self.start_date if start_date is None else start_date
         ed = self.end_date if end_date is None else end_date
         data = self.get_data("aisugar_hisugar", sd, ed)
+        if data.shape[0] == 0:
+            return []
         data = data.drop_duplicates(subset=["date", "article_id", "title"])     # 删除重复的文章
         data = data.sort_values(["date", "article_id"], ascending=[False, False])  # 按照日期和文章ID排序
         data["date"] = data["date"].dt.strftime("%Y-%m-%d")
@@ -133,25 +136,47 @@ class SentimentalBot(AIBase):
         self.cache(cache_path+cache_id, temp)
         return False, temp
 
-    def assistant(self, data: dict) -> list:
+    def assistant(self, data: dict, run_parallel: bool=False) -> list:
         """研究助理: 收集文章, 总结内容, 给出初步判断"""
-        # 逐篇文章分析
-        result = []
-        article_nums = len(data)
-        for i, article in enumerate(data):
+        def parallel_run(i, article, article_nums):
+            """并行处理"""
             buffer, temp = self.analyzing_article(article)
-            result.append(temp)
             if buffer is True:
-                self.write_log(f"[Assistant] 命中缓存: ({i+1} / {article_nums}), 标题: {article['title']}", logout=0)
+                self.write_log(f"[Assistant] 命中缓存: ({i+1} / {article_nums}), 标题: {article['title']}", logout=1)
             else:
-                self.write_log(f"[Assistant] AI分析: ({i+1} / {article_nums}), 标题: {article['title']}", logout=0) 
+                self.write_log(f"[Assistant] AI分析: ({i+1} / {article_nums}), 标题: {article['title']}", logout=1)
+            return temp
+    
+        if len(data) == 0:
+            self.write_log("[Assistant] 没有可分析的文章！")
+            return []
+    
+        # 逐篇文章分析
+        article_nums = len(data)
+        if run_parallel:
+            # 并行处理
+            self.write_log(f"[Assistant] 共计 {article_nums} 篇文章，并行处理！", logout=1)
+            result = Parallel(n_jobs=-1, backend='loky')(
+                delayed(parallel_run)(i, article, article_nums) for i, article in enumerate(data)
+            )
+        else:
+            # 串行处理
+            self.write_log(f"[Assistant] 共计 {article_nums} 篇文章，串行处理！", logout=1)
+            result = []
+            for i, article in enumerate(data):
+                buffer, temp = self.analyzing_article(article)
+                result.append(temp)
+                if buffer is True:
+                    self.write_log(f"[Assistant] 命中缓存: ({i+1} / {article_nums}), 标题: {article['title']}", logout=1)
+                else:
+                    self.write_log(f"[Assistant] AI分析: ({i+1} / {article_nums}), 标题: {article['title']}", logout=1) 
         return result
 
     def analyzing_assistant_reports(self, repeorts: list) -> dict:
         """分析研究助理的文章"""
         # 缓存
         cache_path = self.filepath_cache + "research/"
-        cache_id = f"{self.today}{self.time}_sentimental_researcher_report.pkl"
+        cache_id = f"{self.today}_sentimental_researcher_report.pkl"
         
         # 读取缓存
         temp = self.cache(cache_path+cache_id)
@@ -182,16 +207,18 @@ class SentimentalBot(AIBase):
         # 缓存内容
         if answer is not None:
             temp = json.loads(answer)
-            temp["date"] = datetime.now().strftime("%Y-%m-%d")
+            temp["date"] = self.today
         else:
             # 若deepseek无法回答，则为空
             temp = None
         self.cache(cache_path+cache_id, temp)
-        return True, temp
+        return False, temp
 
     def researcher(self, input_reports: list) -> str:
         """研究员: 分析研究助理的判断, 给出整体的分析结果"""
-
+        if len(input_reports) == 0:
+            self.write_log("[Researcher] 没有可分析的报告！")
+            return ""
         # AI分析
         buffer, temp = self.analyzing_assistant_reports(input_reports)
         if buffer is True:
@@ -214,8 +241,21 @@ class SentimentalBot(AIBase):
         self.save_md(self.filepath_save, "sentimental", report)
         return report
 
+    def get_ratings(self, start_date: str, end_date: str) -> dict:
+        """获取指定日期范围内的评级"""
+        cache_path = self.filepath_cache + "research/"
+        import os
+        pkl_files = [f for f in os.listdir(cache_path) if f.endswith('.pkl')]
+        ratings = {}
+        for file in pkl_files:
+            answer = self.cache(cache_path+file)
+            if (pd.to_datetime(answer["date"]) >= pd.to_datetime(start_date)) and (pd.to_datetime(answer["date"]) <= pd.to_datetime(end_date)):
+                # 筛选出符合日期范围的报告
+                ratings[answer["date"]] = answer["rating"]
+        return ratings
+
     def analyzing(self):
         data = self.get_articles()
-        assistant_reports = self.assistant(data)
-        research_report = self.researcher(assistant_reports)
+        assistant_reports = self.assistant(data, run_parallel=True)
+        # research_report = self.researcher(assistant_reports)
         # self.email_sending(f"SR 舆情分析报告_{self.end_date}", research_report)
