@@ -417,13 +417,12 @@ class AIBase:
             content = file.read()
         return content
 
-    def save_md(self, filepath: str, category: str, content: str) -> str:
+    def save_md(self, filepath: str, category: str, report_date: str, publish_time: str, content: str) -> str:
         """保存内容到指定 Markdown 文件"""
-        report_id = "{date}{time}_{category}_{report_id}.md".format(
-            date=self.today,
-            time=self.time,
-            category=category,
-            report_id=str(uuid.uuid4())
+        report_id = "{report_date}_{publish_time}_{category}.md".format(
+            report_date=report_date,        # 报告日期
+            publish_time=publish_time,      # 发表日期
+            category=category
         )
         with open(filepath+report_id, 'w', encoding='utf-8') as file:
             file.write(content)

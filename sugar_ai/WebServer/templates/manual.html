@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="/static/styles/manual.css">
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="control-panel">
+            <h2>参数设置</h2>
+            <div class="date-picker">
+                <label>开始日期</label>
+                <input type="date" id="startDate">
+                <label>结束日期</label>
+                <input type="date" id="endDate">
+            </div>
+            <button id="getArticleBtn" onclick="get_article()" style="margin-top: 20px;">获取文章</button>
+            <button id="analysisBtn" onclick="handleStart()" style="margin-top: 10px;">AI分析</button>
+        </div>
+
+        <div class="news-list">
+            <h2>舆情文章</h2>
+            <div id="newsContainer"></div>
+        </div>
+
+        <!-- </div> 关闭原有的container -->
+        <div class="analysis-report">
+            <h2>分析报告</h2>
+            <div id="progress"></div>
+            <div id="analysisContent" class="report-content"></div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="/static/scripts/manual.js"></script>
+{% endblock %}
+

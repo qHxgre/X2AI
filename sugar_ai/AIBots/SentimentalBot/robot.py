@@ -238,7 +238,9 @@ class SentimentalBot(AIBase):
         )
 
         # 保存报告
-        self.save_md(self.filepath_save, "sentimental", report)
+        report_date = self.end_date.replace("-", "")
+        publish_time = f"{self.today}{self.time}"
+        self.save_md(self.filepath_save, "sentimental", report_date, publish_time, report)
         return report
 
     def get_ratings(self, start_date: str, end_date: str) -> dict:
@@ -257,5 +259,5 @@ class SentimentalBot(AIBase):
     def analyzing(self):
         data = self.get_articles()
         assistant_reports = self.assistant(data, run_parallel=True)
-        # research_report = self.researcher(assistant_reports)
+        research_report = self.researcher(assistant_reports)
         # self.email_sending(f"SR 舆情分析报告_{self.end_date}", research_report)

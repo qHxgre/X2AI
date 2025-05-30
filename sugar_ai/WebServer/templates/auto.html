@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="/static/styles/auto.css">
+{% endblock %}
+
+{% block content %}
+    <div class="auto-container">
+        <!-- 图片展示区域 -->
+        <section class="image-section">
+            <h2>图片展示</h2>
+            <div id="imageGallery" class="content-area">
+                <!-- 图片将由JavaScript动态加载 -->
+                <div class="loading-spinner">加载中...</div>
+            </div>
+        </section>
+
+        <!-- Markdown内容展示区域 -->
+        <section class="markdown-section">
+            <h2>文档内容</h2>
+            <div id="markdownContent" class="content-area">
+                <!-- Markdown内容将由JavaScript动态加载 -->
+                <div class="loading-spinner">加载中...</div>
+            </div>
+        </section>
+    </div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="/static/scripts/auto.js"></script>
+{% endblock %}
