@@ -258,6 +258,7 @@ class SentimentalBot(AIBase):
 
     def analyzing(self):
         data = self.get_articles()
-        assistant_reports = self.assistant(data, run_parallel=True)
-        research_report = self.researcher(assistant_reports)
+        return data
+        # assistant_reports = self.assistant(data, run_parallel=True)
+        # research_report = self.researcher(assistant_reports)
         # self.email_sending(f"SR 舆情分析报告_{self.end_date}", research_report)

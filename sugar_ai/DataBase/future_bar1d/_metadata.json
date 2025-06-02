@@ -1,0 +1,49 @@
+{
+  "table_name": "future_bar1d",
+  "keys": [
+    "date",
+    "instrument"
+  ],
+  "partition_cols": "partitionBy",
+  "schema": {
+    "names": [
+      "date",
+      "instrument",
+      "trading_code",
+      "open",
+      "close",
+      "high",
+      "low",
+      "pre_close",
+      "volume",
+      "amount",
+      "open_interest",
+      "settle",
+      "pre_settle",
+      "upper_limit",
+      "lower_limit",
+      "product_code",
+      "partitionBy"
+    ],
+    "types": [
+      "timestamp[ns]",
+      "string",
+      "string",
+      "double",
+      "double",
+      "double",
+      "double",
+      "double",
+      "int64",
+      "double",
+      "int32",
+      "double",
+      "double",
+      "double",
+      "double",
+      "string",
+      "string"
+    ]
+  },
+  "created_at": "2025-06-03T01:23:07.042191"
+}

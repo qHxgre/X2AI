@@ -5,9 +5,8 @@ import numpy as np
 import pandas as pd
 from datetime import datetime, timedelta
 from bs4 import BeautifulSoup
-from base import BaseCrawler
 from DataBuilder.hisugar.schema import HisugarSchema
-from base import DBFile, DBSQL
+from base import DBFile, DBSQL, BaseCrawler
 
 class HigSugarCrawler(BaseCrawler):
     '目标网址（泛糖科技）：https://www.hisugar.com/home/newListMore?parentId=57&level=3&childId=151&menuTap3'
@@ -23,7 +22,12 @@ class HigSugarCrawler(BaseCrawler):
         # 数据库：默认为 PostgresSQL
         self.handler = DBSQL() if db is None else db
         # 原始数据
-        self.raw_data = self.handler.read_data(table=self.datasource_id, start_date=self.start_date, end_date=self.end_date)
+        self.raw_data = self.handler.read_data(
+            table=self.datasource_id,
+            filters={
+                "date": [self.start_date, self.end_date]
+            }
+        )
 
         # 增量更新时每页 10 条，获取历史数据时每页50条
         date_format = "%Y-%m-%d"
@@ -166,6 +170,7 @@ class HigSugarCrawler(BaseCrawler):
                 continue
 
             normalized_df = self.normalize(data)
+            normalized_df[self.handler.DEFAULT_PARTITION_FIELD] = normalized_df["date"].dt.strftime("%Y%m")
             self.write(normalized_df)
             self.write_log(f"爬取完成: {category_name} - {sub_name}, 数据大小: {data.shape}, 耗时: {datetime.now() - now}", True)
 
