@@ -11,7 +11,6 @@ from functools import reduce
 from typing import Any, Dict, List, Union, Optional
 
 # 文件数据库
-import shutil
 import pyarrow as pa
 import pyarrow.parquet as pq
 import pyarrow.dataset as ds
@@ -66,97 +65,40 @@ class DBFile:
             table: 表名，将作为子目录名称
             keys: 唯一键列名列表，用于去重
         """
-        if not keys:
-            raise ValueError("去重键列不能为空")
-        
-        if data.empty:
-            return  # 如果数据为空，直接返回
-        
         # 创建表目录
         table_path = os.path.join(self.base_path, table)
         os.makedirs(table_path, exist_ok=True)
         
-        # 检查是否是分区表
-        is_partitioned = self.DEFAULT_PARTITION_FIELD in data.columns
+        # 去重
+        if keys:
+            data = data.drop_duplicates(subset=keys, keep="last")
         
-        if is_partitioned:
-            # 分区表处理 - 按分区处理数据
-            partitions = data[self.DEFAULT_PARTITION_FIELD].unique()
-            
-            for partition in partitions:
-                # 获取当前分区的数据
-                partition_data = data[data[self.DEFAULT_PARTITION_FIELD] == partition]
-                
-                # 构建分区路径
-                partition_path = os.path.join(
-                    table_path, 
-                    f"{self.DEFAULT_PARTITION_FIELD}={partition}"
-                )
-                os.makedirs(partition_path, exist_ok=True)
-                
-                # 1. 尝试读取现有分区数据
-                existing_data = None
-                parquet_file = os.path.join(partition_path, "data.parquet")
-                if os.path.exists(parquet_file):
-                    try:
-                        existing_data = pq.read_table(parquet_file).to_pandas()
-                    except Exception as e:
-                        print(f"读取分区数据失败: {e}")
-                
-                # 2. 合并新旧数据并去重
-                if existing_data is not None and not existing_data.empty:
-                    # 合并新旧数据
-                    combined = pd.concat([existing_data, partition_data], ignore_index=True)
-                    # 按keys去重，保留最后出现的记录
-                    partition_data = combined.drop_duplicates(subset=keys, keep="last")
-                else:
-                    # 只有新数据，只需简单去重
-                    partition_data = partition_data.drop_duplicates(subset=keys, keep="last")
-                
-                # 转换为Arrow Table
-                arrow_table = pa.Table.from_pandas(partition_data)
-                
-                # 3. 保存分区数据
-                pq.write_table(
-                    table=arrow_table,
-                    where=parquet_file,
-                )
+        # 与旧数据去重
+
+        # 转换为Arrow Table
+        arrow_table = pa.Table.from_pandas(data)
+        
+        # 保存数据
+        if self.DEFAULT_PARTITION_FIELD in data.columns:
+            partition_cols = self.DEFAULT_PARTITION_FIELD
+            pq.write_to_dataset(
+                table=arrow_table,      # 要写入的 Arrow 表
+                root_path=table_path,       # 输出目录的根路径
+                partition_cols=[self.DEFAULT_PARTITION_FIELD],  # 用于分区的列名列表
+                existing_data_behavior="overwrite_or_ignore"        # 如何处理现有数据 ('error', 'overwrite_or_ignore', 'delete_matching')
+            )
         else:
-            # 非分区表处理
-            parquet_file = os.path.join(table_path, "data.parquet")
-            
-            # 1. 尝试读取现有数据
-            existing_data = None
-            if os.path.exists(parquet_file):
-                try:
-                    existing_data = pq.read_table(parquet_file).to_pandas()
-                except Exception as e:
-                    print(f"读取数据失败: {e}")
-            
-            # 2. 合并新旧数据并去重
-            if existing_data is not None and not existing_data.empty:
-                # 合并新旧数据
-                combined = pd.concat([existing_data, data], ignore_index=True)
-                # 按keys去重，保留最后出现的记录
-                data = combined.drop_duplicates(subset=keys, keep="last")
-            else:
-                # 只有新数据，只需简单去重
-                data = data.drop_duplicates(subset=keys, keep="last")
-            
-            # 转换为Arrow Table
-            arrow_table = pa.Table.from_pandas(data)
-            
-            # 3. 保存数据
+            partition_cols = None
             pq.write_table(
                 table=arrow_table,
-                where=parquet_file,
+                where=os.path.join(table_path, "data.parquet"),
             )
         
         # 保存元数据
         self._save_metadata(
             table_name=table,
             keys=keys,
-            partition_cols=[self.DEFAULT_PARTITION_FIELD] if is_partitioned else None,
+            partition_cols=partition_cols,
             schema=arrow_table.schema
         )
 

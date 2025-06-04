@@ -63,7 +63,7 @@ class SentimentalBot(AIBase):
     """
     def __init__(self, start_date: Optional[str]=None, end_date: Optional[str]=None, n_days: int=7, db=None) -> None:
         super().__init__()
-        self.handler = DBSQL() if db is None else db
+        self.handler = DBFile() if db is None else db
         date_format = "%Y-%m-%d"
         self.start_date = (datetime.now() - timedelta(days=n_days)).strftime(date_format) if start_date is None else start_date
         self.end_date = datetime.now().strftime(date_format) if end_date is None else end_date
@@ -73,8 +73,18 @@ class SentimentalBot(AIBase):
         self.time = datetime.now().strftime("%H%M%S")
 
         self.filepath_prompt = self.parent_path + "/AIBots/SentimentalBot/prompts/"
-        self.filepath_cache = self.parent_path + "/AIBots/SentimentalBot/cache/"
         self.filepath_save = self.parent_path + "/Reports/"
+
+        # 原始分析数据
+        def _get_raw(table) -> pd.DataFrame:
+            df = self.handler.read_data(table, filters={"date": [self.start_date, self.end_date]})
+            df = df[[i for i in df.columns if i != self.handler.DEFAULT_PARTITION_FIELD]]
+            df["date"] = df["date"].dt.strftime("%Y-%m-%d")
+            return df
+        self.table_assistant = "aicache_assistant"
+        self.raw_assistant = _get_raw(self.table_assistant)
+        self.table_researcher = "aicache_researcher"
+        self.raw_researcher = _get_raw(self.table_researcher)
 
     def write_log(self, log: str, logout: int=1):
         if logout == 1:
@@ -96,15 +106,13 @@ class SentimentalBot(AIBase):
     def analyzing_article(self, article: dict):
         """分析一篇文章"""
         # 缓存
-        cache_path = self.filepath_cache + "assistant/"
-        cache_id = "{date}_{category}_{sub_category}_{title}.pkl".format(
-            date=article["date"].replace("-", ""),
-            category=article["category"].replace("/", ""),
-            sub_category=article["sub_category"].replace("/", ""),
-            title=article["title"].replace("/", "")
-        )
-        
-        temp = self.cache(cache_path+cache_id)
+        params = {
+            "date": article["date"],
+            "category": article["category"].replace("/", ""),
+            "subcategory": article["sub_category"].replace("/", ""),
+            "title": article["title"].replace("/", "")
+        }
+        temp = self.read_cache(self.raw_assistant, params)
         if temp is not None:
             return True, temp
         
@@ -125,15 +133,18 @@ class SentimentalBot(AIBase):
         # 缓存内容
         if answer is not None:
             temp = json.loads(answer)
+            temp["category"] = article["category"]
+            temp["subcategory"] = article["sub_category"]
         else:
             # 若deepseek无法回答，则为空
             temp = {
                 'title': article["title"],
                 'date': article["date"],
+                'category': article["category"],
+                'subcategory': article["sub_category"],
                 'summary': '',
                 'opinion': ''
             }
-        self.cache(cache_path+cache_id, temp)
         return False, temp
 
     def assistant(self, data: dict, run_parallel: bool=False) -> list:
@@ -170,16 +181,19 @@ class SentimentalBot(AIBase):
                     self.write_log(f"[Assistant] 命中缓存: ({i+1} / {article_nums}), 标题: {article['title']}", logout=1)
                 else:
                     self.write_log(f"[Assistant] AI分析: ({i+1} / {article_nums}), 标题: {article['title']}", logout=1) 
+        
+        # 存储缓存
+        self.save_cache(
+            df=pd.DataFrame(result),
+            table=self.table_assistant,
+            keys=["date", "category", "subcategory", "title"]
+        )
         return result
 
     def analyzing_assistant_reports(self, repeorts: list) -> dict:
         """分析研究助理的文章"""
-        # 缓存
-        cache_path = self.filepath_cache + "research/"
-        cache_id = f"{self.today}_sentimental_researcher_report.pkl"
-        
         # 读取缓存
-        temp = self.cache(cache_path+cache_id)
+        temp = self.read_cache(self.raw_researcher, {"date": self.end_date})
         if temp is not None:
             return True, temp
 
@@ -203,15 +217,12 @@ class SentimentalBot(AIBase):
         system_prompt = self.read_md(self.filepath_prompt+"researcher.md")
         answer = self.api_deepseek(user_prompt, system_prompt, True)
 
-
         # 缓存内容
         if answer is not None:
             temp = json.loads(answer)
-            temp["date"] = self.today
+            temp["date"] = self.end_date
         else:
-            # 若deepseek无法回答，则为空
             temp = None
-        self.cache(cache_path+cache_id, temp)
         return False, temp
 
     def researcher(self, input_reports: list) -> str:
@@ -225,6 +236,13 @@ class SentimentalBot(AIBase):
             self.write_log(f"[Researcher] 生成 {self.today} 的报告：命中缓存！")
         else:
             self.write_log(f"[Researcher] 生成 {self.today} 的报告：AI分析！")
+
+        # 存储缓存
+        self.save_cache(
+            df=pd.DataFrame(temp, index=[0]),
+            table=self.table_assistant,
+            keys=["date"]
+        )
 
         # 生成报告
         report = TEMPLET_REPORT.format(
@@ -258,7 +276,6 @@ class SentimentalBot(AIBase):
 
     def analyzing(self):
         data = self.get_articles()
-        return data
-        # assistant_reports = self.assistant(data, run_parallel=True)
-        # research_report = self.researcher(assistant_reports)
+        assistant_reports = self.assistant(data, run_parallel=True)
+        research_report = self.researcher(assistant_reports)
         # self.email_sending(f"SR 舆情分析报告_{self.end_date}", research_report)

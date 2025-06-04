@@ -1,0 +1,35 @@
+{
+  "table_name": "aicache_assistant",
+  "keys": [
+    "date",
+    "title"
+  ],
+  "partition_cols": [
+    "partitionBy"
+  ],
+  "schema": {
+    "names": [
+      "title",
+      "date",
+      "summary",
+      "opinion",
+      "rating",
+      "category",
+      "subcategory",
+      "partitionBy",
+      "__index_level_0__"
+    ],
+    "types": [
+      "string",
+      "timestamp[ns]",
+      "string",
+      "string",
+      "string",
+      "string",
+      "string",
+      "string",
+      "int64"
+    ]
+  },
+  "created_at": "2025-06-04T18:20:06.789199"
+}
