@@ -2,6 +2,7 @@ import sys
 from pathlib import Path
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 sys.path.append(str(PROJECT_ROOT))
+print(PROJECT_ROOT)
 
 import os
 import time
@@ -140,3 +141,4 @@ def analyze_articles():
 
 if __name__ == '__main__':
     app.run(debug=True)
+    # app.run(port=5001)

@@ -2,6 +2,8 @@
   "table_name": "aicache_assistant",
   "keys": [
     "date",
+    "category",
+    "subcategory",
     "title"
   ],
   "partition_cols": [
@@ -31,5 +33,6 @@
       "int64"
     ]
   },
-  "created_at": "2025-06-04T18:20:06.789199"
+  "created_at": "2025-06-05T22:32:02.575173",
+  "metadata_version": "1.1"
 }

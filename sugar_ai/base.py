@@ -52,6 +52,187 @@ class DBFile:
             
         os.makedirs(self.base_path, exist_ok=True)
 
+    def save_dict(self, data: Dict[datetime, Dict[str, Any]], table: str):
+        """
+        存储嵌套字典数据，按年月自动分区
+        
+        参数:
+            data: 嵌套字典数据，外层key为datetime对象
+            table: 表名
+        """
+        table_path = os.path.join(self.base_path, table)
+        os.makedirs(table_path, exist_ok=True)
+        
+        partition_dict = {}
+        for key, value in data.items():
+            partition_key = key.strftime("%Y%m")
+            if partition_key not in partition_dict:
+                partition_dict[partition_key] = {}
+            if key not in partition_dict[partition_key]:
+                partition_dict[partition_key][key] = value
+        
+        for partition_key, data_dict in partition_dict.items():
+            # 读取旧数据
+            filepath = os.path.join(table_path, f"{partition_key}_data.pickle")
+            if os.path.exists(filepath):
+                with open(filepath, 'rb') as f:
+                    raw_dict = pickle.load(f)
+                
+                # 合并旧数据: 保留最新的数据
+                for k, v in raw_dict.items():
+                    if k not in data_dict:
+                        data_dict[k] = v
+                
+                # 删除旧文件
+                os.remove(filepath)
+
+            # 存储数据
+            with open(filepath, 'wb') as f:
+                pickle.dump(data_dict, f)
+
+    def read_dict(self, table: str, filters: dict) -> dict:
+        """
+        从分区目录加载dict数据
+        
+        参数:
+            table: 表名
+        """
+        table_path = os.path.join(self.base_path, table)
+        
+        if not os.path.exists(table_path):
+            raise FileNotFoundError(f"Table {table} not found")
+    
+        result = {}
+        if "date" in filters:
+            # 确定时间分区范围
+            start_date, end_date = pd.to_datetime(filters["date"][0]), pd.to_datetime(filters["date"][1])
+            partition_start, partition_end = start_date.strftime("%Y%m"), end_date.strftime("%Y%m")
+            # 分区读取
+            for filename in os.listdir(table_path):
+                if filename.endswith('.pickle') or filename.endswith('.pkl'):
+                    filepath = os.path.join(table_path, filename)
+                    partition_key = filename[:6]  # 获取分区标识
+                    if (partition_key<partition_start) or (partition_key>partition_end):
+                        continue
+                    # 读取分区文件
+                    with open(filepath, 'rb') as f:
+                        data = pickle.load(f)
+                    
+                    for k, v in data.items():
+                        if (k < start_date) or (k > end_date):
+                            continue
+                        if k not in result:
+                            result[k] = v
+        else:
+            # 读取所有文件
+            for filename in os.listdir(table_path):
+                if filename.endswith('.pickle') or filename.endswith('.pkl'):
+                    file_path = os.path.join(table_path, filename)
+                    try:
+                        with open(file_path, 'rb') as file:
+                            data = pickle.load(file)
+                        
+                        for k, v in data.items():
+                            if k not in result:
+                                result[k] = v
+                        
+                    except Exception as e:
+                        print(f"无法加载文件 {filename}: {str(e)}")
+                        continue
+        return result
+
+
+    def load_nested_dict_by_date(base_dir: str) -> Dict[datetime, Dict[str, Any]]:
+        """
+        从分区目录加载嵌套字典数据
+        
+        参数:
+            base_dir: 存储的根目录路径
+            
+        返回:
+            重构的嵌套字典，外层key为datetime对象
+        """
+        result = {}
+        
+        # 遍历所有年月分区目录
+        for year_month in os.listdir(base_dir):
+            partition_dir = os.path.join(base_dir, year_month)
+            
+            if not os.path.isdir(partition_dir):
+                continue
+                
+            # 遍历分区目录中的所有文件
+            for filename in os.listdir(partition_dir):
+                if filename.endswith('.pkl'):
+                    filepath = os.path.join(partition_dir, filename)
+                    
+                    # 从文件名解析时间戳
+                    try:
+                        dt_str = filename[:-4]  # 去掉.pkl后缀
+                        dt = datetime.strptime(dt_str, "%Y-%m-%d_%H-%M-%S")
+                    except ValueError:
+                        continue  # 跳过格式不匹配的文件
+                    
+                    # 加载嵌套字典
+                    with open(filepath, 'rb') as f:
+                        nested_dict = pickle.load(f)
+                    
+                    result[dt] = nested_dict
+                    
+        return result
+
+    def load_date_range(base_dir: str, start: datetime, end: datetime) -> Dict[datetime, Dict[str, Any]]:
+        """
+        加载指定时间范围内的数据
+        
+        参数:
+            base_dir: 存储的根目录路径
+            start: 开始时间
+            end: 结束时间
+            
+        返回:
+            指定时间范围内的嵌套字典数据
+        """
+        result = {}
+        
+        # 生成需要检查的年月分区列表
+        months = set()
+        current = start.replace(day=1)
+        while current <= end:
+            months.add(current.strftime("%Y-%m"))
+            # 移动到下个月
+            if current.month == 12:
+                current = current.replace(year=current.year+1, month=1)
+            else:
+                current = current.replace(month=current.month+1)
+        
+        # 检查每个可能的分区
+        for year_month in months:
+            partition_dir = os.path.join(base_dir, year_month)
+            
+            if not os.path.isdir(partition_dir):
+                continue
+                
+            # 遍历分区目录中的所有文件
+            for filename in os.listdir(partition_dir):
+                if filename.endswith('.pkl'):
+                    filepath = os.path.join(partition_dir, filename)
+                    
+                    # 从文件名解析时间戳
+                    try:
+                        dt_str = filename[:-4]  # 去掉.pkl后缀
+                        dt = datetime.strptime(dt_str, "%Y-%m-%d_%H-%M-%S")
+                    except ValueError:
+                        continue  # 跳过格式不匹配的文件
+                    
+                    # 检查时间是否在范围内
+                    if start <= dt <= end:
+                        with open(filepath, 'rb') as f:
+                            nested_dict = pickle.load(f)
+                        result[dt] = nested_dict
+                    
+        return result
+
     def save_data(
         self,
         data: pd.DataFrame,
@@ -271,21 +452,29 @@ class DBFile:
         partition_cols: Optional[List[str]],
         schema: pa.Schema
     ) -> None:
-        """保存表的元数据"""
+        """保存表的元数据，优化字典列的结构信息"""
+        def format_field_type(field):
+            if pa.types.is_struct(field.type):
+                # 处理struct类型（字典列）
+                fields = {f.name: str(f.type) for f in field.type}
+                return {"type": "struct", "fields": fields}
+            return str(field.type)
+        
         metadata = {
             "table_name": table_name,
             "keys": keys,
             "partition_cols": partition_cols,
             "schema": {
                 "names": schema.names,
-                "types": [str(field.type) for field in schema]
+                "types": [format_field_type(schema.field(name)) for name in schema.names]
             },
-            "created_at": pd.Timestamp.now().isoformat()
+            "created_at": pd.Timestamp.now().isoformat(),
+            "metadata_version": "1.1"  # 添加版本控制
         }
         
         metadata_path = os.path.join(self.base_path, table_name, "_metadata.json")
-        with open(metadata_path, 'w') as f:
-            json.dump(metadata, f, indent=2)
+        with open(metadata_path, 'w', encoding='utf-8') as f:  # 确保UTF-8编码
+            json.dump(metadata, f, indent=2, ensure_ascii=False)  # 禁用ASCII转义
 
     def _load_metadata(self, table_name: str) -> Dict[str, Any]:
         """加载表的元数据"""
@@ -611,28 +800,39 @@ class AIBase:
         with open(filepath+report_id, 'w', encoding='utf-8') as file:
             file.write(content)
 
-    def read_cache(self, data: pd.DataFrame, params: dict) -> Optional[dict]:
-        """读取命中缓存"""        
-        mask = pd.Series(True, index=data.index)
-        for k, v in params.items():
-            mask &= (data[k] == v)
-        
-        content = data[mask]
-        if content.shape[0] != 0:
-            return content.iloc[0].to_dict()
+    def read_cache(self, data: Union[pd.DataFrame, Dict], params: dict) -> Optional[dict]:
+        """读取命中缓存"""
+        if isinstance(data, pd.DataFrame):        
+            mask = pd.Series(True, index=data.index)
+            for k, v in params.items():
+                mask &= (data[k] == v)
+            
+            content = data[mask]
+            if content.shape[0] != 0:
+                return content.iloc[0].to_dict()
+            else:
+                return None
+        elif isinstance(data, Dict):
+            for k, v in data.items():
+                if k == pd.to_datetime(params["date"]):
+                    return v
+            return None
         else:
             return None
 
-    def save_cache(self, df: pd.DataFrame, table: str, keys: list) -> None:
+    def save_cache(self, data: Union[pd.DataFrame, Dict], table: str, keys: Optional[list]=None) -> None:
         """保存缓存"""
-        df["date"] = pd.to_datetime(df["date"])
-        df[self.handler.DEFAULT_PARTITION_FIELD] = df["date"].dt.strftime("%Y%m")
-        df = df.reset_index(drop=True)
-        self.handler.save_data(
-            data=df,
-            table=table,
-            keys=keys
-        )
+        if isinstance(data, pd.DataFrame):  
+            data["date"] = pd.to_datetime(data["date"])
+            data[self.handler.DEFAULT_PARTITION_FIELD] = data["date"].dt.strftime("%Y%m")
+            data = data.reset_index(drop=True)
+            self.handler.save_data(
+                data=data,
+                table=table,
+                keys=keys
+            )
+        elif isinstance(data, Dict):
+            self.handler.save_dict(data, table)
 
     def email_sending(self, title: str, content: str) -> None:
         """发送邮件"""

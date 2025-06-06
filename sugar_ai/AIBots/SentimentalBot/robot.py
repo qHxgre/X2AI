@@ -78,17 +78,18 @@ class SentimentalBot(AIBase):
         # 原始分析数据
         def _get_raw(table) -> pd.DataFrame:
             df = self.handler.read_data(table, filters={"date": [self.start_date, self.end_date]})
-            df = df[[i for i in df.columns if i != self.handler.DEFAULT_PARTITION_FIELD]]
             df["date"] = df["date"].dt.strftime("%Y-%m-%d")
             return df
         self.table_assistant = "aicache_assistant"
-        self.raw_assistant = _get_raw(self.table_assistant)
+        self.raw_assistant = self.handler.read_data(self.table_assistant, filters={"date": [self.start_date, self.end_date]})
+        self.raw_assistant["date"] = self.raw_assistant["date"].dt.strftime("%Y-%m-%d")
         self.table_researcher = "aicache_researcher"
-        self.raw_researcher = _get_raw(self.table_researcher)
+        self.raw_researcher = self.handler.read_dict(self.table_researcher, filters={"date": [self.start_date, self.end_date]})
 
     def write_log(self, log: str, logout: int=1):
-        if logout == 1:
-            print(log)
+        # if logout == 1:
+            # print(log)
+        pass
 
     def get_articles(self, start_date: Optional[str] = None, end_date: Optional[str]=None) -> list:
         """获取文章数据"""
@@ -108,9 +109,9 @@ class SentimentalBot(AIBase):
         # 缓存
         params = {
             "date": article["date"],
-            "category": article["category"].replace("/", ""),
-            "subcategory": article["sub_category"].replace("/", ""),
-            "title": article["title"].replace("/", "")
+            "category": article["category"],
+            "subcategory": article["sub_category"],
+            "title": article["title"],
         }
         temp = self.read_cache(self.raw_assistant, params)
         if temp is not None:
@@ -175,6 +176,8 @@ class SentimentalBot(AIBase):
             self.write_log(f"[Assistant] 共计 {article_nums} 篇文章，串行处理！", logout=1)
             result = []
             for i, article in enumerate(data):
+                if article["title"] != "赤藓糖醇过剩改善，代糖股业绩回暖，新代糖又现扩产潮":
+                    continue
                 buffer, temp = self.analyzing_article(article)
                 result.append(temp)
                 if buffer is True:
@@ -184,18 +187,19 @@ class SentimentalBot(AIBase):
         
         # 存储缓存
         self.save_cache(
-            df=pd.DataFrame(result),
+            data=pd.DataFrame(result),
             table=self.table_assistant,
             keys=["date", "category", "subcategory", "title"]
         )
         return result
 
-    def analyzing_assistant_reports(self, repeorts: list) -> dict:
+    def analyzing_assistant_reports(self, repeorts: list, cache: bool=False) -> dict:
         """分析研究助理的文章"""
         # 读取缓存
-        temp = self.read_cache(self.raw_researcher, {"date": self.end_date})
-        if temp is not None:
-            return True, temp
+        if cache is True:
+            temp = self.read_cache(self.raw_researcher, {"date": self.end_date})
+            if temp is not None:
+                return True, temp
 
         # 筛选出无效的报告
         repeorts = [i for i in repeorts if i["summary"] != "" and i["opinion"] != ""]
@@ -239,9 +243,8 @@ class SentimentalBot(AIBase):
 
         # 存储缓存
         self.save_cache(
-            df=pd.DataFrame(temp, index=[0]),
-            table=self.table_assistant,
-            keys=["date"]
+            data={pd.to_datetime(temp["date"]): temp},
+            table=self.table_researcher,
         )
 
         # 生成报告
