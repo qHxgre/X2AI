@@ -16,7 +16,7 @@ class HigSugarCrawler(BaseCrawler):
     indexes = ["date"]
     schema = HisugarSchema
 
-    def __init__(self, start_date: str, end_date: str, db=None) -> None:
+    def __init__(self, start_date: str, end_date: str, db=None, isprint: bool=True) -> None:
         # 开始时间和结束时间
         self.start_date, self.end_date = start_date, end_date
         # 数据库：默认为 PostgresSQL
@@ -28,6 +28,9 @@ class HigSugarCrawler(BaseCrawler):
                 "date": [self.start_date, self.end_date]
             }
         )
+
+        # 日志打印
+        self.isprint = isprint
 
         # 增量更新时每页 10 条，获取历史数据时每页50条
         date_format = "%Y-%m-%d"
@@ -133,7 +136,7 @@ class HigSugarCrawler(BaseCrawler):
 
     def write_log(self, msg: str, isprint: bool=True) -> None:
         """日志打印"""
-        if isprint is True:
+        if (self.isprint is True) and (isprint is True):
             print(msg)
 
     def crawl_category(self, category: dict) -> list:

@@ -7,7 +7,9 @@ document.addEventListener('DOMContentLoaded', function() {
 async function get_chart() {
     try {
         const response = await fetch('/get_chart');
-        const htmlContent = await response.text();
+        const result = await response.json();
+        const chartTitle = result.last_date;
+        const htmlContent = result.data;
         
         // 创建一个临时div来放置内容
         const tempDiv = document.createElement('div');
@@ -19,6 +21,11 @@ async function get_chart() {
         
         const chartContent = document.getElementById('chartContent');
         chartContent.innerHTML = '';
+        
+        // 添加标题
+        const titleElement = document.createElement('h3');
+        titleElement.textContent = `最新日期: (${chartTitle})`;
+        chartContent.appendChild(titleElement);
         
         if (chartContainer) {
             chartContent.appendChild(chartContainer);

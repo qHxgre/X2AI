@@ -5,6 +5,7 @@ sys.path.append(str(PROJECT_ROOT))
 print(PROJECT_ROOT)
 
 import os
+import re
 import time
 import json
 import pandas as pd
@@ -79,13 +80,37 @@ def get_article():
 @app.route('/get_chart')
 def get_chart():
     # 读取生成的 HTML 文件
-    filename = "20240604.html"
-    filepath = os.path.join(f"{PROJECT_ROOT}/WebServer/static/images", filename)
-
     try:
+        # 获取目录下所有.html文件
+        directory = f"{PROJECT_ROOT}/WebServer/static/images"
+        html_files = [f for f in os.listdir(directory) if f.endswith('.html')]
+        
+        # 提取文件名中的日期并转换为datetime对象
+        dated_files = []
+        date_pattern = re.compile(r'(\d{8})')  # 匹配8位数字的日期
+        
+        for file in html_files:
+            match = date_pattern.search(file)
+            if match:
+                date_str = match.group(1)
+                try:
+                    date = datetime.strptime(date_str, '%Y%m%d')
+                    dated_files.append((date, file))
+                except ValueError:
+                    continue  # 如果日期格式无效，跳过该文件
+        
+        # 按日期排序并返回最新的文件
+        dated_files.sort(reverse=True)
+        latest_file = dated_files[0][1]
+        last_date = latest_file.replace(".html", "")
+
+        filepath = os.path.join(directory, latest_file)
         with open(filepath, 'r', encoding='utf-8') as f:
             html_content = f.read()
-        return html_content  # 直接返回HTML内容
+        return jsonify({
+            "last_date": last_date,
+            'data': html_content
+        })  # 直接返回HTML内容
     except FileNotFoundError:
         return "Chart not found", 404
 

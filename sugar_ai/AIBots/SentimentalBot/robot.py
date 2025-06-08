@@ -93,9 +93,8 @@ class SentimentalBot(AIBase):
         self.raw_researcher = self.handler.read_dict(self.table_researcher, filters={"date": [self.start_date, self.end_date]})
 
     def write_log(self, log: str, logout: int=1):
-        # if logout == 1:
-            # print(log)
-        pass
+        if logout == 1:
+            print(log)
 
     def get_articles(self, start_date: Optional[str] = None, end_date: Optional[str]=None) -> list:
         """获取文章数据"""
@@ -272,7 +271,7 @@ class SentimentalBot(AIBase):
 
     def plotting(self, today: Optional[str] = None):
         """分析画图"""
-        end_date = today if today is not None else datetime.now().strftime('%Y-%m-%d')
+        end_date = today if today is not None else self.end_date
         start_date = (datetime.strptime(end_date, "%Y-%m-%d") - timedelta(days=365)).strftime("%Y-%m-%d")
 
         # 行情数据
@@ -303,13 +302,18 @@ class SentimentalBot(AIBase):
         # 构造分段区域填充
         pieces = []
         current = 0
+        default_color = 'rgba(128,128,128,0.15)'  # gray for nan/default
         while current < len(rating):
             val = rating[current]
             start = current
             while current + 1 < len(rating) and rating[current + 1] == val:
                 current += 1
             end = current
-            color = {1: 'rgba(255,0,0,0.15)', -1: 'rgba(0,255,0,0.15)', 0: 'rgba(0,0,255,0.15)'}[val]
+            color = {
+                1: 'rgba(255,0,0,0.15)', 
+                -1: 'rgba(0,255,0,0.15)', 
+                0: 'rgba(0,0,255,0.15)'
+            }.get(val, default_color)
             pieces.append({
                 "xAxis": [start, end],
                 "itemStyle": {"color": color}
@@ -320,13 +324,44 @@ class SentimentalBot(AIBase):
         kline = (
             Kline()
             .add_xaxis(dates)
-            .add_yaxis("K线", kline_data)
+            .add_yaxis(
+                "",
+                kline_data,
+                itemstyle_opts=opts.ItemStyleOpts(
+                    color="#ec0000",  # 上涨颜色
+                    color0="#00da3c",  # 下跌颜色
+                ),
+            )
             .set_global_opts(
-                xaxis_opts=opts.AxisOpts(type_="category"),
-                yaxis_opts=opts.AxisOpts(is_scale=True),
-                datazoom_opts=[opts.DataZoomOpts(type_="inside"), opts.DataZoomOpts()],
-                title_opts=opts.TitleOpts(title="K线图"),
-                visualmap_opts=opts.VisualMapOpts(is_show=False),  # 不显示视觉映射
+                title_opts=opts.TitleOpts(title="K线图&AI评级(红色=上涨 | 蓝色=震荡 | 绿色=看跌)"),
+                xaxis_opts=opts.AxisOpts(
+                    type_="category",
+                    is_scale=True,
+                    boundary_gap=False,
+                    axisline_opts=opts.AxisLineOpts(is_on_zero=False),
+                    splitline_opts=opts.SplitLineOpts(is_show=False),
+                    split_number=20,
+                    min_="dataMin",
+                    max_="dataMax",
+                ),
+                tooltip_opts=opts.TooltipOpts(trigger="axis", axis_pointer_type="line"),
+                datazoom_opts=[
+                    opts.DataZoomOpts(
+                        is_show=False,
+                        type_="inside",
+                        xaxis_index=[0],
+                        range_start=0,
+                        range_end=100,
+                    ),
+                    opts.DataZoomOpts(
+                        is_show=True,
+                        xaxis_index=[0],
+                        type_="slider",
+                        pos_top="90%",
+                        range_start=0,
+                        range_end=100,
+                    ),
+                ],
             )
             .set_series_opts(
                 markarea_opts=opts.MarkAreaOpts(
@@ -343,4 +378,5 @@ class SentimentalBot(AIBase):
         data = self.get_articles()
         assistant_reports = self.assistant(data, run_parallel=True)
         research_report = self.researcher(assistant_reports)
-        # self.email_sending(f"SR 舆情分析报告_{self.end_date}", research_report)
+        self.plotting()
+        self.email_sending(f"SR 舆情分析报告_{self.end_date}", research_report)

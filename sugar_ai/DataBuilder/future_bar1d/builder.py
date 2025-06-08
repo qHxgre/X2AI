@@ -44,4 +44,3 @@ class FutureBar1dBuilder(BaseBuilder):
         normalized_df = self.normalize(data)
         normalized_df[self.handler.DEFAULT_PARTITION_FIELD] = normalized_df["date"].dt.strftime("%Y%m")
         self.write(normalized_df)
-        return normalized_df
