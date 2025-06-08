@@ -7,15 +7,45 @@ print(PROJECT_ROOT)
 import os
 import time
 import json
-from datetime import datetime
-from flask import Flask, render_template, request, Response, jsonify, send_from_directory
+import pandas as pd
+from datetime import datetime, timedelta
+from flask import Flask, render_template, request, Response, jsonify, send_from_directory, send_file
 from AIBots.SentimentalBot.robot import SentimentalBot
 from base import DBFile, DBSQL
 
 app = Flask(__name__)
 
 bot = SentimentalBot(db=DBFile())
+today = datetime.now()
+TEMPLET_REPORT = """
+日期: {date}
 
+# 投资评级
+
+{rating}
+
+# 报告正文
+
+## 摘要
+
+{overview}
+
+## 利好分析
+
+{bullish}
+
+## 利空分析
+
+{bearish}
+
+## 结论
+
+{conclusion}
+
+# 风险提示
+
+{risk}
+"""
 
 @app.route('/')
 def home():
@@ -46,49 +76,53 @@ def get_article():
         'data': data
     })
 
-
-
-@app.route('/api/get_images/')
-def get_image():
-    filename = "example2.png"
+@app.route('/get_chart')
+def get_chart():
+    # 读取生成的 HTML 文件
+    filename = "20240604.html"
     filepath = os.path.join(f"{PROJECT_ROOT}/WebServer/static/images", filename)
-    if not os.path.exists(filepath):
-        return jsonify({'status': 'error', 'message': '图片不存在'}), 404
+
+    try:
+        with open(filepath, 'r', encoding='utf-8') as f:
+            html_content = f.read()
+        return html_content  # 直接返回HTML内容
+    except FileNotFoundError:
+        return "Chart not found", 404
+
+@app.route('/get_reports')
+def get_reports():
+    global bot
+    global today
+    global TEMPLET_REPORT
+
+    start_date = (today - timedelta(days=90)).strftime("%Y-%m-%d")
+    end_date = today.strftime("%Y-%m-%d")
+    reports = bot.handler.read_dict(
+        table="aicache_researcher",
+        filters={"date": [start_date, end_date]}
+    )
+
+    # 转换为字典并按日期降序排序
+    sorted_reports = dict(sorted(reports.items(), key=lambda x: x[0], reverse=True))
     
-    # 返回图片URL
+    # 格式化报告内容
+    formatted_reports = {}
+    for date, report in sorted_reports.items():
+        formatted_reports[date.strftime("%Y-%m-%d")] = TEMPLET_REPORT.format(
+            date=date,
+            rating=report["rating"],
+            overview=report["overview"],
+            bullish="\n".join(f"* {k}: {v}" for k, v in report["bullish"].items()),
+            bearish="\n".join(f"* {k}: {v}" for k, v in report["bearish"].items()),
+            conclusion=report["conclusion"],
+            risk="* " + "\n* ".join([i for i in report["risk"]]),
+        )
+
+    print(f"总共获取了 {len(formatted_reports)} 篇分析报告")
     return jsonify({
         'status': 'success',
-        'images': [{
-            'url': "/static/images/example2.png",
-            'name': '示例图片'
-        }]
+        'data': formatted_reports
     })
-
-# 修正静态图片服务路由
-@app.route('/static/images/<filename>')
-def serve_image(filename):
-    return send_from_directory(f"{PROJECT_ROOT}/WebServer/static/images", filename)
-
-@app.route('/api/get_markdown')
-def get_markdown():
-    today = datetime.now().strftime("%Y%m%d")
-    today = "20241201"
-    # 解析文件目录，获取指定日期最新分析
-    result = {}
-    for i in os.listdir(f"{PROJECT_ROOT}/Reports"):
-        if i.split('_')[0] == today:
-            result[i] = i.split('_')[1]
-    filename = max(result, key=result.get)
-    filepath = os.path.join(f"{PROJECT_ROOT}/Reports", filename)
-    try:
-        content = ""
-        if os.path.exists(filepath):
-            with open(filepath, 'r', encoding='utf-8') as f:
-                content = f.read()
-        
-        return jsonify({'content': content})
-    except Exception as e:
-        return jsonify({'error': str(e)}), 500
 
 
 @app.route('/analyze', methods=['POST'])

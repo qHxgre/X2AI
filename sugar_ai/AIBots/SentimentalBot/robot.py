@@ -1,11 +1,17 @@
 import json
 import numpy as np
 import pandas as pd
+import mplfinance as mpf
+import matplotlib.pyplot as plt
 from datetime import datetime, timedelta
 from typing import Optional, Union
 from joblib import Parallel, delayed
 from base import AIBase
 from base import DBFile, DBSQL
+
+from pyecharts.charts import Kline, Line, Grid
+from pyecharts import options as opts
+from pyecharts.commons.utils import JsCode
 
 
 TEMPLET_ARTICLE = """
@@ -264,18 +270,74 @@ class SentimentalBot(AIBase):
         self.save_md(self.filepath_save, "sentimental", report_date, publish_time, report)
         return report
 
-    def get_ratings(self, start_date: str, end_date: str) -> dict:
-        """获取指定日期范围内的评级"""
-        cache_path = self.filepath_cache + "research/"
-        import os
-        pkl_files = [f for f in os.listdir(cache_path) if f.endswith('.pkl')]
-        ratings = {}
-        for file in pkl_files:
-            answer = self.cache(cache_path+file)
-            if (pd.to_datetime(answer["date"]) >= pd.to_datetime(start_date)) and (pd.to_datetime(answer["date"]) <= pd.to_datetime(end_date)):
-                # 筛选出符合日期范围的报告
-                ratings[answer["date"]] = answer["rating"]
-        return ratings
+    def plotting(self, today: Optional[str] = None):
+        """分析画图"""
+        end_date = today if today is not None else datetime.now().strftime('%Y-%m-%d')
+        start_date = (datetime.strptime(end_date, "%Y-%m-%d") - timedelta(days=365)).strftime("%Y-%m-%d")
+
+        # 行情数据
+        ohlc_df = self.handler.read_data(
+            table="future_bar1d",
+            filters={"date": [start_date, end_date]},
+            columns=["date", "instrument", "high", "open", "low", "close"]
+        )
+
+        # 评级数据
+        reports = self.handler.read_dict(
+            table="aicache_researcher",
+            filters={"date": [start_date, end_date]}
+        )
+        rating = pd.DataFrame(reports).T.reset_index(drop=True)[["date", "rating"]]
+        rating["date"] = pd.to_datetime(rating["date"])
+
+        df = pd.merge(rating, ohlc_df, how="right", on=["date"])
+        df = df.dropna(subset=["instrument"]).sort_values('date')
+        df["rating"] = df["rating"].replace({"震荡": 0, "上涨": 1, "下跌": -1})
+        df = df.set_index("date")
+
+        # 准备K线数据
+        kline_data = df[['open', 'close', 'low', 'high']].values.tolist()
+        dates = df.index.strftime('%Y-%m-%d').tolist()
+        rating = df['rating'].tolist()
+
+        # 构造分段区域填充
+        pieces = []
+        current = 0
+        while current < len(rating):
+            val = rating[current]
+            start = current
+            while current + 1 < len(rating) and rating[current + 1] == val:
+                current += 1
+            end = current
+            color = {1: 'rgba(255,0,0,0.15)', -1: 'rgba(0,255,0,0.15)', 0: 'rgba(0,0,255,0.15)'}[val]
+            pieces.append({
+                "xAxis": [start, end],
+                "itemStyle": {"color": color}
+            })
+            current += 1
+
+        # 创建K线图
+        kline = (
+            Kline()
+            .add_xaxis(dates)
+            .add_yaxis("K线", kline_data)
+            .set_global_opts(
+                xaxis_opts=opts.AxisOpts(type_="category"),
+                yaxis_opts=opts.AxisOpts(is_scale=True),
+                datazoom_opts=[opts.DataZoomOpts(type_="inside"), opts.DataZoomOpts()],
+                title_opts=opts.TitleOpts(title="K线图"),
+                visualmap_opts=opts.VisualMapOpts(is_show=False),  # 不显示视觉映射
+            )
+            .set_series_opts(
+                markarea_opts=opts.MarkAreaOpts(
+                    data=[[{"xAxis": dates[piece["xAxis"][0]]}, {"xAxis": dates[piece["xAxis"][1]], "itemStyle": piece["itemStyle"]}] for piece in pieces]
+                )
+            )
+        )
+
+        # kline.render_notebook()
+        filename = (datetime.strptime(end_date, "%Y-%m-%d") - timedelta(days=365)).strftime("%Y%m%d")
+        kline.render(self.parent_path+f"/WebServer/static/images/{filename}.html")
 
     def analyzing(self):
         data = self.get_articles()

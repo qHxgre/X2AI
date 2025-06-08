@@ -90,7 +90,7 @@ class DBFile:
             with open(filepath, 'wb') as f:
                 pickle.dump(data_dict, f)
 
-    def read_dict(self, table: str, filters: dict) -> dict:
+    def read_dict(self, table: str, filters: Optional[Dict[str, List[Any]]] = None,) -> dict:
         """
         从分区目录加载dict数据
         
@@ -103,7 +103,7 @@ class DBFile:
             raise FileNotFoundError(f"Table {table} not found")
     
         result = {}
-        if "date" in filters:
+        if (filters is not None) and ("date" in filters):
             # 确定时间分区范围
             start_date, end_date = pd.to_datetime(filters["date"][0]), pd.to_datetime(filters["date"][1])
             partition_start, partition_end = start_date.strftime("%Y%m"), end_date.strftime("%Y%m")
@@ -388,6 +388,8 @@ class DBFile:
             )
         
         df = table.to_pandas()
+        if "date" in df.columns:
+            df = df.sort_values("date").reset_index(drop=True)
         if self.DEFAULT_PARTITION_FIELD in df.columns:
             return df.drop(self.DEFAULT_PARTITION_FIELD, axis=1)
         else:

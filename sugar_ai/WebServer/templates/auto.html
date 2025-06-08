@@ -9,23 +9,20 @@
         <!-- 图片展示区域 -->
         <section class="image-section">
             <h2>图片展示</h2>
-            <div id="imageGallery" class="content-area">
+            <div id="chartContent" class="content-area">
                 <!-- 图片将由JavaScript动态加载 -->
-                <div class="loading-spinner">加载中...</div>
             </div>
         </section>
+    </div>
 
-        <!-- Markdown内容展示区域 -->
-        <section class="markdown-section">
-            <h2>文档内容</h2>
-            <div id="markdownContent" class="content-area">
-                <!-- Markdown内容将由JavaScript动态加载 -->
-                <div class="loading-spinner">加载中...</div>
-            </div>
-        </section>
+    <div class="reports-list">
+        <h2>分析报告</h2>
+        <div id="reportsContainer"></div>
     </div>
 {% endblock %}
 
 {% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 <script src="/static/scripts/auto.js"></script>
 {% endblock %}

@@ -4,7 +4,7 @@
     "date",
     "instrument"
   ],
-  "partition_cols": "partitionBy",
+  "partition_cols": null,
   "schema": {
     "names": [
       "date",
@@ -23,7 +23,7 @@
       "upper_limit",
       "lower_limit",
       "product_code",
-      "partitionBy"
+      "__index_level_0__"
     ],
     "types": [
       "timestamp[ns]",
@@ -42,8 +42,9 @@
       "double",
       "double",
       "string",
-      "string"
+      "int64"
     ]
   },
-  "created_at": "2025-06-03T01:23:07.042191"
+  "created_at": "2025-06-06T14:50:53.524323",
+  "metadata_version": "1.1"
 }
