@@ -25,7 +25,8 @@
       "upper_limit",
       "lower_limit",
       "product_code",
-      "partitionBy"
+      "partitionBy",
+      "__index_level_0__"
     ],
     "types": [
       "timestamp[ns]",
@@ -44,9 +45,10 @@
       "double",
       "double",
       "string",
-      "string"
+      "string",
+      "int64"
     ]
   },
-  "created_at": "2025-06-09T01:48:05.351839",
+  "created_at": "2025-06-14T16:11:30.578046",
   "metadata_version": "1.1"
 }

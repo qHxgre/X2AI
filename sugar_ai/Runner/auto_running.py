@@ -9,7 +9,7 @@ import schedule
 from datetime import datetime, timedelta
 from DataBuilder.hisugar.crawler import HigSugarCrawler
 from DataBuilder.future_bar1d.builder import FutureBar1dBuilder
-from base import DBFile, DBSQL
+from X2AI.sugar_ai.Base.base import DBFile, DBSQL
 from AIBots.SentimentalBot.robot import SentimentalBot
 
 

@@ -1,100 +1,58 @@
+import os
 import json
 import numpy as np
 import pandas as pd
-import mplfinance as mpf
-import matplotlib.pyplot as plt
 from datetime import datetime, timedelta
-from typing import Optional, Union
+from typing import Optional, Tuple, List, Dict
 from joblib import Parallel, delayed
-from base import AIBase
-from base import DBFile, DBSQL
+from Base import BaseAI, DBFile, DBSQL, LoggerController
+from AIBots.SentimentalBot.templets import TEMPLET_ARTICLE, TEMPLET_ASSISTANT_REPORT, TEMPLET_REPORT
 
-from pyecharts.charts import Kline, Line, Grid
+from pyecharts.charts import Kline
 from pyecharts import options as opts
-from pyecharts.commons.utils import JsCode
 
 
-TEMPLET_ARTICLE = """
-* 文章标题: {title}
-* 发布时间: {publish_date}
-* 发布分类: {category}
-* 子分类: {sub_category}
-* 内容简介: {brief}
-* 正文: {content}
-"""
 
-TEMPLET_ASSISTANT_REPORT = """
-## 第 {i} 篇文章
-* 文章标题: {title}
-* 发布时间: {publish_report}
-* 内容总结: {summary}
-* 个人观点: {suggestion}
-"""
-
-
-TEMPLET_REPORT = """
-日期: {date}
-
-# 投资评级
-
-{rating}
-
-# 报告正文
-
-## 摘要
-
-{overview}
-
-## 利好分析
-
-{bullish}
-
-## 利空分析
-
-{bearish}
-
-## 结论
-
-{conclusion}
-
-# 风险提示
-
-{risk}
-"""
-
-class SentimentalBot(AIBase):
+class SentimentalBot(BaseAI):
     """基本面AI研究员
     1. 输入单篇文章进行总结和分析
     2. 将第1步的结论进行最后总结
     """
     def __init__(self, start_date: Optional[str]=None, end_date: Optional[str]=None, n_days: int=7, db=None) -> None:
         super().__init__()
-        self.handler = DBFile() if db is None else db
+        # 数据库
+        self.handler = DBFile(os.path.join(self.parent_path, "DataBase")) if db is None else db
+
+        # 日期范围
         date_format = "%Y-%m-%d"
         self.start_date = (datetime.now() - timedelta(days=n_days)).strftime(date_format) if start_date is None else start_date
         self.end_date = datetime.now().strftime(date_format) if end_date is None else end_date
 
-        # 当前日期
-        self.today = datetime.now().strftime("%Y%m%d") if self.end_date is None else pd.to_datetime(self.end_date).strftime("%Y%m%d")
-        self.time = datetime.now().strftime("%H%M%S")
+        # 文件路径
+        self.filepath_prompt = os.path.join(self.parent_path, "AIBots", "SentimentalBot", "prompts")
+        self.filepath_save = os.path.join(self.parent_path, "Reports")
 
-        self.filepath_prompt = self.parent_path + "/AIBots/SentimentalBot/prompts/"
-        self.filepath_save = self.parent_path + "/Reports/"
-
-        # 原始分析数据
-        def _get_raw(table) -> pd.DataFrame:
-            df = self.handler.read_data(table, filters={"date": [self.start_date, self.end_date]})
-            df["date"] = df["date"].dt.strftime("%Y-%m-%d")
-            return df
+        # 获取原始数据
         self.table_assistant = "aicache_assistant"
         self.raw_assistant = self.handler.read_data(self.table_assistant, filters={"date": [self.start_date, self.end_date]})
         self.raw_assistant["date"] = self.raw_assistant["date"].dt.strftime("%Y-%m-%d")
         self.table_researcher = "aicache_researcher"
         self.raw_researcher = self.handler.read_dict(self.table_researcher, filters={"date": [self.start_date, self.end_date]})
 
-    def write_log(self, log: str, logout: int=1):
-        if logout == 1:
-            print(log)
+        # 日志打印
+        self.logger = LoggerController(
+            name="SentimentalBot",
+            log_level="INFO",
+            console_output=False,
+            file_output=True,
+            log_file="AIBot_sentimental.log",
+            when='D'
+        )
+
+        # 初始化的日志
+        self.logger.info(f"本次AI分析的创建时间为: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+        self.logger.info(f"数据获取周期为：{self.start_date} 至 {self.end_date}")
+
 
     def get_articles(self, start_date: Optional[str] = None, end_date: Optional[str]=None) -> list:
         """获取文章数据"""
@@ -102,93 +60,94 @@ class SentimentalBot(AIBase):
         ed = self.end_date if end_date is None else end_date
         data = self.get_data("aisugar_hisugar", sd, ed)
         if data.shape[0] == 0:
+            self.logger.warning(f"数据大小: {data.shape}, 数据获取失败，请检查！")
             return []
-        data = data.drop_duplicates(subset=["date", "article_id", "title"])     # 删除重复的文章
-        data = data.sort_values(["date", "article_id"], ascending=[False, False])  # 按照日期和文章ID排序
-        data["date"] = data["date"].dt.strftime("%Y-%m-%d")
-        data = data.to_dict(orient='records')
-        return data
-
-    def analyzing_article(self, article: dict):
-        """分析一篇文章"""
-        # 缓存
-        params = {
-            "date": article["date"],
-            "category": article["category"],
-            "subcategory": article["sub_category"],
-            "title": article["title"],
-        }
-        temp = self.read_cache(self.raw_assistant, params)
-        if temp is not None:
-            return True, temp
-        
-        # 无缓存内容则用AI分析
-        user_prompt = TEMPLET_ARTICLE.format(
-            title = article["title"],
-            publish_date = article["date"],
-            category = article["category"],
-            sub_category = article["sub_category"],
-            brief = article["brief"],
-            content = article["content"],
-        )
-
-        # 通过AI给出分析结论
-        system_prompt = self.read_md(self.filepath_prompt+"assistant.md")
-        answer = self.api_deepseek(user_prompt, system_prompt, True)
-        
-        # 缓存内容
-        if answer is not None:
-            temp = json.loads(answer)
-            temp["category"] = article["category"]
-            temp["subcategory"] = article["sub_category"]
         else:
-            # 若deepseek无法回答，则为空
-            temp = {
-                'title': article["title"],
-                'date': article["date"],
-                'category': article["category"],
-                'subcategory': article["sub_category"],
-                'summary': '',
-                'opinion': ''
-            }
-        return False, temp
+            self.logger.info(f"数据大小: {data.shape}, 数据获取成功！")
+            data = data.drop_duplicates(subset=["date", "article_id", "title"])     # 删除重复的文章
+            data = data.sort_values(["date", "article_id"], ascending=[False, False])  # 按照日期和文章ID排序
+            data["date"] = data["date"].dt.strftime("%Y-%m-%d")
+            data = data.to_dict(orient='records')
+            return data
 
-    def assistant(self, data: dict, run_parallel: bool=False) -> list:
+    def assistant(self, data: dict, run_parallel: bool=False) -> List:
         """研究助理: 收集文章, 总结内容, 给出初步判断"""
-        def parallel_run(i, article, article_nums):
-            """并行处理"""
-            buffer, temp = self.analyzing_article(article)
-            if buffer is True:
-                self.write_log(f"[Assistant] 命中缓存: ({i+1} / {article_nums}), 标题: {article['title']}", logout=1)
+        def _analyzing_article(article: dict) -> Tuple[bool, Dict]:
+            """分析一篇文章"""
+            # 缓存
+            cache_temp = self.read_cache(
+                self.raw_assistant,
+                input_filters={
+                    "date": article["date"],
+                    "category": article["category"],
+                    "subcategory": article["sub_category"],
+                    "title": article["title"],
+                }
+            )
+            if cache_temp is not None:
+                return True, cache_temp
+            
+            # 无缓存内容则用AI分析
+            user_prompt = TEMPLET_ARTICLE.format(
+                title = article["title"],
+                publish_date = article["date"],
+                category = article["category"],
+                sub_category = article["sub_category"],
+                brief = article["brief"],
+                content = article["content"],
+            )
+
+            # 通过AI给出分析结论
+            system_prompt = self.read_md(os.path.join(self.filepath_prompt, "assistant.md"))
+            answer = self.api_deepseek(user_prompt, system_prompt, True)
+            
+            # 缓存内容
+            if answer is not None:
+                report = json.loads(answer)
+                report["category"] = article["category"]
+                report["subcategory"] = article["sub_category"]
             else:
-                self.write_log(f"[Assistant] AI分析: ({i+1} / {article_nums}), 标题: {article['title']}", logout=1)
-            return temp
+                # 若deepseek无法回答，则为空
+                report = {
+                    'title': article["title"],
+                    'date': article["date"],
+                    'category': article["category"],
+                    'subcategory': article["sub_category"],
+                    'summary': '',
+                    'opinion': ''
+                }
+                self.logger.debug(f"AI 分析失败: {article['title']}, 返回空内容！")
+            return False, report
+
+        def parallel_run(article):
+            """并行处理"""
+            return  _analyzing_article(article)
     
         if len(data) == 0:
-            self.write_log("[Assistant] 没有可分析的文章！")
+            self.logger.warning("[Assistant] 没有可分析的文章: {data.shape}, 返回空列表！")
             return []
     
         # 逐篇文章分析
         article_nums = len(data)
         if run_parallel:
             # 并行处理
-            self.write_log(f"[Assistant] 共计 {article_nums} 篇文章，并行处理！", logout=1)
-            result = Parallel(n_jobs=-1, backend='loky')(
-                delayed(parallel_run)(i, article, article_nums) for i, article in enumerate(data)
+            self.logger.info(f"[Assistant] 共计 {article_nums} 篇文章，并行处理！")
+            result_zip = Parallel(n_jobs=-1, backend='loky')(
+                delayed(parallel_run)(article) for i, article in enumerate(data)
             )
+            hit_static, result = map(list, zip(*result_zip))
+            self.logger.info(f"[Assistant] 并行处理完成: 命中缓存: {len([i for i in hit_static if i is not None])} / {article_nums}")
         else:
             # 串行处理
-            self.write_log(f"[Assistant] 共计 {article_nums} 篇文章，串行处理！", logout=1)
+            self.logger.info(f"[Assistant] 共计 {article_nums} 篇文章，串行处理！")
             result = []
             for i, article in enumerate(data):
-                if article["title"] != "赤藓糖醇过剩改善，代糖股业绩回暖，新代糖又现扩产潮":
-                    continue
-                buffer, temp = self.analyzing_article(article)
-                result.append(temp)
-                if buffer is True:
-                    self.write_log(f"[Assistant] 命中缓存: ({i+1} / {article_nums}), 标题: {article['title']}", logout=1)
+                hit_cache, report = _analyzing_article(article)
+                result.append(report)
+                if hit_cache is True:
+                    self.logger.info(f"[Assistant] 命中缓存: ({i+1} / {article_nums}), 标题: {article['title']}")
                 else:
-                    self.write_log(f"[Assistant] AI分析: ({i+1} / {article_nums}), 标题: {article['title']}", logout=1) 
+                    self.logger.info(f"[Assistant] AI分析: ({i+1} / {article_nums}), 标题: {article['title']}") 
         
         # 存储缓存
         self.save_cache(
@@ -196,78 +155,83 @@ class SentimentalBot(AIBase):
             table=self.table_assistant,
             keys=["date", "category", "subcategory", "title"]
         )
+        self.logger.debug(f"[Assistant] 缓存分析结果: {self.table_assistant}, 缓存大小: {len(result)}") 
         return result
 
-    def analyzing_assistant_reports(self, repeorts: list, cache: bool=False) -> dict:
-        """分析研究助理的文章"""
-        # 读取缓存
-        if cache is True:
-            temp = self.read_cache(self.raw_researcher, {"date": self.end_date})
-            if temp is not None:
-                return True, temp
-
-        # 筛选出无效的报告
-        repeorts = [i for i in repeorts if i["summary"] != "" and i["opinion"] != ""]
-
-        # 汇总助理收集的文章
-        user_prompt = ""
-        for i, report in enumerate(repeorts):
-            report_str = TEMPLET_ASSISTANT_REPORT.format(
-                i=i+1,
-                title=report["title"],
-                summary=report["summary"],
-                suggestion=report["opinion"],
-                publish_report=report["date"],
-            )
-            user_prompt += report_str
-            user_prompt += "\n\n"
-
-        # AI分析
-        system_prompt = self.read_md(self.filepath_prompt+"researcher.md")
-        answer = self.api_deepseek(user_prompt, system_prompt, True)
-
-        # 缓存内容
-        if answer is not None:
-            temp = json.loads(answer)
-            temp["date"] = self.end_date
-        else:
-            temp = None
-        return False, temp
-
-    def researcher(self, input_reports: list) -> str:
+    def researcher(self, input_reports: list, cache: bool) -> str:
         """研究员: 分析研究助理的判断, 给出整体的分析结果"""
+        def _analyzing_assistant_reports(input_reports: list, cache: bool) -> Tuple[bool, Optional[Dict]]:
+            """分析研究助理的文章"""
+            # 读取缓存
+            if cache is True:
+                # 命中缓存
+                cache_temp = self.read_cache(self.raw_researcher, {"date": self.end_date})
+                if cache_temp is not None:
+                    return True, cache_temp
+
+            # 筛选出无效的报告
+            articles = [i for i in input_reports if i["summary"] != "" and i["opinion"] != ""]
+
+            # 汇总助理收集的文章
+            user_prompt = ""
+            for i, article in enumerate(articles):
+                article_str = TEMPLET_ASSISTANT_REPORT.format(
+                    i=i+1,
+                    title=article["title"],
+                    publish_date=article["date"],
+                    summary=article["summary"],
+                    suggestion=article["opinion"]
+                )
+                user_prompt += article_str
+                user_prompt += "\n\n"
+
+            # AI分析
+            system_prompt = self.read_md(os.path.join(self.filepath_prompt, "researcher.md"))
+            answer = self.api_deepseek(user_prompt, system_prompt, True)
+
+            # 缓存内容
+            if answer is not None:
+                report = json.loads(answer)
+                report["date"] = self.end_date
+            else:
+                report = None
+                self.logger.debug(f"AI 分析失败: {article['title']}, 返回空内容！")
+            return False, report
+
         if len(input_reports) == 0:
-            self.write_log("[Researcher] 没有可分析的报告！")
+            self.logger.warning(f"[Researcher] 没有可分析的报告: {len(input_reports)}, 返回空字符串！")
             return ""
+    
         # AI分析
-        buffer, temp = self.analyzing_assistant_reports(input_reports)
-        if buffer is True:
-            self.write_log(f"[Researcher] 生成 {self.today} 的报告：命中缓存！")
+        hit_cache, report = _analyzing_assistant_reports(input_reports, cache)
+        if hit_cache is True:
+            self.logger.info(f"[Researcher] 生成 {self.end_date} 的报告：命中缓存！")
         else:
-            self.write_log(f"[Researcher] 生成 {self.today} 的报告：AI分析！")
+            self.logger.info(f"[Researcher] 生成 {self.end_date} 的报告：AI分析！")
 
         # 存储缓存
         self.save_cache(
-            data={pd.to_datetime(temp["date"]): temp},
+            data={self.end_date: report},
             table=self.table_researcher,
         )
 
         # 生成报告
-        report = TEMPLET_REPORT.format(
-            date=temp["date"],
-            rating=temp["rating"],
-            overview=temp["overview"],
-            bullish="\n".join(f"* {k}: {v}" for k, v in temp["bullish"].items()),
-            bearish="\n".join(f"* {k}: {v}" for k, v in temp["bearish"].items()),
-            conclusion=temp["conclusion"],
-            risk="* " + "\n* ".join([i for i in temp["risk"]]),
+        report_md = TEMPLET_REPORT.format(
+            analyze_date=report["date"],
+            publish_date=datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+            rating=report["rating"],
+            overview=report["overview"],
+            bullish="\n".join(f"* {k}: {v}" for k, v in report["bullish"].items()),
+            bearish="\n".join(f"* {k}: {v}" for k, v in report["bearish"].items()),
+            conclusion=report["conclusion"],
+            risk="* " + "\n* ".join([i for i in report["risk"]]),
         )
 
         # 保存报告
         report_date = self.end_date.replace("-", "")
-        publish_time = f"{self.today}{self.time}"
-        self.save_md(self.filepath_save, "sentimental", report_date, publish_time, report)
-        return report
+        self.save_md(self.filepath_save, "sentimental", report_date, report_md)
+        self.logger.info(f"[Researcher] 报告已保存: {report_date}_sentimental.md, 保存路径: {self.filepath_save}")
+        return report_md
 
     def plotting(self, today: Optional[str] = None):
         """分析画图"""
@@ -304,11 +268,11 @@ class SentimentalBot(AIBase):
         current = 0
         default_color = 'rgba(128,128,128,0.15)'  # gray for nan/default
         while current < len(rating):
-            val = rating[current]
+            val = rating[current] if not pd.isna(rating[current]) else None
             start = current
-            while current + 1 < len(rating) and rating[current + 1] == val:
-                current += 1
-            end = current
+            end = current + 1
+            if end >= len(rating):
+                break
             color = {
                 1: 'rgba(255,0,0,0.15)', 
                 -1: 'rgba(0,255,0,0.15)', 
@@ -371,12 +335,14 @@ class SentimentalBot(AIBase):
         )
 
         # kline.render_notebook()
-        filename = (datetime.strptime(end_date, "%Y-%m-%d") - timedelta(days=365)).strftime("%Y%m%d")
-        kline.render(self.parent_path+f"/WebServer/static/images/{filename}.html")
+        filepath = os.path.join(self.parent_path, "WebServer", "static", "images")
+        filename = (datetime.strptime(end_date, "%Y-%m-%d")).strftime("%Y%m%d")
+        kline.render(path=filepath+f"/{filename}.html")
+        self.logger.info(f"[Plotting] K线图已保存至: {filepath}/{filename}.html")
 
     def analyzing(self):
         data = self.get_articles()
         assistant_reports = self.assistant(data, run_parallel=True)
-        research_report = self.researcher(assistant_reports)
+        research_report = self.researcher(assistant_reports, cache=True)
         self.plotting()
-        self.email_sending(f"SR 舆情分析报告_{self.end_date}", research_report)
+        self.email_sending(f"SR 舆情分析报告_{self.end_date}", research_report, self.end_date)

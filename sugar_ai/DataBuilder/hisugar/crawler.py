@@ -6,7 +6,8 @@ import pandas as pd
 from datetime import datetime, timedelta
 from bs4 import BeautifulSoup
 from DataBuilder.hisugar.schema import HisugarSchema
-from base import DBFile, DBSQL, BaseCrawler
+from Base import DBFile, BaseCrawler, LoggerController
+
 
 class HigSugarCrawler(BaseCrawler):
     '目标网址（泛糖科技）：https://www.hisugar.com/home/newListMore?parentId=57&level=3&childId=151&menuTap3'
@@ -16,11 +17,11 @@ class HigSugarCrawler(BaseCrawler):
     indexes = ["date"]
     schema = HisugarSchema
 
-    def __init__(self, start_date: str, end_date: str, db=None, isprint: bool=True) -> None:
+    def __init__(self, start_date: str, end_date: str, db=None) -> None:
         # 开始时间和结束时间
         self.start_date, self.end_date = start_date, end_date
-        # 数据库：默认为 PostgresSQL
-        self.handler = DBSQL() if db is None else db
+        # 数据库：默认为 文件数据库
+        self.handler = DBFile() if db is None else db
         # 原始数据
         self.raw_data = self.handler.read_data(
             table=self.datasource_id,
@@ -30,13 +31,19 @@ class HigSugarCrawler(BaseCrawler):
         )
 
         # 日志打印
-        self.isprint = isprint
+        self.logger = LoggerController(
+            name="hisugar",
+            log_level="INFO",
+            console_output=False,
+            file_output=True,
+            log_file="Crawler.log",
+            when='D'
+        )
 
         # 增量更新时每页 10 条，获取历史数据时每页50条
         date_format = "%Y-%m-%d"
         date_delta = (datetime.strptime(self.end_date, date_format) - datetime.strptime(self.start_date, date_format)).days
         self.pageSize = 10 if date_delta <= 20 else 30
-        print(f"初始化! 爬取周期: {self.start_date} 至 {self.end_date}, 每页大小: {self.pageSize}")
 
         # 文章分类
         self.article_categories = {
@@ -134,10 +141,10 @@ class HigSugarCrawler(BaseCrawler):
         self.skip_subcategory = False       # 跳过子类的爬取
         self.existing_article = []          # 已爬取过的文章
 
-    def write_log(self, msg: str, isprint: bool=True) -> None:
-        """日志打印"""
-        if (self.isprint is True) and (isprint is True):
-            print(msg)
+        # 初始化的日志
+        self.logger.info(f"本次爬取的创建时间: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+        self.logger.info(f"表名: {self.datasource_id}, 爬取周期: {self.start_date} 至 {self.end_date}, 每页大小: {self.pageSize}")
+
 
     def crawl_category(self, category: dict) -> list:
         """爬取某一大类的数据"""
@@ -169,13 +176,11 @@ class HigSugarCrawler(BaseCrawler):
             headers = self.list_headers.copy()
             headers["Referer"] = category["referer"]
             data = self.crawl_page(headers, input_params)
-            if data.shape[0] == 0:
-                continue
-
-            normalized_df = self.normalize(data)
-            normalized_df[self.handler.DEFAULT_PARTITION_FIELD] = normalized_df["date"].dt.strftime("%Y%m")
-            self.write(normalized_df)
-            self.write_log(f"爬取完成: {category_name} - {sub_name}, 数据大小: {data.shape}, 耗时: {datetime.now() - now}", True)
+            if data.shape[0] != 0:
+                normalized_df = self.normalize(data)
+                normalized_df[self.handler.DEFAULT_PARTITION_FIELD] = normalized_df["date"].dt.strftime("%Y%m")
+                self.write(normalized_df)
+            self.logger.info(f"爬取完成: {category_name} - {sub_name}, 数据大小: {data.shape}, 耗时: {datetime.now() - now}")
 
     def crawl_page(self, hearders: dict, input_params: dict) -> pd.DataFrame:
         """循环遍历每一页爬取数据"""
@@ -190,7 +195,7 @@ class HigSugarCrawler(BaseCrawler):
             time.sleep(random.uniform(0, 1))        # 随机睡眠一段时间，以免被封IP
             pageNo += 1
             params['pageNo'] = str(pageNo)          # 修改爬取的页面
-            self.write_log(f"爬取 [{category} - {sub_category}]: 第 {pageNo} 页")
+            self.logger.info(f"爬取 [{category} - {sub_category}]: 第 {pageNo} 页")
             response = self.request('https://www.hisugar.com/home/getQureyArticleList', params=params, headers=hearders)
             soup = BeautifulSoup(response.text, "lxml")
             # 获取所有文章的内容
@@ -225,7 +230,7 @@ class HigSugarCrawler(BaseCrawler):
                 # 爬取指定文章的内容
                 content = self.crawl_content(self.content_headers, article_id)
                 if content == '':
-                    self.write_log(f"[WARNING] 当前文章无法爬取文字内容，跳过:  {title}")
+                    self.logger.info(f"当前文章无法爬取文字内容，跳过:  {title}")
                     continue
                 temp_result.append({
                     'article_id': article_id,
@@ -236,14 +241,14 @@ class HigSugarCrawler(BaseCrawler):
                     'sub_category': sub_category,
                     'content': content
                 })
-                self.write_log(f"成功爬取文章: {title}, 发布日期: {date}", self.pageSize == 10)
-        print(f"截止日期: {date}")
+                self.logger.info(f"成功爬取文章: {title}, 发布日期: {date}")
+        self.logger.debug(f"当前页面的截止日期为: {date}")
         return temp_result
 
     def check_existing(self, article_id: str, article_list: list, title: str) -> bool:
         """如果文章ID已存在，则跳过"""
         if article_id in article_list:
-            self.write_log(f"[WARNING] 当前文章已爬取, 跳过: {title} ", self.pageSize == 10)
+            self.logger.debug(f"当前文章 ('{title}') 已爬取, 跳过!")
             return True
 
     def check_included(self, date: str, title: str) -> bool:
@@ -251,13 +256,13 @@ class HigSugarCrawler(BaseCrawler):
         if ((pd.to_datetime(self.start_date)-timedelta(days=3)) <= pd.to_datetime(date)) & (pd.to_datetime(date) <= (pd.to_datetime(self.end_date)+timedelta(days=3))):
             return True
         else:
-            self.write_log(f"[WARNING] 当前文章发布时间不在指定时间范围内, 跳过: {title} - {date}", self.pageSize == 10)
+            self.logger.debug(f"当前文章 ('{title}') 发布时间 ({date}) 不在指定时间范围内, 跳过!")
             return False
 
     def check_before(self, date: str, title: str) -> bool:
         """判断该文章的时间是否早于开始时间"""
         if pd.to_datetime(date) < pd.to_datetime(self.start_date):
-            self.write_log(f"[WARNING] 当前文章发布时间超过开始时间，退出: {title}, {date}", self.pageSize != 10)
+            self.logger.debug(f"当前文章 ('{title}') 的发布时间 ({date}) 超过开始时间，退出!")
             return True
         else:
             return False
@@ -277,6 +282,8 @@ class HigSugarCrawler(BaseCrawler):
         return content
 
     def crawl(self):
+        now = datetime.now()
         self.crawl_category(self.article_categories["国内新闻"])
         self.crawl_category(self.article_categories["国际新闻"])
         self.crawl_category(self.article_categories["行业研究"])
+        self.logger.info(f"本次爬取完成, 总共耗时: {datetime.now() - now}")

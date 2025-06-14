@@ -1,7 +1,7 @@
 import os
 from typing import Optional
 from datetime import datetime, timedelta
-from base import PARENT_PATH, AIBase
+from X2AI.sugar_ai.Base.base import PARENT_PATH, AIBase
 
 USER_PROMPT = """
 舆情报告

@@ -3,7 +3,7 @@ import numpy as np
 import pandas as pd
 from typing import Optional
 from datetime import datetime, timedelta
-from base import PARENT_PATH, AIBase
+from X2AI.sugar_ai.Base.base import PARENT_PATH, AIBase
 
 
 class TechnicalBot(AIBase):

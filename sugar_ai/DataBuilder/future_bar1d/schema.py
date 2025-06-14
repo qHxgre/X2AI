@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
 from pydantic import Field
-from base import BaseSchema
+from Base import BaseSchema
 
 
 class FutureBar1dSchema(BaseSchema):
