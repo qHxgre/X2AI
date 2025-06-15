@@ -19,6 +19,7 @@ TEMPLET_ASSISTANT_REPORT = """
 
 TEMPLET_REPORT = """
 分析日期: {analyze_date}
+
 发布日期: {publish_date}
 
 # 投资评级

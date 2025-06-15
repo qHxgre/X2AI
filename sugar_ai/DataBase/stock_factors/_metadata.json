@@ -1,0 +1,34 @@
+{
+  "table_name": "stock_factors",
+  "keys": [
+    "date",
+    "instrument"
+  ],
+  "partition_cols": [
+    "partitionBy"
+  ],
+  "schema": {
+    "names": [
+      "date",
+      "instrument",
+      "pe_ttm",
+      "roe_ttm",
+      "net_profit_ttm_yoy",
+      "net_profit_to_parent_ttm_yoy",
+      "partitionBy",
+      "__index_level_0__"
+    ],
+    "types": [
+      "timestamp[ns]",
+      "string",
+      "double",
+      "double",
+      "double",
+      "double",
+      "string",
+      "int64"
+    ]
+  },
+  "created_at": "2025-06-16T00:23:06.701073",
+  "metadata_version": "1.1"
+}

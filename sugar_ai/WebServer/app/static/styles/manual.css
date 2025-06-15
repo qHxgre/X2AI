@@ -1,0 +1,142 @@
+.container {
+    max-width: 1200px;  /* 设置容器的最大宽度为 1200px，防止内容在宽屏幕上过度拉伸。 */
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    /* 定义网格的列结构，这样布局通常用于侧边栏 + 主内容的结构。
+        * 第一列固定宽度 300px（常用于侧边栏）。
+        * 第二列使用 1fr（剩余可用空间），使其自动填充剩余宽度（常用于主内容区）。
+     */
+    gap: 20px;
+}
+
+
+.control-panel {
+    background: white;  /* 背景颜色为白色。 */
+    padding: 20px;  /* 设置元素的内边距为20像素，即在内容与边框之间添加20像素的空间（上下左右四个方向相同）。 */
+    border-radius: 8px; /* 设置元素的边框圆角半径为8像素，使元素的四个角变得圆润。 */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);   /* 为元素添加阴影效果 */
+}
+
+/* 日期 */
+.date-picker {
+    display: grid;   /* 启用 Grid 布局 */
+    grid-template-columns: 1fr 1fr; /* 2 列，每列等宽 */
+    gap: 12px; /* 行和列的间距均为 12px */
+}
+
+
+/* 按钮样式 */
+button {
+    /* 布局 */
+    height: 10%;
+    width: 100%;
+    padding: 14px 28px;  /* 增加内边距，使按钮更饱满 */
+    margin: 8px 0;       /* 添加外边距，避免按钮紧贴 */
+
+    /* 文字 */
+    color: white;
+    font-weight: 600;    /* 加粗字体，更显眼 */
+    font-size: 16px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase; /* 字母大写，增强按钮感 */
+    font-family: 'Segoe UI', system-ui, sans-serif; /* 使用更现代的字体 */
+
+    /* 背景与边框 */
+    background: var(--primary-color, #080707);
+    border: none;
+    border-radius: 10px;  /* 更大的圆角，更现代 */
+    outline: none;        /* 移除默认轮廓 */
+
+    /* 阴影与深度 */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    
+    /* 交互效果 */
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1); /* 更自然的动画曲线 */
+    will-change: transform, box-shadow; /* 优化动画性能 */
+}
+
+/* 悬停效果 */
+button:hover {
+    background: var(--primary-hover, #3a56d4);   /* 悬停时的颜色 */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    transform: translateY(-2px); /* 更明显的上浮效果 */
+}
+
+/* 点击效果 */
+button:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background: var(--primary-active, #2f4ac1); /* 点击时的颜色深色 */
+}
+
+/* 禁用按钮样式 */
+button:disabled {
+    background-color: #cccccc !important;
+    color: #666666 !important;
+    transform: none !important;
+    box-shadow: none !important;
+    cursor: not-allowed !important;
+}
+
+
+
+/* 新闻列表 */
+.news-list {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    height: 500px;          /* 固定容器高度 */
+    overflow-y: auto;       /* 垂直方向内容溢出时显示滚动条 */
+}
+
+
+
+/* 每一篇文章 */
+.news-item {
+    border: 1px solid #eee;
+    border-radius: 6px;
+    margin-bottom: 10px;
+    overflow: hidden;
+}
+
+.news-header {
+    position: relative;
+    padding-right: 40px;
+}
+
+.news-header::after {
+    content: '▼';
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: transform 0.3s;
+    font-size: 0.8em;
+    color: #666;
+}
+
+.news-item.active .news-header::after {
+    transform: translateY(-50%) rotate(180deg);
+}
+
+.news-item.active .news-content {
+    max-height: 1000px;
+    padding: 16px;
+}
+
+.news-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+    padding: 0 16px;
+    border-top: 1px solid #eee;
+}
+
+
+
+#analysisBtn.aborting {
+    background-color: #dc3545 !important;
+}

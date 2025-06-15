@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="/static/styles/auto.css">
+{% endblock %}
+
+{% block content %}
+    <div class="auto-container">
+        <!-- 图片展示区域 -->
+        <section class="image-section">
+            <h2>市场图表</h2>
+            <div id="chartContent" class="content-area">
+                <!-- 图片将由JavaScript动态加载 -->
+            </div>
+        </section>
+    </div>
+
+    <div class="reports-list">
+        <h2>分析报告列表</h2>
+        <div id="reportsContainer"></div>
+    </div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="/static/scripts/auto.js"></script>
+{% endblock %}

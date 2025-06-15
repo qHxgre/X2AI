@@ -18,7 +18,13 @@ class SentimentalBot(BaseAI):
     1. 输入单篇文章进行总结和分析
     2. 将第1步的结论进行最后总结
     """
-    def __init__(self, start_date: Optional[str]=None, end_date: Optional[str]=None, n_days: int=7, db=None) -> None:
+    def __init__(
+        self,
+        start_date: Optional[str]=None,
+        end_date: Optional[str]=None,
+        n_days: int=7,
+        db: Optional[DBFile]=None
+    ) -> None:
         super().__init__()
         # 数据库
         self.handler = DBFile(os.path.join(self.parent_path, "DataBase")) if db is None else db
@@ -70,58 +76,59 @@ class SentimentalBot(BaseAI):
             data = data.to_dict(orient='records')
             return data
 
+
+    def analyzing_article(self, article: dict) -> Tuple[bool, Dict]:
+        """分析一篇文章"""
+        # 缓存
+        cache_temp = self.read_cache(
+            self.raw_assistant,
+            input_filters={
+                "date": article["date"],
+                "category": article["category"],
+                "subcategory": article["sub_category"],
+                "title": article["title"],
+            }
+        )
+        if cache_temp is not None:
+            return True, cache_temp
+        
+        # 无缓存内容则用AI分析
+        user_prompt = TEMPLET_ARTICLE.format(
+            title = article["title"],
+            publish_date = article["date"],
+            category = article["category"],
+            sub_category = article["sub_category"],
+            brief = article["brief"],
+            content = article["content"],
+        )
+
+        # 通过AI给出分析结论
+        system_prompt = self.read_md(os.path.join(self.filepath_prompt, "assistant.md"))
+        answer = self.api_deepseek(user_prompt, system_prompt, True)
+        
+        # 缓存内容
+        if answer is not None:
+            report = json.loads(answer)
+            report["category"] = article["category"]
+            report["subcategory"] = article["sub_category"]
+        else:
+            # 若deepseek无法回答，则为空
+            report = {
+                'title': article["title"],
+                'date': article["date"],
+                'category': article["category"],
+                'subcategory': article["sub_category"],
+                'summary': '',
+                'opinion': ''
+            }
+            self.logger.debug(f"AI 分析失败: {article['title']}, 返回空内容！")
+        return False, report
+
     def assistant(self, data: dict, run_parallel: bool=False) -> List:
         """研究助理: 收集文章, 总结内容, 给出初步判断"""
-        def _analyzing_article(article: dict) -> Tuple[bool, Dict]:
-            """分析一篇文章"""
-            # 缓存
-            cache_temp = self.read_cache(
-                self.raw_assistant,
-                input_filters={
-                    "date": article["date"],
-                    "category": article["category"],
-                    "subcategory": article["sub_category"],
-                    "title": article["title"],
-                }
-            )
-            if cache_temp is not None:
-                return True, cache_temp
-            
-            # 无缓存内容则用AI分析
-            user_prompt = TEMPLET_ARTICLE.format(
-                title = article["title"],
-                publish_date = article["date"],
-                category = article["category"],
-                sub_category = article["sub_category"],
-                brief = article["brief"],
-                content = article["content"],
-            )
-
-            # 通过AI给出分析结论
-            system_prompt = self.read_md(os.path.join(self.filepath_prompt, "assistant.md"))
-            answer = self.api_deepseek(user_prompt, system_prompt, True)
-            
-            # 缓存内容
-            if answer is not None:
-                report = json.loads(answer)
-                report["category"] = article["category"]
-                report["subcategory"] = article["sub_category"]
-            else:
-                # 若deepseek无法回答，则为空
-                report = {
-                    'title': article["title"],
-                    'date': article["date"],
-                    'category': article["category"],
-                    'subcategory': article["sub_category"],
-                    'summary': '',
-                    'opinion': ''
-                }
-                self.logger.debug(f"AI 分析失败: {article['title']}, 返回空内容！")
-            return False, report
-
         def parallel_run(article):
             """并行处理"""
-            return  _analyzing_article(article)
+            return  self.analyzing_article(article)
     
         if len(data) == 0:
             self.logger.warning("[Assistant] 没有可分析的文章: {data.shape}, 返回空列表！")
