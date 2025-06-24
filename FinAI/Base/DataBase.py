@@ -49,7 +49,7 @@ class DBFile:
             log_level="INFO",
             console_output=False,
             file_output=True,
-            log_file="DBFile.log",
+            log_file="BASE_DBFile.log",
             when='D'
         )
 

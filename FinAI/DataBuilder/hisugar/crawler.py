@@ -36,7 +36,7 @@ class HigSugarCrawler(BaseCrawler):
             log_level="INFO",
             console_output=False,
             file_output=True,
-            log_file="Crawler.log",
+            log_file="Builder_Crawling.log",
             when='D'
         )
 

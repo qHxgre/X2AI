@@ -17,7 +17,7 @@ logger = LoggerController(
     log_level="INFO",
     console_output=False,
     file_output=True,
-    log_file="WebServer.log",
+    log_file="Web_Server.log",
     when='D'
 )
 

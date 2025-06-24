@@ -31,7 +31,7 @@ class BaseAI:
             log_level="INFO",
             console_output=False,
             file_output=True,
-            log_file="AIBase.log",
+            log_file="BASE_AI.log",
             when='D'
         )
 

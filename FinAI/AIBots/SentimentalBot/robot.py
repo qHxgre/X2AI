@@ -149,7 +149,7 @@ class SentimentalBot(BaseAI):
             self.logger.info(f"[Assistant] 共计 {article_nums} 篇文章，串行处理！")
             result = []
             for i, article in enumerate(data):
-                hit_cache, report = _analyzing_article(article)
+                hit_cache, report = self.analyzing_article(article)
                 result.append(report)
                 if hit_cache is True:
                     self.logger.info(f"[Assistant] 命中缓存: ({i+1} / {article_nums}), 标题: {article['title']}")
