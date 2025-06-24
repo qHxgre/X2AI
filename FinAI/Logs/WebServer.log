@@ -320,3 +320,19 @@
 2025-06-16 01:22:52 - webserver - INFO - Returning stock results for date: 2025-06-14 00:00:00
 2025-06-16 01:23:10 - webserver - INFO - Returning stock results for date: 2025-06-14 00:00:00
 2025-06-16 01:25:26 - webserver - INFO - Returning stock results for date: 2025-06-14 00:00:00
+2025-06-16 22:11:31 - webserver - INFO - AnalysisService initialized
+2025-06-16 22:11:31 - webserver - INFO - ReportService initialized
+2025-06-16 22:11:31 - webserver - INFO - stockService initialized
+2025-06-16 22:11:32 - webserver - INFO - AnalysisService initialized
+2025-06-16 22:11:32 - webserver - INFO - ReportService initialized
+2025-06-16 22:11:32 - webserver - INFO - stockService initialized
+2025-06-16 22:11:45 - webserver - INFO - [自动分析] 找到 11 个图表文件, 最新日期: 20250614
+2025-06-16 22:11:45 - webserver - WARNING - 最新图表日期 20250614 与当前日期不一致!
+2025-06-16 22:11:45 - webserver - INFO - 总共获取了 87 篇分析报告
+2025-06-16 22:11:46 - webserver - INFO - Returning stock results for date: 2025-06-14 00:00:00
+2025-06-16 22:11:48 - webserver - INFO - [自动分析] 找到 11 个图表文件, 最新日期: 20250614
+2025-06-16 22:11:48 - webserver - WARNING - 最新图表日期 20250614 与当前日期不一致!
+2025-06-16 22:11:48 - webserver - INFO - 总共获取了 87 篇分析报告
+2025-06-16 22:13:59 - webserver - INFO - AnalysisService initialized
+2025-06-16 22:13:59 - webserver - INFO - ReportService initialized
+2025-06-16 22:13:59 - webserver - INFO - stockService initialized

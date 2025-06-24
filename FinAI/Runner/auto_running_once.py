@@ -9,12 +9,12 @@ import schedule
 from datetime import datetime, timedelta
 from DataBuilder.hisugar.crawler import HigSugarCrawler
 from DataBuilder.future_bar1d.builder import FutureBar1dBuilder
-from X2AI.sugar_ai.Base.base import DBFile, DBSQL
+from Base import DBFile, DBSQL
 from AIBots.SentimentalBot.robot import SentimentalBot
 
 # 设置参数
-today = datetime.strptime("2025-06-10", "%Y-%m-%d")
-# today = datetime.now()
+# today = datetime.strptime("2025-06-10", "%Y-%m-%d")
+today = datetime.now()
 start_date = (today - timedelta(days=7)).strftime("%Y-%m-%d")
 end_date = today.strftime("%Y-%m-%d")
 print(f"{datetime.now()} 开始运行: {start_date} 至 {end_date}")

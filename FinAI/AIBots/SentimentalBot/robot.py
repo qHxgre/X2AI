@@ -342,7 +342,7 @@ class SentimentalBot(BaseAI):
         )
 
         # kline.render_notebook()
-        filepath = os.path.join(self.parent_path, "WebServer", "static", "images")
+        filepath = os.path.join(self.parent_path, "WebServer", "static", "app", "images")
         filename = (datetime.strptime(end_date, "%Y-%m-%d")).strftime("%Y%m%d")
         kline.render(path=filepath+f"/{filename}.html")
         self.logger.info(f"[Plotting] K线图已保存至: {filepath}/{filename}.html")
