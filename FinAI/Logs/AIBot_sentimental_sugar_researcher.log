@@ -1,0 +1,98 @@
+2025-06-27 18:16:56 - sugar_researcher - INFO - =====>>>>> [初始化] 表名: aibot_sentimental_sugar_researcher, AI 模型: deepseek, 数据获取周期：2025-06-10 至 2025-06-10
+2025-06-27 18:16:56 - sugar_researcher - INFO - 数据获取成功: (32, 7), 耗时: 0:00:00.058479
+2025-06-27 18:16:56 - sugar_researcher - WARNING - 读取缓存失败: 从 aibot_sentimental_sugar_researcher 读取 dataframe 数据, 表名不存在！, 将使用原数据: (32, 7)
+2025-06-27 18:16:56 - sugar_researcher - INFO - 数据清洗, 待分析的文章数量: 8, 耗时: 0:00:00.004882
+2025-06-27 18:16:56 - sugar_researcher - INFO - 共计 8 篇文章，串行处理！
+2025-06-27 18:17:09 - sugar_researcher - INFO - AI分析: (1 / 8), 标题: 巴西6月第一周出口糖和糖蜜78.32万吨, 耗时: 0:00:12.878301
+2025-06-27 18:17:48 - sugar_researcher - INFO - =====>>>>> [初始化] 表名: aibot_sentimental_sugar_researcher, AI 模型: deepseek, 数据获取周期：2025-06-10 至 2025-06-10
+2025-06-27 18:17:48 - sugar_researcher - INFO - 数据获取成功: (32, 7), 耗时: 0:00:00.011699
+2025-06-27 18:17:48 - sugar_researcher - WARNING - 读取缓存失败: 从 aibot_sentimental_sugar_researcher 读取 dataframe 数据, 表名不存在！, 将使用原数据: (32, 7)
+2025-06-27 18:17:48 - sugar_researcher - INFO - 数据清洗, 待分析的文章数量: 8, 耗时: 0:00:00.001902
+2025-06-27 18:17:48 - sugar_researcher - INFO - 共计 8 篇文章，串行处理！
+2025-06-27 18:17:59 - sugar_researcher - INFO - AI分析: (1 / 8), 标题: 巴西6月第一周出口糖和糖蜜78.32万吨, 耗时: 0:00:10.509753
+2025-06-27 18:18:12 - sugar_researcher - INFO - AI分析: (2 / 8), 标题: 一德期货6.10：白糖早报, 耗时: 0:00:13.200663
+2025-06-27 18:18:21 - sugar_researcher - INFO - AI分析: (3 / 8), 标题: 国投期货6.10：白糖早报, 耗时: 0:00:09.215321
+2025-06-27 18:23:48 - sugar_researcher - INFO - =====>>>>> [初始化] 表名: aibot_sentimental_sugar_researcher, AI 模型: deepseek, 数据获取周期：2025-06-10 至 2025-06-10
+2025-06-27 18:23:48 - sugar_researcher - INFO - 数据获取成功: (32, 7), 耗时: 0:00:00.055061
+2025-06-27 18:23:48 - sugar_researcher - WARNING - 读取缓存失败: 从 aibot_sentimental_sugar_researcher 读取 dataframe 数据, 表名不存在！, 将使用原数据: (32, 7)
+2025-06-27 18:23:48 - sugar_researcher - INFO - 数据清洗, 待分析的文章数量: 8, 耗时: 0:00:00.003098
+2025-06-27 18:23:48 - sugar_researcher - INFO - 共计 8 篇文章，串行处理！
+2025-06-27 18:23:59 - sugar_researcher - INFO - AI分析: (1 / 8), 标题: 巴西6月第一周出口糖和糖蜜78.32万吨, 耗时: 0:00:10.933506
+2025-06-27 18:24:13 - sugar_researcher - INFO - AI分析: (2 / 8), 标题: 一德期货6.10：白糖早报, 耗时: 0:00:14.502190
+2025-06-27 18:24:25 - sugar_researcher - INFO - AI分析: (3 / 8), 标题: 国投期货6.10：白糖早报, 耗时: 0:00:11.460298
+2025-06-27 18:24:38 - sugar_researcher - INFO - AI分析: (4 / 8), 标题: 光大期货6.10：白糖早报, 耗时: 0:00:12.786118
+2025-06-27 18:24:54 - sugar_researcher - INFO - AI分析: (5 / 8), 标题: 五矿期货6.10：白糖早报, 耗时: 0:00:16.082373
+2025-06-27 18:25:07 - sugar_researcher - INFO - AI分析: (6 / 8), 标题: 大地期货6.10：白糖早报, 耗时: 0:00:12.872303
+2025-06-27 18:25:20 - sugar_researcher - INFO - AI分析: (7 / 8), 标题: 广金期货6.10：白糖早报, 耗时: 0:00:13.087362
+2025-06-27 18:25:31 - sugar_researcher - INFO - AI分析: (8 / 8), 标题: 20250609郑商所白糖期货持仓数据, 耗时: 0:00:11.182030
+2025-06-27 18:25:31 - sugar_researcher - INFO - AI分析, 报告数据: 8, 耗时: 0:01:42.913994
+2025-06-27 18:31:52 - sugar_researcher - INFO - =====>>>>> [初始化] 表名: aibot_sentimental_sugar_researcher, AI 模型: deepseek, 数据获取周期：2025-06-10 至 2025-06-10
+2025-06-27 18:33:16 - sugar_researcher - INFO - =====>>>>> [初始化] 表名: aibot_sentimental_sugar_researcher, AI 模型: deepseek, 数据获取周期：2025-06-10 至 2025-06-10
+2025-06-27 18:33:16 - sugar_researcher - INFO - 数据获取成功: (32, 7), 耗时: 0:00:00.063486
+2025-06-27 18:33:16 - sugar_researcher - WARNING - 读取缓存失败: 从 aibot_sentimental_sugar_researcher 读取 dataframe 数据, 表名不存在！, 将使用原数据: (32, 7)
+2025-06-27 18:33:16 - sugar_researcher - INFO - 数据清洗, 待分析的文章数量: 8, 耗时: 0:00:00.004714
+2025-06-27 18:33:16 - sugar_researcher - INFO - 共计 8 篇文章，串行处理！
+2025-06-27 18:33:28 - sugar_researcher - INFO - AI分析: (1 / 8), 标题: 巴西6月第一周出口糖和糖蜜78.32万吨, 耗时: 0:00:11.568214
+2025-06-27 18:33:43 - sugar_researcher - INFO - AI分析: (2 / 8), 标题: 一德期货6.10：白糖早报, 耗时: 0:00:14.554143
+2025-06-27 18:33:54 - sugar_researcher - INFO - AI分析: (3 / 8), 标题: 国投期货6.10：白糖早报, 耗时: 0:00:11.273981
+2025-06-27 18:34:06 - sugar_researcher - INFO - AI分析: (4 / 8), 标题: 光大期货6.10：白糖早报, 耗时: 0:00:12.055160
+2025-06-27 18:34:22 - sugar_researcher - INFO - AI分析: (5 / 8), 标题: 五矿期货6.10：白糖早报, 耗时: 0:00:16.106451
+2025-06-27 18:34:33 - sugar_researcher - INFO - AI分析: (6 / 8), 标题: 大地期货6.10：白糖早报, 耗时: 0:00:10.913671
+2025-06-27 18:34:46 - sugar_researcher - INFO - AI分析: (7 / 8), 标题: 广金期货6.10：白糖早报, 耗时: 0:00:13.348433
+2025-06-27 18:34:56 - sugar_researcher - INFO - AI分析: (8 / 8), 标题: 20250609郑商所白糖期货持仓数据, 耗时: 0:00:10.092494
+2025-06-27 18:34:56 - sugar_researcher - INFO - AI分析, 报告数据: 8, 耗时: 0:01:39.922023
+2025-06-27 18:34:56 - sugar_researcher - INFO - 存储分析结果: (8, 10), 耗时: 0:00:00.022690
+2025-06-27 18:38:14 - sugar_researcher - INFO - =====>>>>> [初始化] 表名: aibot_sentimental_sugar_researcher, AI 模型: deepseek, 数据获取周期：2025-06-10 至 2025-06-10
+2025-06-27 18:38:14 - sugar_researcher - INFO - 数据获取成功: (32, 7), 耗时: 0:00:00.058033
+2025-06-27 18:38:14 - sugar_researcher - WARNING - 读取缓存失败: 从 aibot_sentimental_sugar_researcher 读取 dataframe 数据, 表名不存在！, 将使用原数据: (32, 7)
+2025-06-27 18:38:14 - sugar_researcher - INFO - 数据清洗, 待分析的文章数量: 16, 耗时: 0:00:00.002220
+2025-06-27 18:38:14 - sugar_researcher - INFO - 共计 16 篇文章，串行处理！
+2025-06-27 18:38:22 - sugar_researcher - INFO - 数据获取成功: (32, 7), 耗时: 0:00:00.013075
+2025-06-27 18:38:22 - sugar_researcher - WARNING - 读取缓存失败: 从 aibot_sentimental_sugar_researcher 读取 dataframe 数据, 表名不存在！, 将使用原数据: (32, 7)
+2025-06-27 18:38:22 - sugar_researcher - INFO - 数据清洗, 待分析的文章数量: 16, 耗时: 0:00:00.001764
+2025-06-27 18:38:22 - sugar_researcher - INFO - 共计 16 篇文章，串行处理！
+2025-06-27 18:38:34 - sugar_researcher - INFO - =====>>>>> [初始化] 表名: aibot_sentimental_sugar_researcher, AI 模型: deepseek, 数据获取周期：2025-06-10 至 2025-06-10
+2025-06-27 18:38:34 - sugar_researcher - INFO - 数据获取成功: (32, 7), 耗时: 0:00:00.020875
+2025-06-27 18:38:34 - sugar_researcher - WARNING - 读取缓存失败: 从 aibot_sentimental_sugar_researcher 读取 dataframe 数据, 表名不存在！, 将使用原数据: (32, 7)
+2025-06-27 18:38:34 - sugar_researcher - INFO - 数据清洗, 待分析的文章数量: 16, 耗时: 0:00:00.001864
+2025-06-27 18:38:34 - sugar_researcher - INFO - 共计 2 篇文章，串行处理！
+2025-06-27 18:38:38 - sugar_researcher - INFO - AI分析: (1 / 2), 标题: 20250610郑商所白糖期权报价, 耗时: 0:00:04.827888
+2025-06-27 18:38:49 - sugar_researcher - INFO - AI分析: (2 / 2), 标题: 20250610国内制糖集团报价, 耗时: 0:00:10.695432
+2025-06-27 18:38:49 - sugar_researcher - INFO - AI分析, 报告数据: 2, 耗时: 0:00:15.525416
+2025-06-27 18:43:43 - sugar_researcher - INFO - =====>>>>> [初始化] 表名: aibot_sentimental_sugar_researcher, AI 模型: deepseek, 数据获取周期：2025-06-10 至 2025-06-10
+2025-06-27 18:43:43 - sugar_researcher - INFO - 数据获取成功: (32, 7), 耗时: 0:00:00.046484
+2025-06-27 18:43:43 - sugar_researcher - WARNING - 读取缓存失败: 从 aibot_sentimental_sugar_researcher 读取 dataframe 数据, 表名不存在！, 将使用原数据: (32, 7)
+2025-06-27 18:43:43 - sugar_researcher - INFO - 数据清洗, 待分析的文章数量: 16, 耗时: 0:00:00.002725
+2025-06-27 18:43:43 - sugar_researcher - INFO - 共计 2 篇文章，串行处理！
+2025-06-27 18:43:48 - sugar_researcher - INFO - AI分析: (1 / 2), 标题: 20250610郑商所白糖期权报价, 耗时: 0:00:05.269775
+2025-06-27 18:44:00 - sugar_researcher - INFO - AI分析: (2 / 2), 标题: 20250610国内制糖集团报价, 耗时: 0:00:11.889635
+2025-06-27 18:44:00 - sugar_researcher - INFO - AI分析, 报告数据: 2, 耗时: 0:00:17.163691
+2025-06-27 18:48:04 - sugar_researcher - INFO - =====>>>>> [初始化] 表名: aibot_sentimental_sugar_researcher, AI 模型: deepseek, 数据获取周期：2025-06-10 至 2025-06-10
+2025-06-27 18:48:04 - sugar_researcher - INFO - 数据获取成功: (32, 7), 耗时: 0:00:00.043416
+2025-06-27 18:48:04 - sugar_researcher - WARNING - 读取缓存失败: 从 aibot_sentimental_sugar_researcher 读取 dataframe 数据, 表名不存在！, 将使用原数据: (32, 7)
+2025-06-27 18:48:04 - sugar_researcher - INFO - 数据清洗, 待分析的文章数量: 16, 耗时: 0:00:00.002290
+2025-06-27 18:48:04 - sugar_researcher - INFO - 共计 2 篇文章，串行处理！
+2025-06-27 18:48:10 - sugar_researcher - INFO - AI分析: (1 / 2), 标题: 20250610郑商所白糖期权报价, 耗时: 0:00:05.580329
+2025-06-27 18:48:22 - sugar_researcher - INFO - AI分析: (2 / 2), 标题: 20250610国内制糖集团报价, 耗时: 0:00:12.222175
+2025-06-27 18:48:22 - sugar_researcher - INFO - AI分析, 报告数据: 2, 耗时: 0:00:17.805329
+2025-06-27 18:48:22 - sugar_researcher - INFO - 存储分析结果: (2, 10), 耗时: 0:00:00.037311
+2025-06-27 18:49:18 - sugar_researcher - INFO - =====>>>>> [初始化] 表名: aibot_sentimental_sugar_researcher, AI 模型: deepseek, 数据获取周期：2025-06-23 至 2025-06-23
+2025-06-27 18:49:18 - sugar_researcher - INFO - 数据获取成功: (24, 7), 耗时: 0:00:00.038283
+2025-06-27 18:49:18 - sugar_researcher - WARNING - 读取缓存成功, 剔除后已分析文章后, 无待分析的文章: (0, 9), 请检查！耗时: 0:00:00.005618
+2025-06-27 18:49:58 - sugar_researcher - INFO - =====>>>>> [初始化] 表名: aibot_sentimental_sugar_researcher, AI 模型: deepseek, 数据获取周期：2025-06-23 至 2025-06-23
+2025-06-27 18:49:58 - sugar_researcher - INFO - 数据获取成功: (24, 7), 耗时: 0:00:00.067762
+2025-06-27 18:49:58 - sugar_researcher - WARNING - 读取缓存成功, 剔除后已分析文章后, 无待分析的文章: (0, 9), 请检查！耗时: 0:00:00.007981
+2025-06-27 18:51:02 - sugar_researcher - INFO - =====>>>>> [初始化] 表名: aibot_sentimental_sugar_researcher, AI 模型: deepseek, 数据获取周期：2025-06-20 至 2025-06-20
+2025-06-27 18:51:19 - sugar_researcher - INFO - =====>>>>> [初始化] 表名: aibot_sentimental_sugar_researcher, AI 模型: deepseek, 数据获取周期：2025-06-10 至 2025-06-10
+2025-06-27 18:52:14 - sugar_researcher - INFO - =====>>>>> [初始化] 表名: aibot_sentimental_sugar_researcher, AI 模型: deepseek, 数据获取周期：2025-06-10 至 2025-06-10
+2025-06-27 18:56:30 - sugar_researcher - INFO - =====>>>>> [初始化] 表名: aibot_sentimental_sugar_researcher, AI 模型: deepseek, 数据获取周期：2025-06-10 至 2025-06-10
+2025-06-27 18:56:30 - sugar_researcher - INFO - 数据获取成功: (32, 7), 耗时: 0:00:00.010761
+2025-06-27 18:56:30 - sugar_researcher - INFO - 读取缓存成功, 剔除后已分析文章后, 剩余数据大小: (30, 7), 耗时: 0:00:00.005264
+2025-06-27 18:57:02 - sugar_researcher - INFO - =====>>>>> [初始化] 表名: aibot_sentimental_sugar_researcher, AI 模型: deepseek, 数据获取周期：2025-06-10 至 2025-06-10
+2025-06-27 18:57:02 - sugar_researcher - INFO - 数据获取成功: (32, 7), 耗时: 0:00:00.009357
+2025-06-27 18:57:02 - sugar_researcher - INFO - 读取缓存成功, 剔除后已分析文章后, 剩余数据大小: (30, 7), 耗时: 0:00:00.005581
+2025-06-27 18:57:02 - sugar_researcher - INFO - 数据清洗, 待分析的文章数量: 16, 耗时: 0:00:00.001074
+2025-06-27 18:57:02 - sugar_researcher - INFO - 共计 16 篇文章，并行处理！
+2025-06-27 18:57:26 - sugar_researcher - INFO - 并行处理完成! 分析失败占比: 0 / 16
+2025-06-27 18:57:26 - sugar_researcher - INFO - AI分析, 报告数据: 16, 耗时: 0:00:24.678090
+2025-06-27 18:57:26 - sugar_researcher - INFO - 存储分析结果: (16, 10), 耗时: 0:00:00.040578

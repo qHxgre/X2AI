@@ -1,9 +1,6 @@
 
 TEMPLET_ARTICLE = """
 * 文章标题: {title}
-* 发布时间: {publish_date}
-* 发布分类: {category}
-* 子分类: {sub_category}
 * 内容简介: {brief}
 * 正文: {content}
 """

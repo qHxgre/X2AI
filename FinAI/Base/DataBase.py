@@ -5,9 +5,10 @@ import pickle
 import numpy as np
 import pandas as pd
 import pydantic
+from pydantic import BaseModel
 from datetime import datetime
 from functools import reduce
-from typing import Any, Dict, List, Union, Optional
+from typing import Any, Dict, List, Union, Optional, Type
 
 # 文件数据库
 import pyarrow as pa
@@ -31,27 +32,42 @@ class DBFile:
     
     DEFAULT_PARTITION_FIELD = "partitionBy"
     
-    def __init__(self, base_path: Optional[str] = None):
+    def __init__(self, base_path: Optional[str] = None, log_name: str="DBFile", log_level: str="INFO"):
         """
         初始化文件数据库
         
         :param base_path: 数据库根目录路径，如果为None则使用项目目录下的DataBase
         """
+        self.logger = LoggerController(
+            name=log_name,
+            log_level=log_level,
+            console_output=False,
+            file_output=True,
+            log_file="DBFile.log",
+            when='D'
+        )
+
         if base_path is None:
             self.base_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "DataBase")
         else:
             self.base_path = base_path
             
         os.makedirs(self.base_path, exist_ok=True)
+        self.logger.info(f"初始化文件数据库, 根路径: {self.base_path}")
 
-        self.logger = LoggerController(
-            name="DBFile",
-            log_level="INFO",
-            console_output=False,
-            file_output=True,
-            log_file="BASE_DBFile.log",
-            when='D'
-        )
+    def save_data(
+        self,
+        data: pd.DataFrame,
+        table: str,
+        keys: List[str],
+        schema: pa.Schema = None,
+    ):
+        if isinstance(data, pd.DataFrame):
+            self.save_dataframe(data=data, table=table, keys=keys, schema=schema)
+        elif isinstance(data, dict):
+            self.save_dict(data=data, table=table)
+        else:
+            raise ValueError(f"暂不支持当前类型数据存储: {type(data)}")
 
     def save_dict(self, data: Dict[datetime, Dict[str, Any]], table: str):
         """
@@ -144,7 +160,6 @@ class DBFile:
                         continue
         return result
 
-
     def load_nested_dict_by_date(base_dir: str) -> Dict[datetime, Dict[str, Any]]:
         """
         从分区目录加载嵌套字典数据
@@ -236,12 +251,13 @@ class DBFile:
                     
         return result
 
-    def save_data(
+    def save_dataframe(
         self,
         data: pd.DataFrame,
         table: str,
         keys: List[str],
-    ) -> None:
+        schema: pa.Schema = None,
+    ):
         """
         将DataFrame保存为Parquet格式，支持分区存储和去重
         
@@ -250,24 +266,52 @@ class DBFile:
             table: 表名，将作为子目录名称
             keys: 唯一键列名列表，用于去重
         """
+        self.logger.debug(f"存储 dataframe 数据至 {table}, 开始存储 pd.DataFrame 数据")
+
         if not keys:
-            raise ValueError("去重键列不能为空")
+            error_msg = "去重键列不能为空"
+            self.logger.error(error_msg)
+            raise ValueError(error_msg)
+
         
         if data.empty:
+            self.logger.warning(f"存储 dataframe 数据至 {table}, 待存储的数据为空: {data.shape}, 跳过!")
             return  # 如果数据为空，直接返回
+        
+        # 检查schema一致性
+        if schema is not None:
+            # 检查列名是否一致
+            schema_fields = set(schema.names)
+            data_fields = set(data.columns)
+            data_fields.remove('partitionBy')
+            
+            if schema_fields != data_fields:
+                missing_fields = schema_fields - data_fields
+                extra_fields = data_fields - schema_fields
+                error_msg = []
+                if missing_fields:
+                    error_msg.append(f"缺少字段: {missing_fields}")
+                if extra_fields:
+                    error_msg.append(f"多余字段: {extra_fields}")
+                self.logger.error(f"存储 dataframe 数据至 {table}, schema 检查失败:" + ", ".join(error_msg))
+                raise ValueError("schema 检查失败:" + ", ".join(error_msg))
         
         # 创建表目录
         table_path = os.path.join(self.base_path, table)
         os.makedirs(table_path, exist_ok=True)
+        self.logger.debug(f"[存储 {table}]: {table_path}")
         
         # 检查是否是分区表
         is_partitioned = self.DEFAULT_PARTITION_FIELD in data.columns
         
         if is_partitioned:
+            self.logger.debug(f"存储 dataframe 数据至 {table}, 执行分区存储")
             # 分区表处理 - 按分区处理数据
             partitions = data[self.DEFAULT_PARTITION_FIELD].unique()
+            self.logger.debug(f"存储 dataframe 数据至 {table}, 待存储数据中有 {len(partitions)} 个分区")
             
             for partition in partitions:
+                self.logger.debug(f"存储 dataframe 数据至 {table}, 执行目标分区存储: {partition}")
                 # 获取当前分区的数据
                 partition_data = data[data[self.DEFAULT_PARTITION_FIELD] == partition]
                 
@@ -277,6 +321,7 @@ class DBFile:
                     f"{self.DEFAULT_PARTITION_FIELD}={partition}"
                 )
                 os.makedirs(partition_path, exist_ok=True)
+                self.logger.debug(f"存储 dataframe 数据至 {table}, 创建分区路径: {partition_path}")
                 
                 # 1. 尝试读取现有分区数据
                 existing_data = None
@@ -284,28 +329,37 @@ class DBFile:
                 if os.path.exists(parquet_file):
                     try:
                         existing_data = pq.read_table(parquet_file).to_pandas()
+                        self.logger.debug(f"存储 dataframe 数据至 {table}, 从文件中获取已存在数据: {parquet_file}, 数据大小: {existing_data.shape}")
                     except Exception as e:
                         self.logger.warning(f"读取分区数据失败: {e}")
                 
                 # 2. 合并新旧数据并去重
                 if existing_data is not None and not existing_data.empty:
+                    self.logger.debug(f"存储 dataframe 数据至 {table}, 将目标数据与已有数据合并")
                     # 合并新旧数据
                     combined = pd.concat([existing_data, partition_data], ignore_index=True)
                     # 按keys去重，保留最后出现的记录
                     partition_data = combined.drop_duplicates(subset=keys, keep="last")
+                    self.logger.debug(f"存储 dataframe 数据至 {table}, 合并后的数据大小: {partition_data.shape}")
                 else:
                     # 只有新数据，只需简单去重
                     partition_data = partition_data.drop_duplicates(subset=keys, keep="last")
+                    self.logger.debug(f"存储 dataframe 数据至 {table}, 只有待入库数据, 根据主键去重: {partition_data.shape}")
                 
-                # 转换为Arrow Table
-                arrow_table = pa.Table.from_pandas(partition_data)
-                
+                # 转换为Arrow Table，使用用户定义的schema或自动推断
+                arrow_table = pa.Table.from_pandas(
+                    partition_data,
+                    schema=schema if schema is not None else None
+                )
+        
                 # 3. 保存分区数据
                 pq.write_table(
                     table=arrow_table,
                     where=parquet_file,
                 )
+                self.logger.debug(f"存储 dataframe 数据至 {table}, 将数据存储到目标文件中: {parquet_file}")
         else:
+            self.logger.debug(f"存储 dataframe 数据至 {table}, 执行非分区存储")
             # 非分区表处理
             parquet_file = os.path.join(table_path, "data.parquet")
             
@@ -314,6 +368,7 @@ class DBFile:
             if os.path.exists(parquet_file):
                 try:
                     existing_data = pq.read_table(parquet_file).to_pandas()
+                    self.logger.debug(f"存储 dataframe 数据至 {table}, 从文件中获取已存在数据: {parquet_file}, 数据大小: {existing_data.shape}")
                 except Exception as e:
                     self.logger.warning(f"读取数据失败: {e}")
             
@@ -323,18 +378,24 @@ class DBFile:
                 combined = pd.concat([existing_data, data], ignore_index=True)
                 # 按keys去重，保留最后出现的记录
                 data = combined.drop_duplicates(subset=keys, keep="last")
+                self.logger.debug(f"存储 dataframe 数据至 {table}, 合并后的数据大小: {data.shape}")
             else:
                 # 只有新数据，只需简单去重
                 data = data.drop_duplicates(subset=keys, keep="last")
+                self.logger.debug(f"存储 dataframe 数据至 {table}, 只有待入库数据, 根据主键去重: {data.shape}")
             
-            # 转换为Arrow Table
-            arrow_table = pa.Table.from_pandas(data)
+            # 转换为Arrow Table，使用用户定义的schema或自动推断
+            arrow_table = pa.Table.from_pandas(
+                data,
+                schema=schema if schema is not None else None
+            )
             
             # 3. 保存数据
             pq.write_table(
                 table=arrow_table,
                 where=parquet_file,
             )
+            self.logger.debug(f"存储 dataframe 数据至 {table}, 将数据存储到目标文件中: {parquet_file}")
         
         # 保存元数据
         self._save_metadata(
@@ -343,8 +404,9 @@ class DBFile:
             partition_cols=[self.DEFAULT_PARTITION_FIELD] if is_partitioned else None,
             schema=arrow_table.schema
         )
+        self.logger.info(f"存储数据成功: {table}")
 
-    def read_data(
+    def read_dataframe(
         self,
         table: str,
         filters: Optional[Dict[str, List[Any]]] = None,
@@ -363,40 +425,47 @@ class DBFile:
         Returns:
             读取的DataFrame
         """
+        self.logger.debug(f"读取 dataframe 数据, 表名: {table}")
         table_path = os.path.join(self.base_path, table)
         
         if not os.path.exists(table_path):
-            raise FileNotFoundError(f"Table {table} not found")
+            error_msg = f"从 {table} 读取 dataframe 数据, 表名不存在！"
+            self.logger.error(error_msg)
+            raise FileNotFoundError(error_msg)
         
         # 读取元数据
         metadata = self._load_metadata(table)
+        self.logger.debug(f"从 {table} 读取 dataframe 数据, 加载 metadata")
         
         # 转换筛选条件为PyArrow格式
         arrow_filters = self._convert_filters(filters) if filters else None
         
         # 检查是否是分区表
         if metadata['partition_cols']:
+            self.logger.debug(f"从 {table} 读取 dataframe 数据, 执行分区读取")
             dataset = ds.dataset(
                 source=table_path,
                 format="parquet",
                 partitioning=[self.DEFAULT_PARTITION_FIELD]
             )
             scanner = dataset.scanner(filter=arrow_filters, columns=columns)
-            table = scanner.to_table()
+            table_pyarrow = scanner.to_table()
         else:
-            table = pq.read_table(
+            self.logger.debug(f"从 {table} 读取 dataframe 数据, 执行非分区读取")
+            table_pyarrow = pq.read_table(
                 os.path.join(table_path, "data.parquet"),
                 filters=arrow_filters,
                 columns=columns
             )
         
-        df = table.to_pandas()
+        df = table_pyarrow.to_pandas()
         if "date" in df.columns:
             df = df.sort_values("date").reset_index(drop=True)
         if self.DEFAULT_PARTITION_FIELD in df.columns:
-            return df.drop(self.DEFAULT_PARTITION_FIELD, axis=1)
-        else:
-            return df
+            df = df.drop(self.DEFAULT_PARTITION_FIELD, axis=1)
+
+        self.logger.info(f"成功从 {table} 读取 dataframe 数据，数据大小: {df.shape}")
+        return df
     
     def _convert_filters(
         self, 
@@ -708,11 +777,54 @@ class BaseBuilder:
         return df
 
     def write(self, df: pd.DataFrame) -> None:
+        columns = [col for col, _ in self.sort_by]
+        ascending = [True if direction == "ascending" else False for _, direction in self.sort_by]
+        df = df.sort_values(by=columns, ascending=ascending).reset_index(drop=True)
         self.handler.save_data(
             data=df,
             table=self.datasource_id,
-            keys=self.unique_together
+            keys=self.unique_together,
+            schema=self.pydantic_model_to_arrow_schema(self.schema)
         )
+
+    def pydantic_model_to_arrow_schema(self, model: Type[BaseModel]) -> pa.Schema:
+        """
+        将Pydantic模型转换为PyArrow Schema
+        
+        Args:
+            model: Pydantic模型类
+            
+        Returns:
+            PyArrow Schema对象
+        """
+        type_mapping = {
+            np.datetime64: pa.timestamp('ns'),
+            pd.StringDtype: pa.string(),
+            np.double: pa.float64(),
+            float: pa.float64(),
+            int: pa.int64(),
+            str: pa.string(),
+            bool: pa.bool_(),
+        }
+        
+        fields = []
+        for field_name, field_info in model.__fields__.items():
+            field_type = field_info.annotation
+            
+            # 处理特殊类型
+            if field_type == np.datetime64:
+                arrow_type = pa.timestamp('ns')
+            elif field_type == pd.StringDtype:
+                arrow_type = pa.string()
+            elif field_type == np.double:
+                arrow_type = pa.float64()
+            else:
+                # 默认处理
+                arrow_type = type_mapping.get(field_type, pa.string())
+            
+            fields.append(pa.field(field_name, arrow_type))
+        
+        return pa.schema(fields)
 
 
 class BaseSchema(pydantic.BaseModel):

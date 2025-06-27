@@ -1,0 +1,38 @@
+{
+  "table_name": "aibot_sentimental_sugar_researcher",
+  "keys": [
+    "date",
+    "category",
+    "sub_category",
+    "title"
+  ],
+  "partition_cols": [
+    "partitionBy"
+  ],
+  "schema": {
+    "names": [
+      "date",
+      "title",
+      "category",
+      "sub_category",
+      "summary",
+      "opinion",
+      "short_forecast",
+      "long_forecast",
+      "confidence"
+    ],
+    "types": [
+      "timestamp[ns]",
+      "string",
+      "string",
+      "string",
+      "string",
+      "string",
+      "double",
+      "double",
+      "double"
+    ]
+  },
+  "created_at": "2025-06-27T18:57:26.981578",
+  "metadata_version": "1.1"
+}
