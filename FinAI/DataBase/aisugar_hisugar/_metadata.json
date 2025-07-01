@@ -18,8 +18,7 @@
       "sub_category",
       "title",
       "brief",
-      "content",
-      "partitionBy"
+      "content"
     ],
     "types": [
       "string",
@@ -28,10 +27,9 @@
       "string",
       "string",
       "string",
-      "string",
       "string"
     ]
   },
-  "created_at": "2025-06-27T10:35:34.000720",
+  "created_at": "2025-06-30T09:48:08.477964",
   "metadata_version": "1.1"
 }

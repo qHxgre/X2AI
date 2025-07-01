@@ -1,0 +1,337 @@
+2025-06-29 14:48:39 - sugar_manager - INFO - =====>>>>> [初始化] 表名: aibot_sentimental_sugar_manager, AI 模型: deepseek, 数据获取周期：2025-01-01 至 2025-06-24"
+2025-06-29 14:51:49 - sugar_manager - INFO - =====>>>>> [初始化] 表名: aibot_sentimental_sugar_manager, AI 模型: deepseek, 数据获取周期：2025-01-01 至 2025-06-24"
+2025-06-29 14:52:42 - sugar_manager - INFO - =====>>>>> [初始化] 表名: aibot_sentimental_sugar_manager, AI 模型: deepseek, 数据获取周期：2025-01-01 至 2025-06-24
+2025-06-29 15:03:08 - sugar_manager - INFO - =====>>>>> [初始化] 表名: aibot_sentimental_sugar_manager, AI 模型: deepseek, 数据获取周期：2025-01-01 至 2025-06-24
+2025-06-29 15:03:58 - sugar_manager - INFO - =====>>>>> [初始化] 表名: aibot_sentimental_sugar_manager, AI 模型: deepseek, 数据获取周期：2025-01-01 至 2025-06-24
+2025-06-29 15:04:01 - sugar_manager - INFO - =====>>>>> [初始化] 表名: aibot_sentimental_sugar_manager, AI 模型: deepseek, 数据获取周期：2025-01-01 至 2025-06-24
+2025-06-29 15:14:47 - sugar_manager - INFO - =====>>>>> [初始化] 表名: aibot_sentimental_sugar_manager, AI 模型: deepseek, 数据获取周期：2025-01-01 至 2025-06-24
+2025-06-29 15:15:16 - sugar_manager - INFO - =====>>>>> [初始化] 表名: aibot_sentimental_sugar_manager, AI 模型: deepseek, 数据获取周期：2025-01-01 至 2025-06-24
+2025-06-30 09:25:08 - sugar_manager - INFO - =====>>>>> [初始化] 表名: aibot_sentimental_sugar_manager, AI 模型: deepseek, 数据获取周期：2025-01-01 至 2025-06-24
+2025-06-30 10:18:11 - sugar_manager - INFO - 
+=====>>>>> 初始化开始 
+2025-06-30 10:18:11 - sugar_manager - INFO - 表名: aibot_sentimental_sugar_manager, AI 模型: deepseek, 数据获取周期：2025-01-01 至 2025-06-24
+2025-06-30 10:18:11 - sugar_manager - INFO - 项目路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI, 
+图片存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/WebServer/app/static/images, 报告存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/Reports
+2025-06-30 10:18:11 - sugar_manager - INFO - =====>>>>> 初始化完毕
+2025-06-30 10:18:11 - sugar_manager - INFO - 数据获取成功: (796, 9), 耗时: 0:00:00.006853
+2025-06-30 10:18:11 - sugar_manager - INFO - 数据清洗, 待分析的文章数量: 668, 耗时: 0:00:00.001355
+2025-06-30 11:13:41 - sugar_manager - INFO - =====>>>>> 初始化开始 
+2025-06-30 11:13:41 - sugar_manager - INFO - 表名: aibot_sentimental_sugar_manager, AI 模型: deepseek, 数据获取周期：2025-01-01 至 2025-06-24
+2025-06-30 11:13:41 - sugar_manager - INFO - 项目路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI, 
+图片存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/WebServer/app/static/images, 报告存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/Reports
+2025-06-30 11:13:41 - sugar_manager - INFO - =====<<<<< 初始化完毕
+2025-06-30 11:13:41 - sugar_manager - INFO - 数据获取成功: (796, 9), 耗时: 0:00:00.005623
+2025-06-30 11:13:41 - sugar_manager - INFO - 数据清洗, 待分析的文章数量: 668, 耗时: 0:00:00.001047
+2025-06-30 11:15:28 - sugar_manager - INFO - =====>>>>> 初始化开始 
+2025-06-30 11:15:28 - sugar_manager - INFO - 表名: aibot_sentimental_sugar_manager, AI 模型: deepseek, 数据获取周期：2025-01-01 至 2025-06-24
+2025-06-30 11:15:28 - sugar_manager - INFO - 项目路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI, 
+图片存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/WebServer/app/static/images, 报告存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/Reports
+2025-06-30 11:15:28 - sugar_manager - INFO - =====<<<<< 初始化完毕
+2025-06-30 11:15:28 - sugar_manager - INFO - 数据获取成功: (796, 9), 耗时: 0:00:00.005500
+2025-06-30 11:15:28 - sugar_manager - INFO - 数据清洗, 待分析的文章数量: 668, 耗时: 0:00:00.001084
+2025-06-30 11:17:35 - sugar_manager - INFO - =====>>>>> 初始化开始 
+2025-06-30 11:17:35 - sugar_manager - INFO - 表名: aibot_sentimental_sugar_manager, AI 模型: deepseek, 数据获取周期：2025-01-01 至 2025-06-24
+2025-06-30 11:17:35 - sugar_manager - INFO - 项目路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI, 
+图片存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/WebServer/app/static/images, 报告存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/Reports
+2025-06-30 11:17:35 - sugar_manager - INFO - =====<<<<< 初始化完毕
+2025-06-30 11:17:35 - sugar_manager - INFO - 数据获取成功: (796, 9), 耗时: 0:00:00.006092
+2025-06-30 11:17:35 - sugar_manager - INFO - 数据清洗, 待分析的文章数量: 668, 耗时: 0:00:00.001191
+2025-06-30 11:19:49 - sugar_manager - INFO - =====>>>>> 初始化开始 
+2025-06-30 11:19:49 - sugar_manager - INFO - 表名: aibot_sentimental_sugar_manager, AI 模型: deepseek, 数据获取周期：2025-01-01 至 2025-06-24
+2025-06-30 11:19:49 - sugar_manager - INFO - 项目路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI, 
+图片存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/WebServer/app/static/images, 报告存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/Reports
+2025-06-30 11:19:49 - sugar_manager - INFO - =====<<<<< 初始化完毕
+2025-06-30 11:19:49 - sugar_manager - INFO - =====>>>>> 初始化开始 
+2025-06-30 11:19:49 - sugar_manager - INFO - 表名: aibot_sentimental_sugar_manager, AI 模型: deepseek, 数据获取周期：2025-01-01 至 2025-06-24
+2025-06-30 11:19:49 - sugar_manager - INFO - 项目路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI, 
+图片存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/WebServer/app/static/images, 报告存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/Reports
+2025-06-30 11:19:49 - sugar_manager - INFO - =====<<<<< 初始化完毕
+2025-06-30 11:25:06 - sugar_manager - INFO - =====>>>>> 初始化开始 
+2025-06-30 11:25:06 - sugar_manager - INFO - 表名: aibot_sentimental_sugar_manager, AI 模型: deepseek, 数据获取周期：2025-01-01 至 2025-06-24
+2025-06-30 11:25:06 - sugar_manager - INFO - 项目路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI, 
+图片存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/WebServer/app/static/images, 报告存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/Reports
+2025-06-30 11:25:06 - sugar_manager - INFO - =====<<<<< 初始化完毕
+2025-06-30 11:25:06 - sugar_manager - INFO - =====>>>>> 初始化开始 
+2025-06-30 11:25:06 - sugar_manager - INFO - 表名: aibot_sentimental_sugar_manager, AI 模型: deepseek, 数据获取周期：2025-01-01 至 2025-06-24
+2025-06-30 11:25:06 - sugar_manager - INFO - 项目路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI, 
+图片存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/WebServer/app/static/images, 报告存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/Reports
+2025-06-30 11:25:06 - sugar_manager - INFO - =====<<<<< 初始化完毕
+2025-06-30 15:15:20 - sugar_manager - INFO - =====>>>>> 初始化开始 
+2025-06-30 15:15:20 - sugar_manager - INFO - 表名: aibot_sentimental_sugar_manager, AI 模型: deepseek, 数据获取周期：2025-01-01 至 2025-06-24
+2025-06-30 15:15:20 - sugar_manager - INFO - 项目路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI, 
+图片存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/WebServer/app/static/images, 报告存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/Reports
+2025-06-30 15:15:20 - sugar_manager - INFO - =====<<<<< 初始化完毕
+2025-06-30 15:15:20 - sugar_manager - INFO - =====>>>>> 初始化开始 
+2025-06-30 15:15:20 - sugar_manager - INFO - 表名: aibot_sentimental_sugar_manager, AI 模型: deepseek, 数据获取周期：2025-01-01 至 2025-06-24
+2025-06-30 15:15:20 - sugar_manager - INFO - 项目路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI, 
+图片存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/WebServer/app/static/images, 报告存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/Reports
+2025-06-30 15:15:20 - sugar_manager - INFO - =====<<<<< 初始化完毕
+2025-06-30 15:16:36 - sugar_manager - INFO - =====>>>>> 初始化开始 
+2025-06-30 15:16:36 - sugar_manager - INFO - 表名: aibot_sentimental_sugar_manager, AI 模型: deepseek, 数据获取周期：2025-01-01 至 2025-06-24
+2025-06-30 15:16:36 - sugar_manager - INFO - 项目路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI, 
+图片存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/WebServer/app/static/images, 报告存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/Reports
+2025-06-30 15:16:36 - sugar_manager - INFO - =====<<<<< 初始化完毕
+2025-06-30 15:16:36 - sugar_manager - INFO - =====>>>>> 初始化开始 
+2025-06-30 15:16:36 - sugar_manager - INFO - 表名: aibot_sentimental_sugar_manager, AI 模型: deepseek, 数据获取周期：2025-01-01 至 2025-06-24
+2025-06-30 15:16:36 - sugar_manager - INFO - 项目路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI, 
+图片存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/WebServer/app/static/images, 报告存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/Reports
+2025-06-30 15:16:36 - sugar_manager - INFO - =====<<<<< 初始化完毕
+2025-06-30 15:27:36 - sugar_manager - INFO - =====>>>>> 初始化开始 
+2025-06-30 15:27:36 - sugar_manager - INFO - 表名: aibot_sentimental_sugar_manager, AI 模型: deepseek, 数据获取周期：2025-01-01 至 2025-06-24
+2025-06-30 15:27:36 - sugar_manager - INFO - 项目路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI, 
+图片存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/WebServer/app/static/images, 报告存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/Reports
+2025-06-30 15:27:36 - sugar_manager - INFO - =====<<<<< 初始化完毕
+2025-06-30 15:27:36 - sugar_manager - INFO - =====>>>>> 初始化开始 
+2025-06-30 15:27:36 - sugar_manager - INFO - 表名: aibot_sentimental_sugar_manager, AI 模型: deepseek, 数据获取周期：2025-01-01 至 2025-06-24
+2025-06-30 15:27:36 - sugar_manager - INFO - 项目路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI, 
+图片存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/WebServer/app/static/images, 报告存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/Reports
+2025-06-30 15:27:36 - sugar_manager - INFO - =====<<<<< 初始化完毕
+2025-06-30 15:41:50 - sugar_manager - INFO - =====>>>>> 初始化开始 
+2025-06-30 15:41:50 - sugar_manager - INFO - 表名: aibot_sentimental_sugar_manager, AI 模型: deepseek, 数据获取周期：2025-01-01 至 2025-06-24
+2025-06-30 15:41:50 - sugar_manager - INFO - 项目路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI, 
+图片存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/WebServer/app/static/images, 报告存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/Reports
+2025-06-30 15:41:50 - sugar_manager - INFO - =====<<<<< 初始化完毕
+2025-06-30 15:41:50 - sugar_manager - INFO - =====>>>>> 初始化开始 
+2025-06-30 15:41:50 - sugar_manager - INFO - 表名: aibot_sentimental_sugar_manager, AI 模型: deepseek, 数据获取周期：2025-01-01 至 2025-06-24
+2025-06-30 15:41:50 - sugar_manager - INFO - 项目路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI, 
+图片存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/WebServer/app/static/images, 报告存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/Reports
+2025-06-30 15:41:50 - sugar_manager - INFO - =====<<<<< 初始化完毕
+2025-06-30 15:54:15 - sugar_manager - INFO - =====>>>>> 初始化开始 
+2025-06-30 15:54:15 - sugar_manager - INFO - 表名: aibot_sentimental_sugar_manager, AI 模型: deepseek, 数据获取周期：2025-01-01 至 2025-06-24
+2025-06-30 15:54:15 - sugar_manager - INFO - 项目路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI, 
+图片存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/WebServer/app/static/images, 报告存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/Reports
+2025-06-30 15:54:15 - sugar_manager - INFO - =====<<<<< 初始化完毕
+2025-06-30 15:54:16 - sugar_manager - INFO - =====>>>>> 初始化开始 
+2025-06-30 15:54:16 - sugar_manager - INFO - 表名: aibot_sentimental_sugar_manager, AI 模型: deepseek, 数据获取周期：2025-01-01 至 2025-06-24
+2025-06-30 15:54:16 - sugar_manager - INFO - 项目路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI, 
+图片存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/WebServer/app/static/images, 报告存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/Reports
+2025-06-30 15:54:16 - sugar_manager - INFO - =====<<<<< 初始化完毕
+2025-06-30 15:54:57 - sugar_manager - INFO - =====>>>>> 初始化开始 
+2025-06-30 15:54:57 - sugar_manager - INFO - 表名: aibot_sentimental_sugar_manager, AI 模型: deepseek, 数据获取周期：2025-01-01 至 2025-06-24
+2025-06-30 15:54:57 - sugar_manager - INFO - 项目路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI, 
+图片存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/WebServer/app/static/images, 报告存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/Reports
+2025-06-30 15:54:57 - sugar_manager - INFO - =====<<<<< 初始化完毕
+2025-06-30 15:54:57 - sugar_manager - INFO - =====>>>>> 初始化开始 
+2025-06-30 15:54:57 - sugar_manager - INFO - 表名: aibot_sentimental_sugar_manager, AI 模型: deepseek, 数据获取周期：2025-01-01 至 2025-06-24
+2025-06-30 15:54:57 - sugar_manager - INFO - 项目路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI, 
+图片存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/WebServer/app/static/images, 报告存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/Reports
+2025-06-30 15:54:57 - sugar_manager - INFO - =====<<<<< 初始化完毕
+2025-06-30 17:36:21 - sugar_manager - INFO - =====>>>>> 初始化开始 
+2025-06-30 17:36:21 - sugar_manager - INFO - 表名: aibot_sentimental_sugar_manager, AI 模型: deepseek, 数据获取周期：2025-01-01 至 2025-06-24
+2025-06-30 17:36:21 - sugar_manager - INFO - 项目路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI, 
+图片存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/WebServer/app/static/images, 报告存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/Reports
+2025-06-30 17:36:21 - sugar_manager - INFO - =====<<<<< 初始化完毕
+2025-06-30 17:36:21 - sugar_manager - INFO - =====>>>>> 初始化开始 
+2025-06-30 17:36:21 - sugar_manager - INFO - 表名: aibot_sentimental_sugar_manager, AI 模型: deepseek, 数据获取周期：2025-01-01 至 2025-06-24
+2025-06-30 17:36:21 - sugar_manager - INFO - 项目路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI, 
+图片存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/WebServer/app/static/images, 报告存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/Reports
+2025-06-30 17:36:21 - sugar_manager - INFO - =====<<<<< 初始化完毕
+2025-06-30 17:45:05 - sugar_manager - INFO - =====>>>>> 初始化开始 
+2025-06-30 17:45:05 - sugar_manager - INFO - 表名: aibot_sentimental_sugar_manager, AI 模型: deepseek, 数据获取周期：2025-01-01 至 2025-06-24
+2025-06-30 17:45:05 - sugar_manager - INFO - 项目路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI, 
+图片存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/WebServer/app/static/images, 报告存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/Reports
+2025-06-30 17:45:05 - sugar_manager - INFO - =====<<<<< 初始化完毕
+2025-06-30 17:45:05 - sugar_manager - INFO - =====>>>>> 初始化开始 
+2025-06-30 17:45:05 - sugar_manager - INFO - 表名: aibot_sentimental_sugar_manager, AI 模型: deepseek, 数据获取周期：2025-01-01 至 2025-06-24
+2025-06-30 17:45:05 - sugar_manager - INFO - 项目路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI, 
+图片存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/WebServer/app/static/images, 报告存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/Reports
+2025-06-30 17:45:05 - sugar_manager - INFO - =====<<<<< 初始化完毕
+2025-06-30 17:51:46 - sugar_manager - INFO - =====>>>>> 初始化开始 
+2025-06-30 17:51:46 - sugar_manager - INFO - 表名: aibot_sentimental_sugar_manager, AI 模型: deepseek, 数据获取周期：2025-01-01 至 2025-06-24
+2025-06-30 17:51:46 - sugar_manager - INFO - 项目路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI, 
+图片存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/WebServer/app/static/images, 报告存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/Reports
+2025-06-30 17:51:46 - sugar_manager - INFO - =====<<<<< 初始化完毕
+2025-06-30 17:51:46 - sugar_manager - INFO - =====>>>>> 初始化开始 
+2025-06-30 17:51:46 - sugar_manager - INFO - 表名: aibot_sentimental_sugar_manager, AI 模型: deepseek, 数据获取周期：2025-01-01 至 2025-06-24
+2025-06-30 17:51:46 - sugar_manager - INFO - 项目路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI, 
+图片存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/WebServer/app/static/images, 报告存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/Reports
+2025-06-30 17:51:46 - sugar_manager - INFO - =====<<<<< 初始化完毕
+2025-06-30 18:07:56 - sugar_manager - INFO - =====>>>>> 初始化开始 
+2025-06-30 18:07:56 - sugar_manager - INFO - 表名: aibot_sentimental_sugar_manager, AI 模型: deepseek, 数据获取周期：2025-01-01 至 2025-06-24
+2025-06-30 18:07:56 - sugar_manager - INFO - 项目路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI, 
+图片存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/WebServer/app/static/images, 报告存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/Reports
+2025-06-30 18:07:56 - sugar_manager - INFO - =====<<<<< 初始化完毕
+2025-06-30 18:07:57 - sugar_manager - INFO - =====>>>>> 初始化开始 
+2025-06-30 18:07:57 - sugar_manager - INFO - 表名: aibot_sentimental_sugar_manager, AI 模型: deepseek, 数据获取周期：2025-01-01 至 2025-06-24
+2025-06-30 18:07:57 - sugar_manager - INFO - 项目路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI, 
+图片存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/WebServer/app/static/images, 报告存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/Reports
+2025-06-30 18:07:57 - sugar_manager - INFO - =====<<<<< 初始化完毕
+2025-06-30 18:30:09 - sugar_manager - INFO - =====>>>>> 初始化开始 
+2025-06-30 18:30:09 - sugar_manager - INFO - 表名: aibot_sentimental_sugar_manager, AI 模型: deepseek, 数据获取周期：2025-01-01 至 2025-06-24
+2025-06-30 18:30:09 - sugar_manager - INFO - 项目路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI, 
+图片存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/WebServer/app/static/images, 报告存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/Reports
+2025-06-30 18:30:09 - sugar_manager - INFO - =====<<<<< 初始化完毕
+2025-06-30 18:30:09 - sugar_manager - INFO - =====>>>>> 初始化开始 
+2025-06-30 18:30:09 - sugar_manager - INFO - 表名: aibot_sentimental_sugar_manager, AI 模型: deepseek, 数据获取周期：2025-01-01 至 2025-06-24
+2025-06-30 18:30:09 - sugar_manager - INFO - 项目路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI, 
+图片存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/WebServer/app/static/images, 报告存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/Reports
+2025-06-30 18:30:09 - sugar_manager - INFO - =====<<<<< 初始化完毕
+2025-06-30 18:31:11 - sugar_manager - INFO - =====>>>>> 初始化开始 
+2025-06-30 18:31:11 - sugar_manager - INFO - 表名: aibot_sentimental_sugar_manager, AI 模型: deepseek, 数据获取周期：2025-01-01 至 2025-06-24
+2025-06-30 18:31:11 - sugar_manager - INFO - 项目路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI, 
+图片存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/WebServer/app/static/images, 报告存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/Reports
+2025-06-30 18:31:11 - sugar_manager - INFO - =====<<<<< 初始化完毕
+2025-06-30 18:31:11 - sugar_manager - INFO - =====>>>>> 初始化开始 
+2025-06-30 18:31:11 - sugar_manager - INFO - 表名: aibot_sentimental_sugar_manager, AI 模型: deepseek, 数据获取周期：2025-01-01 至 2025-06-24
+2025-06-30 18:31:11 - sugar_manager - INFO - 项目路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI, 
+图片存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/WebServer/app/static/images, 报告存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/Reports
+2025-06-30 18:31:11 - sugar_manager - INFO - =====<<<<< 初始化完毕
+2025-07-01 09:57:04 - sugar_manager - INFO - =====>>>>> 初始化开始 
+2025-07-01 09:57:04 - sugar_manager - INFO - 表名: aibot_sentimental_sugar_manager, AI 模型: deepseek, 数据获取周期：2025-01-01 至 2025-06-24
+2025-07-01 09:57:04 - sugar_manager - INFO - 项目路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI, 
+图片存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/WebServer/app/static/images, 报告存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/Reports
+2025-07-01 09:57:04 - sugar_manager - INFO - =====<<<<< 初始化完毕
+2025-07-01 09:57:04 - sugar_manager - INFO - =====>>>>> 初始化开始 
+2025-07-01 09:57:04 - sugar_manager - INFO - 表名: aibot_sentimental_sugar_manager, AI 模型: deepseek, 数据获取周期：2025-01-01 至 2025-06-24
+2025-07-01 09:57:04 - sugar_manager - INFO - 项目路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI, 
+图片存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/WebServer/app/static/images, 报告存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/Reports
+2025-07-01 09:57:04 - sugar_manager - INFO - =====<<<<< 初始化完毕
+2025-07-01 10:00:45 - sugar_manager - INFO - =====>>>>> 初始化开始 
+2025-07-01 10:00:45 - sugar_manager - INFO - 表名: aibot_sentimental_sugar_manager, AI 模型: deepseek, 数据获取周期：2025-01-01 至 2025-06-24
+2025-07-01 10:00:45 - sugar_manager - INFO - 项目路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI, 
+图片存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/WebServer/app/static/images, 报告存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/Reports
+2025-07-01 10:00:45 - sugar_manager - INFO - =====<<<<< 初始化完毕
+2025-07-01 10:00:45 - sugar_manager - INFO - =====>>>>> 初始化开始 
+2025-07-01 10:00:45 - sugar_manager - INFO - 表名: aibot_sentimental_sugar_manager, AI 模型: deepseek, 数据获取周期：2025-01-01 至 2025-06-24
+2025-07-01 10:00:45 - sugar_manager - INFO - 项目路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI, 
+图片存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/WebServer/app/static/images, 报告存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/Reports
+2025-07-01 10:00:45 - sugar_manager - INFO - =====<<<<< 初始化完毕
+2025-07-01 10:20:18 - sugar_manager - INFO - =====>>>>> 初始化开始 
+2025-07-01 10:20:18 - sugar_manager - INFO - 表名: aibot_sentimental_sugar_manager, AI 模型: deepseek, 数据获取周期：2025-06-15 至 2025-06-24
+2025-07-01 10:20:18 - sugar_manager - INFO - 项目路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI, 
+图片存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/WebServer/app/static/images, 报告存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/Reports
+2025-07-01 10:20:18 - sugar_manager - INFO - =====<<<<< 初始化完毕
+2025-07-01 10:22:33 - sugar_manager - INFO - 当日报告 AI 分析成功：2025-06-16 
+2025-07-01 10:23:32 - sugar_manager - INFO - =====>>>>> 初始化开始 
+2025-07-01 10:23:32 - sugar_manager - INFO - 表名: aibot_sentimental_sugar_manager, AI 模型: deepseek, 数据获取周期：2025-06-23 至 2025-06-24
+2025-07-01 10:23:32 - sugar_manager - INFO - 项目路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI
+2025-07-01 10:23:32 - sugar_manager - INFO - 图片存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/WebServer/app/static/images
+2025-07-01 10:23:32 - sugar_manager - INFO - 报告存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/Reports
+2025-07-01 10:23:32 - sugar_manager - INFO - =====<<<<< 初始化完毕
+2025-07-01 10:26:31 - sugar_manager - INFO - =====>>>>> 初始化开始 
+2025-07-01 10:26:31 - sugar_manager - INFO - 表名: aibot_sentimental_sugar_manager, AI 模型: deepseek, 数据获取周期：2025-01-01 至 2025-06-24
+2025-07-01 10:26:31 - sugar_manager - INFO - 项目路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI
+2025-07-01 10:26:31 - sugar_manager - INFO - 图片存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/WebServer/app/static/images
+2025-07-01 10:26:31 - sugar_manager - INFO - 报告存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/Reports
+2025-07-01 10:26:31 - sugar_manager - INFO - =====<<<<< 初始化完毕
+2025-07-01 10:29:25 - sugar_manager - INFO - 当日报告 AI 分析成功：2025-06-23 
+2025-07-01 10:32:22 - sugar_manager - INFO - 当日报告 AI 分析成功：2025-06-24 
+2025-07-01 11:27:54 - sugar_manager - INFO - =====>>>>> 初始化开始 
+2025-07-01 11:27:54 - sugar_manager - INFO - 表名: aibot_sentimental_sugar_manager, AI 模型: deepseek, 数据获取周期：2025-01-01 至 2025-06-24
+2025-07-01 11:27:54 - sugar_manager - INFO - 项目路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI
+2025-07-01 11:27:54 - sugar_manager - INFO - 图片存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/WebServer/app/static/images
+2025-07-01 11:27:54 - sugar_manager - INFO - 报告存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/Reports
+2025-07-01 11:27:54 - sugar_manager - INFO - =====<<<<< 初始化完毕
+2025-07-01 11:30:52 - sugar_manager - INFO - 当日报告 AI 分析成功：2025-06-23 
+2025-07-01 11:33:38 - sugar_manager - INFO - 当日报告 AI 分析成功：2025-06-24 
+2025-07-01 11:37:27 - sugar_manager - INFO - =====>>>>> 初始化开始 
+2025-07-01 11:37:27 - sugar_manager - INFO - 表名: aibot_sentimental_sugar_manager, AI 模型: deepseek, 数据获取周期：2025-01-01 至 2025-06-24
+2025-07-01 11:37:27 - sugar_manager - INFO - 项目路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI
+2025-07-01 11:37:27 - sugar_manager - INFO - 图片存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/WebServer/app/static/images
+2025-07-01 11:37:27 - sugar_manager - INFO - 报告存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/Reports
+2025-07-01 11:37:27 - sugar_manager - INFO - =====<<<<< 初始化完毕
+2025-07-01 11:39:46 - sugar_manager - INFO - 当日报告 AI 分析成功：2025-06-23 
+2025-07-01 11:42:09 - sugar_manager - INFO - 当日报告 AI 分析成功：2025-06-24 
+2025-07-01 11:52:08 - sugar_manager - INFO - =====>>>>> 初始化开始 
+2025-07-01 11:52:08 - sugar_manager - INFO - 表名: aibot_sentimental_sugar_manager, AI 模型: deepseek, 数据获取周期：2025-01-01 至 2025-06-24
+2025-07-01 11:52:08 - sugar_manager - INFO - 项目路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI
+2025-07-01 11:52:08 - sugar_manager - INFO - 图片存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/WebServer/app/static/images
+2025-07-01 11:52:08 - sugar_manager - INFO - 报告存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/Reports
+2025-07-01 11:52:08 - sugar_manager - INFO - =====<<<<< 初始化完毕
+2025-07-01 11:54:41 - sugar_manager - INFO - 当日报告 AI 分析成功：2025-06-18 
+2025-07-01 11:57:05 - sugar_manager - INFO - 当日报告 AI 分析成功：2025-06-19 
+2025-07-01 11:58:54 - sugar_manager - INFO - 当日报告 AI 分析成功：2025-06-20 
+2025-07-01 12:00:07 - sugar_manager - INFO - 当日报告 AI 分析成功：2025-06-21 
+2025-07-01 12:01:51 - sugar_manager - INFO - 当日报告 AI 分析成功：2025-06-23 
+2025-07-01 12:03:49 - sugar_manager - INFO - 当日报告 AI 分析成功：2025-06-24 
+2025-07-01 14:42:07 - sugar_manager - INFO - =====>>>>> 初始化开始 
+2025-07-01 14:42:07 - sugar_manager - INFO - 表名: aibot_sentimental_sugar_manager, AI 模型: deepseek, 数据获取周期：2025-01-01 至 2025-06-24
+2025-07-01 14:42:07 - sugar_manager - INFO - 项目路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI
+2025-07-01 14:42:07 - sugar_manager - INFO - 图片存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/WebServer/app/static/images
+2025-07-01 14:42:07 - sugar_manager - INFO - 报告存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/Reports
+2025-07-01 14:42:07 - sugar_manager - INFO - =====<<<<< 初始化完毕
+2025-07-01 15:09:13 - sugar_manager - INFO - =====>>>>> 初始化开始 
+2025-07-01 15:09:13 - sugar_manager - INFO - 表名: aibot_sentimental_sugar_manager, AI 模型: deepseek, 数据获取周期：2025-01-01 至 2025-06-24
+2025-07-01 15:09:13 - sugar_manager - INFO - 项目路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI
+2025-07-01 15:09:13 - sugar_manager - INFO - 图片存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/WebServer/app/static/images
+2025-07-01 15:09:13 - sugar_manager - INFO - 报告存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/Reports
+2025-07-01 15:09:13 - sugar_manager - INFO - =====<<<<< 初始化完毕
+2025-07-01 15:11:24 - sugar_manager - INFO - 当日报告 AI 分析成功：2025-05-23 
+2025-07-01 15:13:34 - sugar_manager - INFO - 当日报告 AI 分析成功：2025-05-26 
+2025-07-01 15:15:37 - sugar_manager - INFO - 当日报告 AI 分析成功：2025-05-27 
+2025-07-01 15:18:21 - sugar_manager - INFO - 当日报告 AI 分析成功：2025-05-28 
+2025-07-01 15:20:50 - sugar_manager - INFO - 当日报告 AI 分析成功：2025-05-29 
+2025-07-01 15:23:13 - sugar_manager - INFO - 当日报告 AI 分析成功：2025-05-30 
+2025-07-01 15:25:27 - sugar_manager - INFO - 当日报告 AI 分析成功：2025-06-03 
+2025-07-01 15:28:01 - sugar_manager - INFO - 当日报告 AI 分析成功：2025-06-04 
+2025-07-01 15:31:07 - sugar_manager - INFO - 当日报告 AI 分析成功：2025-06-05 
+2025-07-01 15:47:37 - sugar_manager - INFO - =====>>>>> 初始化开始 
+2025-07-01 15:47:37 - sugar_manager - INFO - 表名: aibot_sentimental_sugar_manager, AI 模型: deepseek, 数据获取周期：2025-01-01 至 2025-06-24
+2025-07-01 15:47:37 - sugar_manager - INFO - 项目路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI
+2025-07-01 15:47:37 - sugar_manager - INFO - 图片存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/WebServer/app/static/images
+2025-07-01 15:47:37 - sugar_manager - INFO - 报告存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/Reports
+2025-07-01 15:47:37 - sugar_manager - INFO - =====<<<<< 初始化完毕
+2025-07-01 15:50:49 - sugar_manager - INFO - 当日报告 AI 分析成功：2025-05-23 
+2025-07-01 15:54:50 - sugar_manager - INFO - 当日报告 AI 分析成功：2025-05-23 
+2025-07-01 16:01:39 - sugar_manager - INFO - =====>>>>> 初始化开始 
+2025-07-01 16:01:39 - sugar_manager - INFO - 表名: aibot_sentimental_sugar_manager, AI 模型: deepseek, 数据获取周期：2025-01-01 至 2025-06-24
+2025-07-01 16:01:39 - sugar_manager - INFO - 项目路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI
+2025-07-01 16:01:39 - sugar_manager - INFO - 图片存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/WebServer/app/static/images
+2025-07-01 16:01:39 - sugar_manager - INFO - 报告存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/Reports
+2025-07-01 16:01:39 - sugar_manager - INFO - =====<<<<< 初始化完毕
+2025-07-01 16:03:45 - sugar_manager - INFO - 当日报告 AI 分析成功：2025-05-23 
+2025-07-01 16:09:51 - sugar_manager - INFO - 当日报告 AI 分析成功：2025-05-26 
+2025-07-01 16:12:10 - sugar_manager - INFO - 当日报告 AI 分析成功：2025-05-27 
+2025-07-01 16:14:59 - sugar_manager - INFO - 当日报告 AI 分析成功：2025-05-28 
+2025-07-01 16:18:04 - sugar_manager - INFO - 当日报告 AI 分析成功：2025-05-29 
+2025-07-01 16:20:59 - sugar_manager - INFO - 当日报告 AI 分析成功：2025-05-30 
+2025-07-01 16:23:37 - sugar_manager - INFO - 当日报告 AI 分析成功：2025-06-03 
+2025-07-01 16:26:16 - sugar_manager - INFO - 当日报告 AI 分析成功：2025-06-04 
+2025-07-01 16:29:21 - sugar_manager - INFO - 当日报告 AI 分析成功：2025-06-05 
+2025-07-01 16:31:52 - sugar_manager - INFO - 当日报告 AI 分析成功：2025-06-06 
+2025-07-01 16:34:17 - sugar_manager - INFO - 当日报告 AI 分析成功：2025-06-09 
+2025-07-01 16:36:13 - sugar_manager - INFO - 当日报告 AI 分析成功：2025-06-10 
+2025-07-01 16:38:10 - sugar_manager - INFO - 当日报告 AI 分析成功：2025-06-11 
+2025-07-01 16:40:30 - sugar_manager - INFO - 当日报告 AI 分析成功：2025-06-12 
+2025-07-01 16:43:21 - sugar_manager - INFO - 当日报告 AI 分析成功：2025-06-13 
+2025-07-01 16:45:53 - sugar_manager - INFO - 当日报告 AI 分析成功：2025-06-16 
+2025-07-01 16:48:13 - sugar_manager - INFO - 当日报告 AI 分析成功：2025-06-17 
+2025-07-01 16:50:48 - sugar_manager - INFO - 当日报告 AI 分析成功：2025-06-18 
+2025-07-01 17:06:21 - sugar_manager - INFO - =====>>>>> 初始化开始 
+2025-07-01 17:06:21 - sugar_manager - INFO - 表名: aibot_sentimental_sugar_manager, AI 模型: deepseek, 数据获取周期：2025-01-01 至 2025-06-24
+2025-07-01 17:06:21 - sugar_manager - INFO - 项目路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI
+2025-07-01 17:06:21 - sugar_manager - INFO - 图片存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/WebServer/app/static/images
+2025-07-01 17:06:21 - sugar_manager - INFO - 报告存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/Reports
+2025-07-01 17:06:21 - sugar_manager - INFO - =====<<<<< 初始化完毕
+2025-07-01 17:16:41 - sugar_manager - INFO - =====>>>>> 初始化开始 
+2025-07-01 17:16:41 - sugar_manager - INFO - 表名: aibot_sentimental_sugar_manager, AI 模型: deepseek, 数据获取周期：2025-01-01 至 2025-06-24
+2025-07-01 17:16:41 - sugar_manager - INFO - 项目路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI
+2025-07-01 17:16:41 - sugar_manager - INFO - 图片存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/WebServer/app/static/images
+2025-07-01 17:16:41 - sugar_manager - INFO - 报告存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/Reports
+2025-07-01 17:16:41 - sugar_manager - INFO - =====<<<<< 初始化完毕
+2025-07-01 17:53:43 - sugar_manager - INFO - =====>>>>> 初始化开始 
+2025-07-01 17:53:43 - sugar_manager - INFO - 表名: aibot_sentimental_sugar_manager, AI 模型: deepseek, 数据获取周期：2025-01-01 至 2025-06-24
+2025-07-01 17:53:43 - sugar_manager - INFO - 项目路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI
+2025-07-01 17:53:43 - sugar_manager - INFO - 图片存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/WebServer/app/static/images
+2025-07-01 17:53:43 - sugar_manager - INFO - 报告存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/Reports
+2025-07-01 17:53:43 - sugar_manager - INFO - =====<<<<< 初始化完毕
+2025-07-01 18:26:34 - sugar_manager - INFO - =====>>>>> 初始化开始 
+2025-07-01 18:26:34 - sugar_manager - INFO - 表名: aibot_sentimental_sugar_manager, AI 模型: deepseek, 数据获取周期：2025-01-01 至 2025-06-24
+2025-07-01 18:26:34 - sugar_manager - INFO - 项目路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI
+2025-07-01 18:26:34 - sugar_manager - INFO - 图片存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/WebServer/app/static/images
+2025-07-01 18:26:34 - sugar_manager - INFO - 报告存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/Reports
+2025-07-01 18:26:34 - sugar_manager - INFO - =====<<<<< 初始化完毕
+2025-07-01 18:28:03 - sugar_manager - INFO - =====>>>>> 初始化开始 
+2025-07-01 18:28:03 - sugar_manager - INFO - 表名: aibot_sentimental_sugar_manager, AI 模型: deepseek, 数据获取周期：2025-01-01 至 2025-06-24
+2025-07-01 18:28:03 - sugar_manager - INFO - 项目路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI
+2025-07-01 18:28:03 - sugar_manager - INFO - 图片存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/WebServer/app/static/images
+2025-07-01 18:28:03 - sugar_manager - INFO - 报告存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/Reports
+2025-07-01 18:28:03 - sugar_manager - INFO - =====<<<<< 初始化完毕
+2025-07-01 18:31:32 - sugar_manager - INFO - =====>>>>> 初始化开始 
+2025-07-01 18:31:32 - sugar_manager - INFO - 表名: aibot_sentimental_sugar_manager, AI 模型: deepseek, 数据获取周期：2025-01-01 至 2025-06-24
+2025-07-01 18:31:32 - sugar_manager - INFO - 项目路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI
+2025-07-01 18:31:32 - sugar_manager - INFO - 图片存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/WebServer/app/static/images
+2025-07-01 18:31:32 - sugar_manager - INFO - 报告存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/Reports
+2025-07-01 18:31:32 - sugar_manager - INFO - =====<<<<< 初始化完毕
+2025-07-01 18:38:32 - sugar_manager - INFO - [滚动分析] AI 分析成功：2025-06-16 
+2025-07-01 18:41:15 - sugar_manager - INFO - [滚动分析] AI 分析成功：2025-06-17 

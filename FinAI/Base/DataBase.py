@@ -59,7 +59,7 @@ class DBFile:
         self,
         data: pd.DataFrame,
         table: str,
-        keys: List[str],
+        keys: List[str] = None,
         schema: pa.Schema = None,
     ):
         if isinstance(data, pd.DataFrame):
@@ -351,7 +351,6 @@ class DBFile:
                     partition_data,
                     schema=schema if schema is not None else None
                 )
-        
                 # 3. 保存分区数据
                 pq.write_table(
                     table=arrow_table,
@@ -775,17 +774,28 @@ class BaseBuilder:
         df = df.astype(self.schema.field_type_mapping())
         df = df.fillna(self.schema.field_default_mapping())
         return df
-
-    def write(self, df: pd.DataFrame) -> None:
+    
+    def sort_data(self, df: pd.DataFrame) -> pd.DataFrame:
+        """按照指定规则排序"""
         columns = [col for col, _ in self.sort_by]
         ascending = [True if direction == "ascending" else False for _, direction in self.sort_by]
         df = df.sort_values(by=columns, ascending=ascending).reset_index(drop=True)
-        self.handler.save_data(
-            data=df,
-            table=self.datasource_id,
-            keys=self.unique_together,
-            schema=self.pydantic_model_to_arrow_schema(self.schema)
-        )
+        return df
+
+    def write(self, df: pd.DataFrame) -> None:
+        if isinstance(df, pd.DataFrame):
+            df = self.sort_data(df=df)     # 排序
+            self.handler.save_data(
+                data=df,
+                table=self.datasource_id,
+                keys=self.unique_together,
+                schema=self.pydantic_model_to_arrow_schema(self.schema)
+            )
+        elif isinstance(df, dict):
+            self.handler.save_data(
+                data=data,
+                table=self.datasource_id
+            )
 
     def pydantic_model_to_arrow_schema(self, model: Type[BaseModel]) -> pa.Schema:
         """
@@ -797,30 +807,61 @@ class BaseBuilder:
         Returns:
             PyArrow Schema对象
         """
+        # 扩展类型映射字典
         type_mapping = {
-            np.datetime64: pa.timestamp('ns'),
-            pd.StringDtype: pa.string(),
+            # NumPy 类型
+            np.int8: pa.int8(),
+            np.int16: pa.int16(),
+            np.int32: pa.int32(),
+            np.int64: pa.int64(),
+            np.uint8: pa.uint8(),
+            np.uint16: pa.uint16(),
+            np.uint32: pa.uint32(),
+            np.uint64: pa.uint64(),
+            np.float16: pa.float16(),
+            np.float32: pa.float32(),
+            np.float64: pa.float64(),
             np.double: pa.float64(),
-            float: pa.float64(),
-            int: pa.int64(),
+            np.datetime64: pa.timestamp('ns'),
+            np.bool_: pa.bool_(),
+            
+            # Python 内置类型
+            int: pa.int64(),    # 默认映射到int64
+            float: pa.float64(), # 默认映射到float64
             str: pa.string(),
             bool: pa.bool_(),
+            
+            # Pandas 类型
+            pd.StringDtype: pa.string(),
+            
+            # 添加更多类型映射...
         }
         
         fields = []
         for field_name, field_info in model.__fields__.items():
             field_type = field_info.annotation
+
+            # 查找类型映射
+            arrow_type = None
             
-            # 处理特殊类型
-            if field_type == np.datetime64:
-                arrow_type = pa.timestamp('ns')
-            elif field_type == pd.StringDtype:
-                arrow_type = pa.string()
-            elif field_type == np.double:
-                arrow_type = pa.float64()
+            # 首先尝试直接匹配
+            if field_type in type_mapping:
+                arrow_type = type_mapping[field_type]
             else:
-                # 默认处理
-                arrow_type = type_mapping.get(field_type, pa.string())
+                # 尝试匹配 NumPy dtype
+                if hasattr(field_type, 'type'):
+                    if field_type.type in type_mapping:
+                        arrow_type = type_mapping[field_type.type]
+                
+                # 如果还没找到，尝试匹配父类
+                if arrow_type is None:
+                    for py_type, arrow_type_val in type_mapping.items():
+                        if isinstance(field_type, type) and issubclass(field_type, py_type):
+                            arrow_type = arrow_type_val
+                            break
+            
+            if arrow_type is None:
+                raise ValueError(f'未找到数据映射: {field_name}, {field_type}')
             
             fields.append(pa.field(field_name, arrow_type))
         

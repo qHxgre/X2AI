@@ -3,6 +3,7 @@
 import os
 import httpx
 import pandas as pd
+from typing import Optional
 
 # 邮件发送
 import smtplib
@@ -30,6 +31,7 @@ class BaseAI:
         if llms_api == "deepseek":
             self.client = OpenAI(api_key="sk-7e0d7d183ae84e08b8579a537feff921", base_url="https://api.deepseek.com")
             self.model = "deepseek-chat"
+            self.model = "deepseek-"
         elif llms_api == "gemini":
             self.client = OpenAI(
                 api_key="AIzaSyAuNZ8x72O-lzIeoa_OZKSjlg48P6YBA8E",
@@ -40,7 +42,9 @@ class BaseAI:
         else:
             raise ValueError("Unsupported LLM API. Please choose 'deepseek' or 'gemini'.")
 
-    def ai_api(self, user_prompt: str, system_prompt: str, json_output: bool=False) -> str:
+    def ai_api(self, user_prompt: str, system_prompt: str, json_output: bool=False, model: Optional[str]=None) -> str:
+        if model is not None:
+            self.model = model
         if json_output is True:
             response = self.client.chat.completions.create(
                 model=self.model,

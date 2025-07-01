@@ -23,7 +23,7 @@ class HigSugarCrawler(BaseCrawler):
         # 数据库：默认为 文件数据库
         self.handler = DBFile() if db is None else db
         # 原始数据
-        self.raw_data = self.handler.read_data(
+        self.raw_data = self.handler.read_dataframe(
             table=self.datasource_id,
             filters={
                 "date": [self.start_date, self.end_date]

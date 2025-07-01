@@ -16,14 +16,7 @@ class FutureBar1dBuilder(BaseBuilder):
         # 开始时间和结束时间
         self.start_date, self.end_date = start_date, end_date
         # 数据库：默认为 PostgresSQL
-        self.handler = DBSQL() if db is None else db
-        # 原始数据
-        self.raw_data = self.handler.read_data(
-            table=self.datasource_id,
-            filters={
-                "date": [self.start_date, self.end_date]
-            }
-        )
+        self.handler = DBFile() if db is None else db
 
         # 日志打印
         self.logger = LoggerController(

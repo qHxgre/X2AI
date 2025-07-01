@@ -58,14 +58,14 @@ class AIBotSentimentalSugarResearcher(BaseAI, BaseBuilder):
         self.end_date = datetime.now().strftime(date_format) if end_date is None else end_date
 
         # 文件路径
-        self.filepath_prompt = os.path.join(self.parent_path, "AIBots", "SentimentalBot", "prompts")
         self.filepath_save = os.path.join(self.parent_path, "Reports")
 
         # 已分析的文章
         self.cache = cache
 
         # 系统提示词
-        self.system_prompt = self.read_md(os.path.join(self.filepath_prompt, "assistant.md"))
+        self.filepath_prompt = os.path.join(self.parent_path, "AIBots", "aibot_sentimental_sugar_researcher")
+        self.system_prompt = self.read_md(os.path.join(self.filepath_prompt, "prompt.md"))
 
         # 初始化的日志
         self.logger.info(f"=====>>>>> [初始化] 表名: {self.datasource_id}, AI 模型: {llms}, 数据获取周期：{self.start_date} 至 {self.end_date}")
@@ -84,7 +84,7 @@ class AIBotSentimentalSugarResearcher(BaseAI, BaseBuilder):
         # 删除重复的文章
         data = data.drop_duplicates(subset=["date", "article_id", "title"])
         # 筛选指定类型的数据
-        # data = data[data["sub_category"].isin(["最新资讯", "日报", "热点研究", "周报"])]
+        data = data[data["sub_category"].isin(["最新资讯", "日报", "热点研究", "周报"])]
         # 按照日期和文章ID排序
         data = data.sort_values(["date", "article_id"], ascending=[False, False])
         return data.to_dict(orient='records')
