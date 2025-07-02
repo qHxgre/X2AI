@@ -3,8 +3,7 @@ import json
 import numpy as np
 import pandas as pd
 from datetime import datetime, timedelta
-from typing import Optional, Tuple, Dict
-from joblib import Parallel, delayed
+from typing import Optional
 from Base import BaseAI, DBFile, DBSQL, LoggerController, BaseBuilder
 from AIBots.aibot_sentimental_sugar_manager.plotting import plt_klines_rank
 from AIBots.aibot_sentimental_sugar_manager.templets import TEMPLET_INPUT_REPORT_DAILY, TEMPLET_USER_PROMPT_DAILY, TEMPLET_INPUT_REPORT_ROLLING, TEMPLET_USER_PROMPT_ROLLING
@@ -87,7 +86,7 @@ class AIBotSentimentalSugarManager(BaseAI, BaseBuilder):
             self.cache = cache
             self.raw_data = self.handler.read_dataframe(
                 table=self.datasource_id,
-                filters={'date': [self.start_date, self.end_date]}
+                filters={'date': [self.before_start_date, self.end_date]}
             )
             self.raw_data['date'] = self.raw_data['date'].dt.strftime('%Y-%m-%d')
 
@@ -395,11 +394,20 @@ class AIBotSentimentalSugarManager(BaseAI, BaseBuilder):
             index = temp.index[0]
             part_reports = daily_reports.iloc[max(index-k+1, 0): index+1, :]
             sd, ed = part_reports['date'].min(), part_reports['date'].max()
-            part_stimedecay = static_timedecay[(static_timedecay['date']>=sd) & (static_timedecay['date']<=ed)]
-            reports_size, static_size = part_reports.shape[0], part_stimedecay.shape[0]
-            if (reports_size < 5) | (static_size < 5):
-                self.logger.warning(f"[滚动分析] {today} 分析失败: {sd} 至 {ed}，数据为空！每日报告: {reports_size}; 时间衰减统计值：{static_size}。跳过！")
+
+            # 检查 时序报告列表的数据是否足够
+            reports_size = part_reports.shape[0]
+            if reports_size < 5:
+                self.logger.warning(f"[滚动分析] {today} 分析失败: {sd} 至 {ed}，数据！每日报告: {reports_size}。跳过！")
                 continue
+
+            # 检查当日时间衰减加权值是否
+            part_stimedecay = static_timedecay[static_timedecay['date']==today]
+            static_size = part_stimedecay.shape[0]
+            if static_size == 0:
+                self.logger.warning(f"[滚动分析] {today} 分析失败，时间衰减统计值缺失：{static_size}。跳过！")
+                continue
+        
             # AI 分析
             today_report, msg = _analyzing(
                 system_prompt=system_prompt,
@@ -428,14 +436,14 @@ class AIBotSentimentalSugarManager(BaseAI, BaseBuilder):
         start_date = self.start_date if start_date is None else start_date
         end_date = self.end_date if end_date is None else end_date
         before_start_date = (datetime.strptime(start_date, "%Y-%m-%d") - timedelta(days=10)).strftime("%Y-%m-%d")
-        date_series=pd.date_range(start=start_date, end=end_date)
 
         # STEP 1: 分析当日数据
+        # notice: 因为分析多日数据需要向前获取一定天数，因此保证有前10的单日分析数据
         self.analyzing_daily(
-            date_series=date_series,
-            reports_list=self.reports[(self.reports['date']>=start_date) & (self.reports['date']<=end_date)],
-            static_simple=self.static_simple[(self.static_simple['date']>=start_date) & (self.static_simple['date']<=end_date)],
-            static_group=self.static_group[(self.static_group['date']>=start_date) & (self.static_group['date']<=end_date)],
+            date_series=pd.date_range(start=before_start_date, end=end_date),
+            reports_list=self.reports[(self.reports['date']>=before_start_date) & (self.reports['date']<=end_date)],
+            static_simple=self.static_simple[(self.static_simple['date']>=before_start_date) & (self.static_simple['date']<=end_date)],
+            static_group=self.static_group[(self.static_group['date']>=before_start_date) & (self.static_group['date']<=end_date)],
         )
 
         # STEP 2: 分析多日数据
@@ -454,7 +462,7 @@ class AIBotSentimentalSugarManager(BaseAI, BaseBuilder):
         static_timedecay[cols] = static_timedecay[cols].round(4)
         # 滚动AI分析
         self.analyzing_rolling(
-            date_series=date_series,
+            date_series=pd.date_range(start=start_date, end=end_date),
             daily_reports=daily_reports,
             static_timedecay=static_timedecay[(static_timedecay['date']>=start_date) & (static_timedecay['date']<=end_date)]
         )
@@ -462,7 +470,7 @@ class AIBotSentimentalSugarManager(BaseAI, BaseBuilder):
         # STEP 3: 结合实际走势验证
         # self.analyzing_validate()
 
-    def analyzing(self, run_parallel: bool=True):
+    def analyzing(self):
         """分析主函数"""
         # STEP 1: 获取数据
         t0 = datetime.now()
