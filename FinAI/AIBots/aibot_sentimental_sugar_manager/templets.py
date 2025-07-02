@@ -52,3 +52,24 @@ TEMPLET_USER_PROMPT_ROLLING = """
 {reports_list}
 
 """
+
+
+TEMPLET_OUTPUT = """
+## 日期：{today}
+
+### 投资评级
+* 投资评级：{rating}
+* 预测分数：{ranking}
+* 置信度：{confidence}
+
+### 分析总结
+
+{conclusion}
+
+### 利好分析
+{bullish}
+
+### 利空分析
+{bearish}
+
+"""

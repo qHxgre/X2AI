@@ -7,7 +7,7 @@ def plt_klines_rank(data: pd.DataFrame, filepath: str) -> None:
     """画出k线图和评级"""
     dates = data['date'].values.tolist()
     kline_data = data[['open', 'close', 'low', 'high']].values.tolist()
-    rank_data = data["rank"].values.tolist()
+    rank_data = data["score"].values.tolist()
 
     # 创建K线图
     kline = (

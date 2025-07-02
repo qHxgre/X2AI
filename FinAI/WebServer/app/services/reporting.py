@@ -48,33 +48,28 @@ class ReportService:
             'data': html_content
         })
 
-    def get_reports(self):
-        today = datetime.now()
-        start_date = (today - timedelta(days=90)).strftime("%Y-%m-%d")
-        end_date = today.strftime("%Y-%m-%d")
-        reports = self.bot.handler.read_dict(
-            table="aicache_researcher",
-            filters={"date": [start_date, end_date]}
-        )
+    def get_reports(self, directory: str):
+        # 获取目录下所有.markdown 文件
+        md_files = [f for f in os.listdir(directory) if f.endswith('.markdown')]
+        md_files.sort()
+        md_files = md_files[-5:]
 
-        sorted_reports = dict(sorted(reports.items(), key=lambda x: x[0], reverse=True))
-        
+        date_pattern = re.compile(r'(\d{8})')  # 匹配8位数字的日期
         formatted_reports = {}
-        for date, report in sorted_reports.items():
-            # 生成报告
-            report_md = TEMPLET_REPORT.format(
-                analyze_date=report["date"],
-                publish_date=datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-                rating=report["rating"],
-                overview=report["overview"],
-                bullish="\n".join(f"* {k}: {v}" for k, v in report["bullish"].items()),
-                bearish="\n".join(f"* {k}: {v}" for k, v in report["bearish"].items()),
-                conclusion=report["conclusion"],
-                risk="* " + "\n* ".join([i for i in report["risk"]]),
-            )
-            formatted_reports[date.strftime("%Y-%m-%d")] = report_md
+        for file in md_files:
+            match = date_pattern.search(file)
+            if match:
+                date_str = match.group(1)
+                try:
+                    with open(f'{directory}/{file}', 'r', encoding='utf-8') as file:
+                        content = file.read()
+                    formatted_reports[date_str] = content
+                except ValueError:
+                    continue  # 如果日期格式无效，跳过该文件
+
+        formatted_reports = dict(sorted(formatted_reports.items(), key=lambda x: x[0], reverse=True))
+
         self.logger.info(f"总共获取了 {len(formatted_reports)} 篇分析报告")
-    
         return jsonify({
             'status': 'success',
             'data': formatted_reports

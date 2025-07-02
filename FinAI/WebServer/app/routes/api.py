@@ -41,7 +41,7 @@ def get_chart():
 
 @api_bp.route('/get_reports')
 def get_reports():
-    return report_service.get_reports()
+    return report_service.get_reports(f"{PROJECT_ROOT}/WebServer/app/static/reports")
 
 @api_bp.route('/analyze', methods=['POST'])
 def analyze_articles():

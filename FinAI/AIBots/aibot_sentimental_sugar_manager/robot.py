@@ -6,7 +6,7 @@ from datetime import datetime, timedelta
 from typing import Optional
 from Base import BaseAI, DBFile, DBSQL, LoggerController, BaseBuilder
 from AIBots.aibot_sentimental_sugar_manager.plotting import plt_klines_rank
-from AIBots.aibot_sentimental_sugar_manager.templets import TEMPLET_INPUT_REPORT_DAILY, TEMPLET_USER_PROMPT_DAILY, TEMPLET_INPUT_REPORT_ROLLING, TEMPLET_USER_PROMPT_ROLLING
+from AIBots.aibot_sentimental_sugar_manager.templets import TEMPLET_INPUT_REPORT_DAILY, TEMPLET_USER_PROMPT_DAILY, TEMPLET_INPUT_REPORT_ROLLING, TEMPLET_USER_PROMPT_ROLLING, TEMPLET_OUTPUT
 from AIBots.aibot_sentimental_sugar_manager.schema import AIBotSentimentalSugarManagerSchema
 
 pd.options.mode.chained_assignment = None  # 完全关闭警告
@@ -43,7 +43,7 @@ class AIBotSentimentalSugarManager(BaseAI, BaseBuilder):
         self.parent_path = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))      # 项目路径
         self.filepath_prompt = os.path.join(self.parent_path, "AIBots", "aibot_sentimental_sugar_manager", "prompts")       # 系统提示词
         self.path_image = os.path.join(self.parent_path, 'WebServer', 'app', 'static', 'images')     # 图片存储路径
-        self.path_report = os.path.join(self.parent_path, 'Reports')      # 报告存储路径
+        self.path_markdown = os.path.join(self.parent_path, 'WebServer', 'app', 'static', 'reports')      # 报告存储路径
 
         # 初始化ai
         self.init_ai(llms_api=llms)
@@ -74,13 +74,6 @@ class AIBotSentimentalSugarManager(BaseAI, BaseBuilder):
         self.static_timedecay = None
         self.result = {}
 
-        # 获取行情数据
-        self.future_bar1d = DBFile().read_dataframe(
-            table='future_bar1d',
-            filters={"date": [self.start_date, self.end_date]},
-            columns=["date", "instrument", "high", "open", "low", "close"]
-        )
-
         # 获取原属数据
         if cache is True:
             self.cache = cache
@@ -95,7 +88,7 @@ class AIBotSentimentalSugarManager(BaseAI, BaseBuilder):
         self.logger.info(f"表名: {self.datasource_id}, AI 模型: {llms}, 数据获取周期：{self.start_date} 至 {self.end_date}, 向前获取日期: {self.before_start_date}")
         self.logger.info(f"项目路径: {self.parent_path}")
         self.logger.info(f"图片存储路径: {self.path_image}")
-        self.logger.info(f"报告存储路径: {self.path_report}")
+        self.logger.info(f"报告存储路径: {self.path_markdown}")
         self.logger.info(f"=====<<<<< 初始化完毕")
 
     def get_reports(self, table: str) -> pd.DataFrame:
@@ -228,7 +221,7 @@ class AIBotSentimentalSugarManager(BaseAI, BaseBuilder):
         df = data.sort_values('date')
         df['date'] = pd.to_datetime(df['date'])
         result = {}
-        for i in range(window, df.shape[0]):
+        for i in range(window, df.shape[0]+1):
             recent = df.iloc[i-window: i, :]
             max_date = recent['date'].max()
             recent['days_passed'] = (max_date - recent['date']).dt.days
@@ -242,18 +235,6 @@ class AIBotSentimentalSugarManager(BaseAI, BaseBuilder):
             }
         result = pd.DataFrame(result).T.reset_index().rename(columns={"index": "date"})
         return result
-
-    def plotting_analyzing(self) -> None:
-        """画图分析"""
-        # 画出k线图和预测值的走势
-        plt_df = pd.merge(
-            self.static_timedecay[["date", "short_forecast_timeweighted"]].rename(
-                columns={'short_forecast_timeweighted': 'rank'}),
-            self.future_bar1d, how="outer", on=["date"]
-        )
-        plt_df['date'] = plt_df['date'].dt.strftime('%Y-%m-%d')
-        filepath_image = f"{self.path_image}/{self.end_date.replace('-', '')}_klines.html"
-        plt_klines_rank(data=plt_df, filepath=filepath_image)
 
     def analyzing_daily(self, date_series: list, reports_list: pd.DataFrame, static_simple: pd.DataFrame, static_group: pd.DataFrame) -> None:
         """分析当日数据"""
@@ -427,6 +408,70 @@ class AIBotSentimentalSugarManager(BaseAI, BaseBuilder):
         """结合实际走势验证"""
         pass
 
+    def generate_markdown(self, today: str, method: str='rolling') -> None:
+        """生成markdown"""
+        df = DBFile().read_dataframe(table='aibot_sentimental_sugar_manager', filters={'date': [today, today]})
+        temp = df[df['method']==method]
+        if temp.shape[0] == 0:
+            self.logger.warning(f"[生成 markdown] 失败: {today}, 缺乏数据！")
+            return
+        row = temp.iloc[0]
+
+        emapping_reverse = {
+            'supply': '全球供应',
+            'demand': '全球需求',
+            'energy': '能源政策与原油价格',
+            'domestic': '国内因素',
+            'market': '市场宏观与情绪'
+        }
+
+        bullish_str, bearish_str = '', ''
+        for k, v in row.items():
+            if 'bullish' in k:
+                bullish_str += f"\n    * {emapping_reverse[k.replace('bullish_', '')]}: {v}"
+            elif 'bearish' in k:
+                bearish_str += f"\n    * {emapping_reverse[k.replace('bearish_', '')]}: {v}"
+
+
+        content = TEMPLET_OUTPUT.format(
+            today=row['date'].strftime('%Y-%m-%d'),
+            rating=row['rating'],
+            ranking=row['ranking'],
+            confidence=row['confidence'],
+            conclusion=row['conclusion'],
+            bullish=bullish_str,
+            bearish=bearish_str
+        )
+
+        filepath_markdown = f"{self.path_markdown}/{today.replace('-', '')}_report.markdown"
+        with open(filepath_markdown, 'w') as file:
+            file.write(content)
+
+    def plotting_analyzing(self, today: str) -> None:
+        """画图分析"""
+        start_date = (datetime.strptime(today, "%Y-%m-%d") - timedelta(days=180)).strftime("%Y-%m-%d")
+        end_date = today
+
+        # 获取行情数据
+        future_bar1d = DBFile().read_dataframe(
+            table='future_bar1d',
+            filters={"date": [start_date, end_date]},
+            columns=["date", "instrument", "high", "open", "low", "close"]
+        )
+
+        # 获取 AI 预测数据
+        aibot_suggar = DBFile().read_dataframe(
+            table=self.datasource_id,
+            filters={"date": [start_date, end_date]}
+        )
+
+        # 画出k线图和预测值的走势
+        plt_df = pd.merge(future_bar1d, aibot_suggar[['date', 'ranking']].rename(columns={'ranking': 'score'}), how="outer", on=["date"])
+        plt_df['date'] = plt_df['date'].dt.strftime('%Y-%m-%d')
+        filepath_image = f"{self.path_image}/{today.replace('-', '')}_klines.html"
+        plt_klines_rank(data=plt_df, filepath=filepath_image)
+
+
     def ai_analyzing(self, start_date: Optional[str]=None, end_date: Optional[str]=None) -> None:
         """AI 分析
         # STEP 1: 分析当日数据
@@ -495,8 +540,11 @@ class AIBotSentimentalSugarManager(BaseAI, BaseBuilder):
         self.static_group = self.group_static(self.reports.copy())
         self.static_weighted = self.simple_weighted(self.reports.copy())
         self.static_timedecay = self.timedecay_weighted(self.static_weighted.copy())
-        # self.plotting_analyzing()
 
         # STEP 4: AI 分析
         self.ai_analyzing()
+
+        # STEP 5: 生成报告 & 生成图片
+        self.generate_markdown(self.end_date)
+        self.plotting_analyzing(self.end_date)
         
