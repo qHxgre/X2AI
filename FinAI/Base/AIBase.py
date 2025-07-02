@@ -31,7 +31,6 @@ class BaseAI:
         if llms_api == "deepseek":
             self.client = OpenAI(api_key="sk-7e0d7d183ae84e08b8579a537feff921", base_url="https://api.deepseek.com")
             self.model = "deepseek-chat"
-            self.model = "deepseek-"
         elif llms_api == "gemini":
             self.client = OpenAI(
                 api_key="AIzaSyAuNZ8x72O-lzIeoa_OZKSjlg48P6YBA8E",

@@ -197,7 +197,7 @@ class AIBotSentimentalSugarResearcher(BaseAI, BaseBuilder):
         articles = self.filter_articles(left_data)
         t3 = datetime.now()
         if len(articles) == 0:
-            self.logger.warning(f"没有可分析的文章: {len(articles)} !")
+            self.logger.warning(f"再次筛选数据后，没有可分析的文章: {len(articles)} !")
             return
         self.logger.info(f"数据清洗, 待分析的文章数量: {len(articles)}, 耗时: {t3-t2}")
 
