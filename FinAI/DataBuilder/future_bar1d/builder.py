@@ -15,7 +15,7 @@ class FutureBar1dBuilder(BaseBuilder):
     def __init__(self, start_date: str, end_date: str, db=None) -> None:
         # 开始时间和结束时间
         self.start_date, self.end_date = start_date, end_date
-        # 数据库：默认为 PostgresSQL
+        # 数据库
         self.handler = DBFile() if db is None else db
 
         # 日志打印
