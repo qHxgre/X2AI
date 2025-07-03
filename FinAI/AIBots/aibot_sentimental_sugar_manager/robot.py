@@ -427,6 +427,8 @@ class AIBotSentimentalSugarManager(BaseAI, BaseBuilder):
 
         bullish_str, bearish_str = '', ''
         for k, v in row.items():
+            if v == '':
+                continue
             if 'bullish' in k:
                 bullish_str += f"\n    * {emapping_reverse[k.replace('bullish_', '')]}: {v}"
             elif 'bearish' in k:
