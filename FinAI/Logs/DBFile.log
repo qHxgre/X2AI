@@ -1,0 +1,437 @@
+2025-07-03 11:38:10 - dbfile_sugar - INFO - 初始化文件数据库, 根路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/DataBase
+2025-07-03 11:38:10 - dbfile_sugar - DEBUG - 读取 dataframe 数据, 表名: aibot_sentimental_sugar_manager
+2025-07-03 11:38:10 - dbfile_sugar - DEBUG - 从 aibot_sentimental_sugar_manager 读取 dataframe 数据, 加载 metadata
+2025-07-03 11:38:10 - dbfile_sugar - DEBUG - 从 aibot_sentimental_sugar_manager 读取 dataframe 数据, 执行分区读取
+2025-07-03 11:38:10 - dbfile_sugar - INFO - 成功从 aibot_sentimental_sugar_manager 读取 dataframe 数据，数据大小: (14, 16)
+2025-07-03 11:38:10 - dbfile_sugar - DEBUG - 读取 dataframe 数据, 表名: aibot_sentimental_sugar_researcher
+2025-07-03 11:38:10 - dbfile_sugar - DEBUG - 从 aibot_sentimental_sugar_researcher 读取 dataframe 数据, 加载 metadata
+2025-07-03 11:38:10 - dbfile_sugar - DEBUG - 从 aibot_sentimental_sugar_researcher 读取 dataframe 数据, 执行分区读取
+2025-07-03 11:38:10 - dbfile_sugar - INFO - 成功从 aibot_sentimental_sugar_researcher 读取 dataframe 数据，数据大小: (148, 9)
+2025-07-03 11:38:10 - dbfile_sugar - DEBUG - 存储 dataframe 数据至 aibot_sentimental_sugar_manager, 开始存储 pd.DataFrame 数据
+2025-07-03 11:38:10 - dbfile_sugar - WARNING - 存储 dataframe 数据至 aibot_sentimental_sugar_manager, 待存储的数据为空: (0, 17), 跳过!
+2025-07-03 11:38:10 - dbfile_sugar - DEBUG - 读取 dataframe 数据, 表名: aibot_sentimental_sugar_manager
+2025-07-03 11:38:10 - dbfile_sugar - DEBUG - 从 aibot_sentimental_sugar_manager 读取 dataframe 数据, 加载 metadata
+2025-07-03 11:38:10 - dbfile_sugar - DEBUG - 从 aibot_sentimental_sugar_manager 读取 dataframe 数据, 执行分区读取
+2025-07-03 11:38:10 - dbfile_sugar - INFO - 成功从 aibot_sentimental_sugar_manager 读取 dataframe 数据，数据大小: (14, 16)
+2025-07-03 11:38:10 - dbfile_sugar - DEBUG - 存储 dataframe 数据至 aibot_sentimental_sugar_manager, 开始存储 pd.DataFrame 数据
+2025-07-03 11:38:10 - dbfile_sugar - WARNING - 存储 dataframe 数据至 aibot_sentimental_sugar_manager, 待存储的数据为空: (0, 17), 跳过!
+2025-07-03 11:38:10 - DBFile - INFO - 初始化文件数据库, 根路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/DataBase
+2025-07-03 11:38:10 - DBFile - INFO - 成功从 aibot_sentimental_sugar_manager 读取 dataframe 数据，数据大小: (0, 16)
+2025-07-03 11:38:10 - DBFile - INFO - 初始化文件数据库, 根路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/DataBase
+2025-07-03 11:38:10 - DBFile - INFO - 成功从 future_bar1d 读取 dataframe 数据，数据大小: (106, 6)
+2025-07-03 11:38:10 - DBFile - INFO - 初始化文件数据库, 根路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/DataBase
+2025-07-03 11:38:10 - DBFile - INFO - 成功从 aibot_sentimental_sugar_manager 读取 dataframe 数据，数据大小: (106, 16)
+2025-07-03 11:38:10 - dbfile_sugar - INFO - 初始化文件数据库, 根路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/DataBase
+2025-07-03 11:38:10 - dbfile_sugar - DEBUG - 读取 dataframe 数据, 表名: aibot_sentimental_sugar_manager
+2025-07-03 11:38:10 - dbfile_sugar - DEBUG - 从 aibot_sentimental_sugar_manager 读取 dataframe 数据, 加载 metadata
+2025-07-03 11:38:10 - dbfile_sugar - DEBUG - 从 aibot_sentimental_sugar_manager 读取 dataframe 数据, 执行分区读取
+2025-07-03 11:38:10 - dbfile_sugar - INFO - 成功从 aibot_sentimental_sugar_manager 读取 dataframe 数据，数据大小: (14, 16)
+2025-07-03 11:38:10 - dbfile_sugar - DEBUG - 读取 dataframe 数据, 表名: aibot_sentimental_sugar_researcher
+2025-07-03 11:38:10 - dbfile_sugar - DEBUG - 从 aibot_sentimental_sugar_researcher 读取 dataframe 数据, 加载 metadata
+2025-07-03 11:38:10 - dbfile_sugar - DEBUG - 从 aibot_sentimental_sugar_researcher 读取 dataframe 数据, 执行分区读取
+2025-07-03 11:38:10 - dbfile_sugar - INFO - 成功从 aibot_sentimental_sugar_researcher 读取 dataframe 数据，数据大小: (143, 9)
+2025-07-03 11:38:10 - dbfile_sugar - DEBUG - 存储 dataframe 数据至 aibot_sentimental_sugar_manager, 开始存储 pd.DataFrame 数据
+2025-07-03 11:38:10 - dbfile_sugar - WARNING - 存储 dataframe 数据至 aibot_sentimental_sugar_manager, 待存储的数据为空: (0, 17), 跳过!
+2025-07-03 11:38:10 - dbfile_sugar - DEBUG - 读取 dataframe 数据, 表名: aibot_sentimental_sugar_manager
+2025-07-03 11:38:10 - dbfile_sugar - DEBUG - 从 aibot_sentimental_sugar_manager 读取 dataframe 数据, 加载 metadata
+2025-07-03 11:38:10 - dbfile_sugar - DEBUG - 从 aibot_sentimental_sugar_manager 读取 dataframe 数据, 执行分区读取
+2025-07-03 11:38:10 - dbfile_sugar - INFO - 成功从 aibot_sentimental_sugar_manager 读取 dataframe 数据，数据大小: (14, 16)
+2025-07-03 11:38:10 - dbfile_sugar - DEBUG - 存储 dataframe 数据至 aibot_sentimental_sugar_manager, 开始存储 pd.DataFrame 数据
+2025-07-03 11:38:10 - dbfile_sugar - WARNING - 存储 dataframe 数据至 aibot_sentimental_sugar_manager, 待存储的数据为空: (0, 17), 跳过!
+2025-07-03 11:38:10 - DBFile - INFO - 初始化文件数据库, 根路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/DataBase
+2025-07-03 11:38:10 - DBFile - INFO - 成功从 aibot_sentimental_sugar_manager 读取 dataframe 数据，数据大小: (2, 16)
+2025-07-03 11:38:10 - DBFile - INFO - 初始化文件数据库, 根路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/DataBase
+2025-07-03 11:38:10 - DBFile - INFO - 成功从 future_bar1d 读取 dataframe 数据，数据大小: (107, 6)
+2025-07-03 11:38:10 - DBFile - INFO - 初始化文件数据库, 根路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/DataBase
+2025-07-03 11:38:10 - DBFile - INFO - 成功从 aibot_sentimental_sugar_manager 读取 dataframe 数据，数据大小: (108, 16)
+2025-07-03 11:38:10 - dbfile_sugar - INFO - 初始化文件数据库, 根路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/DataBase
+2025-07-03 11:38:10 - dbfile_sugar - DEBUG - 读取 dataframe 数据, 表名: aibot_sentimental_sugar_manager
+2025-07-03 11:38:10 - dbfile_sugar - DEBUG - 从 aibot_sentimental_sugar_manager 读取 dataframe 数据, 加载 metadata
+2025-07-03 11:38:10 - dbfile_sugar - DEBUG - 从 aibot_sentimental_sugar_manager 读取 dataframe 数据, 执行分区读取
+2025-07-03 11:38:10 - dbfile_sugar - INFO - 成功从 aibot_sentimental_sugar_manager 读取 dataframe 数据，数据大小: (14, 16)
+2025-07-03 11:38:10 - dbfile_sugar - DEBUG - 读取 dataframe 数据, 表名: aibot_sentimental_sugar_researcher
+2025-07-03 11:38:10 - dbfile_sugar - DEBUG - 从 aibot_sentimental_sugar_researcher 读取 dataframe 数据, 加载 metadata
+2025-07-03 11:38:10 - dbfile_sugar - DEBUG - 从 aibot_sentimental_sugar_researcher 读取 dataframe 数据, 执行分区读取
+2025-07-03 11:38:10 - dbfile_sugar - INFO - 成功从 aibot_sentimental_sugar_researcher 读取 dataframe 数据，数据大小: (145, 9)
+2025-07-03 11:38:10 - dbfile_sugar - DEBUG - 存储 dataframe 数据至 aibot_sentimental_sugar_manager, 开始存储 pd.DataFrame 数据
+2025-07-03 11:38:10 - dbfile_sugar - WARNING - 存储 dataframe 数据至 aibot_sentimental_sugar_manager, 待存储的数据为空: (0, 17), 跳过!
+2025-07-03 11:38:10 - dbfile_sugar - DEBUG - 读取 dataframe 数据, 表名: aibot_sentimental_sugar_manager
+2025-07-03 11:38:10 - dbfile_sugar - DEBUG - 从 aibot_sentimental_sugar_manager 读取 dataframe 数据, 加载 metadata
+2025-07-03 11:38:10 - dbfile_sugar - DEBUG - 从 aibot_sentimental_sugar_manager 读取 dataframe 数据, 执行分区读取
+2025-07-03 11:38:10 - dbfile_sugar - INFO - 成功从 aibot_sentimental_sugar_manager 读取 dataframe 数据，数据大小: (14, 16)
+2025-07-03 11:38:10 - dbfile_sugar - DEBUG - 存储 dataframe 数据至 aibot_sentimental_sugar_manager, 开始存储 pd.DataFrame 数据
+2025-07-03 11:38:10 - dbfile_sugar - WARNING - 存储 dataframe 数据至 aibot_sentimental_sugar_manager, 待存储的数据为空: (0, 17), 跳过!
+2025-07-03 11:38:10 - DBFile - INFO - 初始化文件数据库, 根路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/DataBase
+2025-07-03 11:38:10 - DBFile - INFO - 成功从 aibot_sentimental_sugar_manager 读取 dataframe 数据，数据大小: (2, 16)
+2025-07-03 11:38:10 - DBFile - INFO - 初始化文件数据库, 根路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/DataBase
+2025-07-03 11:38:10 - DBFile - INFO - 成功从 future_bar1d 读取 dataframe 数据，数据大小: (108, 6)
+2025-07-03 11:38:10 - DBFile - INFO - 初始化文件数据库, 根路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/DataBase
+2025-07-03 11:38:10 - DBFile - INFO - 成功从 aibot_sentimental_sugar_manager 读取 dataframe 数据，数据大小: (110, 16)
+2025-07-03 11:38:10 - dbfile_sugar - INFO - 初始化文件数据库, 根路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/DataBase
+2025-07-03 11:38:10 - dbfile_sugar - DEBUG - 读取 dataframe 数据, 表名: aibot_sentimental_sugar_manager
+2025-07-03 11:38:10 - dbfile_sugar - DEBUG - 从 aibot_sentimental_sugar_manager 读取 dataframe 数据, 加载 metadata
+2025-07-03 11:38:10 - dbfile_sugar - DEBUG - 从 aibot_sentimental_sugar_manager 读取 dataframe 数据, 执行分区读取
+2025-07-03 11:38:10 - dbfile_sugar - INFO - 成功从 aibot_sentimental_sugar_manager 读取 dataframe 数据，数据大小: (16, 16)
+2025-07-03 11:38:10 - dbfile_sugar - DEBUG - 读取 dataframe 数据, 表名: aibot_sentimental_sugar_researcher
+2025-07-03 11:38:10 - dbfile_sugar - DEBUG - 从 aibot_sentimental_sugar_researcher 读取 dataframe 数据, 加载 metadata
+2025-07-03 11:38:10 - dbfile_sugar - DEBUG - 从 aibot_sentimental_sugar_researcher 读取 dataframe 数据, 执行分区读取
+2025-07-03 11:38:10 - dbfile_sugar - INFO - 成功从 aibot_sentimental_sugar_researcher 读取 dataframe 数据，数据大小: (155, 9)
+2025-07-03 11:38:10 - dbfile_sugar - DEBUG - 存储 dataframe 数据至 aibot_sentimental_sugar_manager, 开始存储 pd.DataFrame 数据
+2025-07-03 11:38:10 - dbfile_sugar - WARNING - 存储 dataframe 数据至 aibot_sentimental_sugar_manager, 待存储的数据为空: (0, 17), 跳过!
+2025-07-03 11:38:10 - dbfile_sugar - DEBUG - 读取 dataframe 数据, 表名: aibot_sentimental_sugar_manager
+2025-07-03 11:38:10 - dbfile_sugar - DEBUG - 从 aibot_sentimental_sugar_manager 读取 dataframe 数据, 加载 metadata
+2025-07-03 11:38:10 - dbfile_sugar - DEBUG - 从 aibot_sentimental_sugar_manager 读取 dataframe 数据, 执行分区读取
+2025-07-03 11:38:10 - dbfile_sugar - INFO - 成功从 aibot_sentimental_sugar_manager 读取 dataframe 数据，数据大小: (16, 16)
+2025-07-03 11:38:10 - dbfile_sugar - DEBUG - 存储 dataframe 数据至 aibot_sentimental_sugar_manager, 开始存储 pd.DataFrame 数据
+2025-07-03 11:38:10 - dbfile_sugar - WARNING - 存储 dataframe 数据至 aibot_sentimental_sugar_manager, 待存储的数据为空: (0, 17), 跳过!
+2025-07-03 11:38:10 - DBFile - INFO - 初始化文件数据库, 根路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/DataBase
+2025-07-03 11:38:10 - DBFile - INFO - 成功从 aibot_sentimental_sugar_manager 读取 dataframe 数据，数据大小: (2, 16)
+2025-07-03 11:38:10 - DBFile - INFO - 初始化文件数据库, 根路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/DataBase
+2025-07-03 11:38:10 - DBFile - INFO - 成功从 future_bar1d 读取 dataframe 数据，数据大小: (109, 6)
+2025-07-03 11:38:10 - DBFile - INFO - 初始化文件数据库, 根路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/DataBase
+2025-07-03 11:38:10 - DBFile - INFO - 成功从 aibot_sentimental_sugar_manager 读取 dataframe 数据，数据大小: (112, 16)
+2025-07-03 11:38:10 - dbfile_sugar - INFO - 初始化文件数据库, 根路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/DataBase
+2025-07-03 11:38:10 - dbfile_sugar - DEBUG - 读取 dataframe 数据, 表名: aibot_sentimental_sugar_manager
+2025-07-03 11:38:10 - dbfile_sugar - DEBUG - 从 aibot_sentimental_sugar_manager 读取 dataframe 数据, 加载 metadata
+2025-07-03 11:38:10 - dbfile_sugar - DEBUG - 从 aibot_sentimental_sugar_manager 读取 dataframe 数据, 执行分区读取
+2025-07-03 11:38:10 - dbfile_sugar - INFO - 成功从 aibot_sentimental_sugar_manager 读取 dataframe 数据，数据大小: (18, 16)
+2025-07-03 11:38:10 - dbfile_sugar - DEBUG - 读取 dataframe 数据, 表名: aibot_sentimental_sugar_researcher
+2025-07-03 11:38:10 - dbfile_sugar - DEBUG - 从 aibot_sentimental_sugar_researcher 读取 dataframe 数据, 加载 metadata
+2025-07-03 11:38:10 - dbfile_sugar - DEBUG - 从 aibot_sentimental_sugar_researcher 读取 dataframe 数据, 执行分区读取
+2025-07-03 11:38:10 - dbfile_sugar - INFO - 成功从 aibot_sentimental_sugar_researcher 读取 dataframe 数据，数据大小: (168, 9)
+2025-07-03 11:38:10 - dbfile_sugar - DEBUG - 存储 dataframe 数据至 aibot_sentimental_sugar_manager, 开始存储 pd.DataFrame 数据
+2025-07-03 11:38:10 - dbfile_sugar - WARNING - 存储 dataframe 数据至 aibot_sentimental_sugar_manager, 待存储的数据为空: (0, 17), 跳过!
+2025-07-03 11:38:10 - dbfile_sugar - DEBUG - 读取 dataframe 数据, 表名: aibot_sentimental_sugar_manager
+2025-07-03 11:38:10 - dbfile_sugar - DEBUG - 从 aibot_sentimental_sugar_manager 读取 dataframe 数据, 加载 metadata
+2025-07-03 11:38:10 - dbfile_sugar - DEBUG - 从 aibot_sentimental_sugar_manager 读取 dataframe 数据, 执行分区读取
+2025-07-03 11:38:10 - dbfile_sugar - INFO - 成功从 aibot_sentimental_sugar_manager 读取 dataframe 数据，数据大小: (18, 16)
+2025-07-03 11:38:10 - dbfile_sugar - DEBUG - 存储 dataframe 数据至 aibot_sentimental_sugar_manager, 开始存储 pd.DataFrame 数据
+2025-07-03 11:38:10 - dbfile_sugar - WARNING - 存储 dataframe 数据至 aibot_sentimental_sugar_manager, 待存储的数据为空: (0, 17), 跳过!
+2025-07-03 11:38:10 - DBFile - INFO - 初始化文件数据库, 根路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/DataBase
+2025-07-03 11:38:10 - DBFile - INFO - 成功从 aibot_sentimental_sugar_manager 读取 dataframe 数据，数据大小: (2, 16)
+2025-07-03 11:38:10 - DBFile - INFO - 初始化文件数据库, 根路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/DataBase
+2025-07-03 11:38:10 - DBFile - INFO - 成功从 future_bar1d 读取 dataframe 数据，数据大小: (110, 6)
+2025-07-03 11:38:10 - DBFile - INFO - 初始化文件数据库, 根路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/DataBase
+2025-07-03 11:38:10 - DBFile - INFO - 成功从 aibot_sentimental_sugar_manager 读取 dataframe 数据，数据大小: (114, 16)
+2025-07-03 11:38:10 - dbfile_sugar - INFO - 初始化文件数据库, 根路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/DataBase
+2025-07-03 11:38:10 - dbfile_sugar - DEBUG - 读取 dataframe 数据, 表名: aibot_sentimental_sugar_manager
+2025-07-03 11:38:10 - dbfile_sugar - DEBUG - 从 aibot_sentimental_sugar_manager 读取 dataframe 数据, 加载 metadata
+2025-07-03 11:38:10 - dbfile_sugar - DEBUG - 从 aibot_sentimental_sugar_manager 读取 dataframe 数据, 执行分区读取
+2025-07-03 11:38:10 - dbfile_sugar - INFO - 成功从 aibot_sentimental_sugar_manager 读取 dataframe 数据，数据大小: (18, 16)
+2025-07-03 11:38:10 - dbfile_sugar - DEBUG - 读取 dataframe 数据, 表名: aibot_sentimental_sugar_researcher
+2025-07-03 11:38:10 - dbfile_sugar - DEBUG - 从 aibot_sentimental_sugar_researcher 读取 dataframe 数据, 加载 metadata
+2025-07-03 11:38:10 - dbfile_sugar - DEBUG - 从 aibot_sentimental_sugar_researcher 读取 dataframe 数据, 执行分区读取
+2025-07-03 11:38:10 - dbfile_sugar - INFO - 成功从 aibot_sentimental_sugar_researcher 读取 dataframe 数据，数据大小: (160, 9)
+2025-07-03 11:38:11 - dbfile_sugar - DEBUG - 存储 dataframe 数据至 aibot_sentimental_sugar_manager, 开始存储 pd.DataFrame 数据
+2025-07-03 11:38:11 - dbfile_sugar - WARNING - 存储 dataframe 数据至 aibot_sentimental_sugar_manager, 待存储的数据为空: (0, 17), 跳过!
+2025-07-03 11:38:11 - dbfile_sugar - DEBUG - 读取 dataframe 数据, 表名: aibot_sentimental_sugar_manager
+2025-07-03 11:38:11 - dbfile_sugar - DEBUG - 从 aibot_sentimental_sugar_manager 读取 dataframe 数据, 加载 metadata
+2025-07-03 11:38:11 - dbfile_sugar - DEBUG - 从 aibot_sentimental_sugar_manager 读取 dataframe 数据, 执行分区读取
+2025-07-03 11:38:11 - dbfile_sugar - INFO - 成功从 aibot_sentimental_sugar_manager 读取 dataframe 数据，数据大小: (18, 16)
+2025-07-03 11:38:11 - dbfile_sugar - DEBUG - 存储 dataframe 数据至 aibot_sentimental_sugar_manager, 开始存储 pd.DataFrame 数据
+2025-07-03 11:38:11 - dbfile_sugar - WARNING - 存储 dataframe 数据至 aibot_sentimental_sugar_manager, 待存储的数据为空: (0, 17), 跳过!
+2025-07-03 11:38:11 - DBFile - INFO - 初始化文件数据库, 根路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/DataBase
+2025-07-03 11:38:11 - DBFile - INFO - 成功从 aibot_sentimental_sugar_manager 读取 dataframe 数据，数据大小: (2, 16)
+2025-07-03 11:38:11 - DBFile - INFO - 初始化文件数据库, 根路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/DataBase
+2025-07-03 11:38:11 - DBFile - INFO - 成功从 future_bar1d 读取 dataframe 数据，数据大小: (111, 6)
+2025-07-03 11:38:11 - DBFile - INFO - 初始化文件数据库, 根路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/DataBase
+2025-07-03 11:38:11 - DBFile - INFO - 成功从 aibot_sentimental_sugar_manager 读取 dataframe 数据，数据大小: (116, 16)
+2025-07-03 11:38:11 - dbfile_sugar - INFO - 初始化文件数据库, 根路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/DataBase
+2025-07-03 11:38:11 - dbfile_sugar - DEBUG - 读取 dataframe 数据, 表名: aibot_sentimental_sugar_manager
+2025-07-03 11:38:11 - dbfile_sugar - DEBUG - 从 aibot_sentimental_sugar_manager 读取 dataframe 数据, 加载 metadata
+2025-07-03 11:38:11 - dbfile_sugar - DEBUG - 从 aibot_sentimental_sugar_manager 读取 dataframe 数据, 执行分区读取
+2025-07-03 11:38:11 - dbfile_sugar - INFO - 成功从 aibot_sentimental_sugar_manager 读取 dataframe 数据，数据大小: (18, 16)
+2025-07-03 11:38:11 - dbfile_sugar - DEBUG - 读取 dataframe 数据, 表名: aibot_sentimental_sugar_researcher
+2025-07-03 11:38:11 - dbfile_sugar - DEBUG - 从 aibot_sentimental_sugar_researcher 读取 dataframe 数据, 加载 metadata
+2025-07-03 11:38:11 - dbfile_sugar - DEBUG - 从 aibot_sentimental_sugar_researcher 读取 dataframe 数据, 执行分区读取
+2025-07-03 11:38:11 - dbfile_sugar - INFO - 成功从 aibot_sentimental_sugar_researcher 读取 dataframe 数据，数据大小: (133, 9)
+2025-07-03 11:38:11 - dbfile_sugar - DEBUG - 存储 dataframe 数据至 aibot_sentimental_sugar_manager, 开始存储 pd.DataFrame 数据
+2025-07-03 11:38:11 - dbfile_sugar - WARNING - 存储 dataframe 数据至 aibot_sentimental_sugar_manager, 待存储的数据为空: (0, 17), 跳过!
+2025-07-03 11:38:11 - dbfile_sugar - DEBUG - 读取 dataframe 数据, 表名: aibot_sentimental_sugar_manager
+2025-07-03 11:38:11 - dbfile_sugar - DEBUG - 从 aibot_sentimental_sugar_manager 读取 dataframe 数据, 加载 metadata
+2025-07-03 11:38:11 - dbfile_sugar - DEBUG - 从 aibot_sentimental_sugar_manager 读取 dataframe 数据, 执行分区读取
+2025-07-03 11:38:11 - dbfile_sugar - INFO - 成功从 aibot_sentimental_sugar_manager 读取 dataframe 数据，数据大小: (18, 16)
+2025-07-03 11:38:11 - dbfile_sugar - DEBUG - 存储 dataframe 数据至 aibot_sentimental_sugar_manager, 开始存储 pd.DataFrame 数据
+2025-07-03 11:38:11 - dbfile_sugar - WARNING - 存储 dataframe 数据至 aibot_sentimental_sugar_manager, 待存储的数据为空: (0, 17), 跳过!
+2025-07-03 11:38:11 - DBFile - INFO - 初始化文件数据库, 根路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/DataBase
+2025-07-03 11:38:11 - DBFile - INFO - 成功从 aibot_sentimental_sugar_manager 读取 dataframe 数据，数据大小: (2, 16)
+2025-07-03 11:38:11 - DBFile - INFO - 初始化文件数据库, 根路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/DataBase
+2025-07-03 11:38:11 - DBFile - INFO - 成功从 future_bar1d 读取 dataframe 数据，数据大小: (111, 6)
+2025-07-03 11:38:11 - DBFile - INFO - 初始化文件数据库, 根路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/DataBase
+2025-07-03 11:38:11 - DBFile - INFO - 成功从 aibot_sentimental_sugar_manager 读取 dataframe 数据，数据大小: (118, 16)
+2025-07-03 11:38:11 - dbfile_sugar - INFO - 初始化文件数据库, 根路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/DataBase
+2025-07-03 11:38:11 - dbfile_sugar - DEBUG - 读取 dataframe 数据, 表名: aibot_sentimental_sugar_manager
+2025-07-03 11:38:11 - dbfile_sugar - DEBUG - 从 aibot_sentimental_sugar_manager 读取 dataframe 数据, 加载 metadata
+2025-07-03 11:38:11 - dbfile_sugar - DEBUG - 从 aibot_sentimental_sugar_manager 读取 dataframe 数据, 执行分区读取
+2025-07-03 11:38:11 - dbfile_sugar - INFO - 成功从 aibot_sentimental_sugar_manager 读取 dataframe 数据，数据大小: (16, 16)
+2025-07-03 11:38:11 - dbfile_sugar - DEBUG - 读取 dataframe 数据, 表名: aibot_sentimental_sugar_researcher
+2025-07-03 11:38:11 - dbfile_sugar - DEBUG - 从 aibot_sentimental_sugar_researcher 读取 dataframe 数据, 加载 metadata
+2025-07-03 11:38:11 - dbfile_sugar - DEBUG - 从 aibot_sentimental_sugar_researcher 读取 dataframe 数据, 执行分区读取
+2025-07-03 11:38:11 - dbfile_sugar - INFO - 成功从 aibot_sentimental_sugar_researcher 读取 dataframe 数据，数据大小: (120, 9)
+2025-07-03 11:38:11 - dbfile_sugar - DEBUG - 存储 dataframe 数据至 aibot_sentimental_sugar_manager, 开始存储 pd.DataFrame 数据
+2025-07-03 11:38:11 - dbfile_sugar - WARNING - 存储 dataframe 数据至 aibot_sentimental_sugar_manager, 待存储的数据为空: (0, 17), 跳过!
+2025-07-03 11:38:11 - dbfile_sugar - DEBUG - 读取 dataframe 数据, 表名: aibot_sentimental_sugar_manager
+2025-07-03 11:38:11 - dbfile_sugar - DEBUG - 从 aibot_sentimental_sugar_manager 读取 dataframe 数据, 加载 metadata
+2025-07-03 11:38:11 - dbfile_sugar - DEBUG - 从 aibot_sentimental_sugar_manager 读取 dataframe 数据, 执行分区读取
+2025-07-03 11:38:11 - dbfile_sugar - INFO - 成功从 aibot_sentimental_sugar_manager 读取 dataframe 数据，数据大小: (16, 16)
+2025-07-03 11:38:11 - dbfile_sugar - DEBUG - 存储 dataframe 数据至 aibot_sentimental_sugar_manager, 开始存储 pd.DataFrame 数据
+2025-07-03 11:38:11 - dbfile_sugar - WARNING - 存储 dataframe 数据至 aibot_sentimental_sugar_manager, 待存储的数据为空: (0, 17), 跳过!
+2025-07-03 11:38:11 - DBFile - INFO - 初始化文件数据库, 根路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/DataBase
+2025-07-03 11:38:11 - DBFile - INFO - 成功从 aibot_sentimental_sugar_manager 读取 dataframe 数据，数据大小: (0, 16)
+2025-07-03 11:38:11 - DBFile - INFO - 初始化文件数据库, 根路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/DataBase
+2025-07-03 11:38:11 - DBFile - INFO - 成功从 future_bar1d 读取 dataframe 数据，数据大小: (111, 6)
+2025-07-03 11:38:11 - DBFile - INFO - 初始化文件数据库, 根路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/DataBase
+2025-07-03 11:38:11 - DBFile - INFO - 成功从 aibot_sentimental_sugar_manager 读取 dataframe 数据，数据大小: (118, 16)
+2025-07-03 11:38:11 - dbfile_sugar - INFO - 初始化文件数据库, 根路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/DataBase
+2025-07-03 11:38:11 - dbfile_sugar - DEBUG - 读取 dataframe 数据, 表名: aibot_sentimental_sugar_manager
+2025-07-03 11:38:11 - dbfile_sugar - DEBUG - 从 aibot_sentimental_sugar_manager 读取 dataframe 数据, 加载 metadata
+2025-07-03 11:38:11 - dbfile_sugar - DEBUG - 从 aibot_sentimental_sugar_manager 读取 dataframe 数据, 执行分区读取
+2025-07-03 11:38:11 - dbfile_sugar - INFO - 成功从 aibot_sentimental_sugar_manager 读取 dataframe 数据，数据大小: (16, 16)
+2025-07-03 11:38:11 - dbfile_sugar - DEBUG - 读取 dataframe 数据, 表名: aibot_sentimental_sugar_researcher
+2025-07-03 11:38:11 - dbfile_sugar - DEBUG - 从 aibot_sentimental_sugar_researcher 读取 dataframe 数据, 加载 metadata
+2025-07-03 11:38:11 - dbfile_sugar - DEBUG - 从 aibot_sentimental_sugar_researcher 读取 dataframe 数据, 执行分区读取
+2025-07-03 11:38:11 - dbfile_sugar - INFO - 成功从 aibot_sentimental_sugar_researcher 读取 dataframe 数据，数据大小: (119, 9)
+2025-07-03 11:38:11 - dbfile_sugar - DEBUG - 存储 dataframe 数据至 aibot_sentimental_sugar_manager, 开始存储 pd.DataFrame 数据
+2025-07-03 11:38:11 - dbfile_sugar - WARNING - 存储 dataframe 数据至 aibot_sentimental_sugar_manager, 待存储的数据为空: (0, 17), 跳过!
+2025-07-03 11:38:11 - dbfile_sugar - DEBUG - 读取 dataframe 数据, 表名: aibot_sentimental_sugar_manager
+2025-07-03 11:38:11 - dbfile_sugar - DEBUG - 从 aibot_sentimental_sugar_manager 读取 dataframe 数据, 加载 metadata
+2025-07-03 11:38:11 - dbfile_sugar - DEBUG - 从 aibot_sentimental_sugar_manager 读取 dataframe 数据, 执行分区读取
+2025-07-03 11:38:11 - dbfile_sugar - INFO - 成功从 aibot_sentimental_sugar_manager 读取 dataframe 数据，数据大小: (16, 16)
+2025-07-03 11:38:11 - dbfile_sugar - DEBUG - 存储 dataframe 数据至 aibot_sentimental_sugar_manager, 开始存储 pd.DataFrame 数据
+2025-07-03 11:38:11 - dbfile_sugar - WARNING - 存储 dataframe 数据至 aibot_sentimental_sugar_manager, 待存储的数据为空: (0, 17), 跳过!
+2025-07-03 11:38:11 - DBFile - INFO - 初始化文件数据库, 根路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/DataBase
+2025-07-03 11:38:11 - DBFile - INFO - 成功从 aibot_sentimental_sugar_manager 读取 dataframe 数据，数据大小: (2, 16)
+2025-07-03 11:38:11 - DBFile - INFO - 初始化文件数据库, 根路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/DataBase
+2025-07-03 11:38:11 - DBFile - INFO - 成功从 future_bar1d 读取 dataframe 数据，数据大小: (112, 6)
+2025-07-03 11:38:11 - DBFile - INFO - 初始化文件数据库, 根路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/DataBase
+2025-07-03 11:38:11 - DBFile - INFO - 成功从 aibot_sentimental_sugar_manager 读取 dataframe 数据，数据大小: (120, 16)
+2025-07-03 11:38:11 - dbfile_sugar - INFO - 初始化文件数据库, 根路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/DataBase
+2025-07-03 11:38:11 - dbfile_sugar - DEBUG - 读取 dataframe 数据, 表名: aibot_sentimental_sugar_manager
+2025-07-03 11:38:11 - dbfile_sugar - DEBUG - 从 aibot_sentimental_sugar_manager 读取 dataframe 数据, 加载 metadata
+2025-07-03 11:38:11 - dbfile_sugar - DEBUG - 从 aibot_sentimental_sugar_manager 读取 dataframe 数据, 执行分区读取
+2025-07-03 11:38:11 - dbfile_sugar - INFO - 成功从 aibot_sentimental_sugar_manager 读取 dataframe 数据，数据大小: (16, 16)
+2025-07-03 11:38:11 - dbfile_sugar - DEBUG - 读取 dataframe 数据, 表名: aibot_sentimental_sugar_researcher
+2025-07-03 11:38:11 - dbfile_sugar - DEBUG - 从 aibot_sentimental_sugar_researcher 读取 dataframe 数据, 加载 metadata
+2025-07-03 11:38:11 - dbfile_sugar - DEBUG - 从 aibot_sentimental_sugar_researcher 读取 dataframe 数据, 执行分区读取
+2025-07-03 11:38:11 - dbfile_sugar - INFO - 成功从 aibot_sentimental_sugar_researcher 读取 dataframe 数据，数据大小: (107, 9)
+2025-07-03 11:38:11 - dbfile_sugar - DEBUG - 存储 dataframe 数据至 aibot_sentimental_sugar_manager, 开始存储 pd.DataFrame 数据
+2025-07-03 11:38:11 - dbfile_sugar - WARNING - 存储 dataframe 数据至 aibot_sentimental_sugar_manager, 待存储的数据为空: (0, 17), 跳过!
+2025-07-03 11:38:11 - dbfile_sugar - DEBUG - 读取 dataframe 数据, 表名: aibot_sentimental_sugar_manager
+2025-07-03 11:38:11 - dbfile_sugar - DEBUG - 从 aibot_sentimental_sugar_manager 读取 dataframe 数据, 加载 metadata
+2025-07-03 11:38:11 - dbfile_sugar - DEBUG - 从 aibot_sentimental_sugar_manager 读取 dataframe 数据, 执行分区读取
+2025-07-03 11:38:11 - dbfile_sugar - INFO - 成功从 aibot_sentimental_sugar_manager 读取 dataframe 数据，数据大小: (16, 16)
+2025-07-03 11:38:11 - dbfile_sugar - DEBUG - 存储 dataframe 数据至 aibot_sentimental_sugar_manager, 开始存储 pd.DataFrame 数据
+2025-07-03 11:38:11 - dbfile_sugar - WARNING - 存储 dataframe 数据至 aibot_sentimental_sugar_manager, 待存储的数据为空: (0, 17), 跳过!
+2025-07-03 11:38:11 - DBFile - INFO - 初始化文件数据库, 根路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/DataBase
+2025-07-03 11:38:11 - DBFile - INFO - 成功从 aibot_sentimental_sugar_manager 读取 dataframe 数据，数据大小: (2, 16)
+2025-07-03 11:38:11 - DBFile - INFO - 初始化文件数据库, 根路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/DataBase
+2025-07-03 11:38:11 - DBFile - INFO - 成功从 future_bar1d 读取 dataframe 数据，数据大小: (113, 6)
+2025-07-03 11:38:11 - DBFile - INFO - 初始化文件数据库, 根路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/DataBase
+2025-07-03 11:38:11 - DBFile - INFO - 成功从 aibot_sentimental_sugar_manager 读取 dataframe 数据，数据大小: (122, 16)
+2025-07-03 11:38:11 - dbfile_sugar - INFO - 初始化文件数据库, 根路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/DataBase
+2025-07-03 11:38:11 - dbfile_sugar - DEBUG - 读取 dataframe 数据, 表名: aibot_sentimental_sugar_manager
+2025-07-03 11:38:11 - dbfile_sugar - DEBUG - 从 aibot_sentimental_sugar_manager 读取 dataframe 数据, 加载 metadata
+2025-07-03 11:38:11 - dbfile_sugar - DEBUG - 从 aibot_sentimental_sugar_manager 读取 dataframe 数据, 执行分区读取
+2025-07-03 11:38:11 - dbfile_sugar - INFO - 成功从 aibot_sentimental_sugar_manager 读取 dataframe 数据，数据大小: (18, 16)
+2025-07-03 11:38:11 - dbfile_sugar - DEBUG - 读取 dataframe 数据, 表名: aibot_sentimental_sugar_researcher
+2025-07-03 11:38:11 - dbfile_sugar - DEBUG - 从 aibot_sentimental_sugar_researcher 读取 dataframe 数据, 加载 metadata
+2025-07-03 11:38:11 - dbfile_sugar - DEBUG - 从 aibot_sentimental_sugar_researcher 读取 dataframe 数据, 执行分区读取
+2025-07-03 11:38:11 - dbfile_sugar - INFO - 成功从 aibot_sentimental_sugar_researcher 读取 dataframe 数据，数据大小: (119, 9)
+2025-07-03 11:38:11 - dbfile_sugar - DEBUG - 存储 dataframe 数据至 aibot_sentimental_sugar_manager, 开始存储 pd.DataFrame 数据
+2025-07-03 11:38:11 - dbfile_sugar - WARNING - 存储 dataframe 数据至 aibot_sentimental_sugar_manager, 待存储的数据为空: (0, 17), 跳过!
+2025-07-03 11:38:11 - dbfile_sugar - DEBUG - 读取 dataframe 数据, 表名: aibot_sentimental_sugar_manager
+2025-07-03 11:38:11 - dbfile_sugar - DEBUG - 从 aibot_sentimental_sugar_manager 读取 dataframe 数据, 加载 metadata
+2025-07-03 11:38:11 - dbfile_sugar - DEBUG - 从 aibot_sentimental_sugar_manager 读取 dataframe 数据, 执行分区读取
+2025-07-03 11:38:11 - dbfile_sugar - INFO - 成功从 aibot_sentimental_sugar_manager 读取 dataframe 数据，数据大小: (18, 16)
+2025-07-03 11:38:11 - dbfile_sugar - DEBUG - 存储 dataframe 数据至 aibot_sentimental_sugar_manager, 开始存储 pd.DataFrame 数据
+2025-07-03 11:38:11 - dbfile_sugar - WARNING - 存储 dataframe 数据至 aibot_sentimental_sugar_manager, 待存储的数据为空: (0, 17), 跳过!
+2025-07-03 11:38:11 - DBFile - INFO - 初始化文件数据库, 根路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/DataBase
+2025-07-03 11:38:11 - DBFile - INFO - 成功从 aibot_sentimental_sugar_manager 读取 dataframe 数据，数据大小: (2, 16)
+2025-07-03 11:38:11 - DBFile - INFO - 初始化文件数据库, 根路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/DataBase
+2025-07-03 11:38:11 - DBFile - INFO - 成功从 future_bar1d 读取 dataframe 数据，数据大小: (114, 6)
+2025-07-03 11:38:11 - DBFile - INFO - 初始化文件数据库, 根路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/DataBase
+2025-07-03 11:38:11 - DBFile - INFO - 成功从 aibot_sentimental_sugar_manager 读取 dataframe 数据，数据大小: (124, 16)
+2025-07-03 11:38:11 - dbfile_sugar - INFO - 初始化文件数据库, 根路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/DataBase
+2025-07-03 11:38:11 - dbfile_sugar - DEBUG - 读取 dataframe 数据, 表名: aibot_sentimental_sugar_manager
+2025-07-03 11:38:11 - dbfile_sugar - DEBUG - 从 aibot_sentimental_sugar_manager 读取 dataframe 数据, 加载 metadata
+2025-07-03 11:38:11 - dbfile_sugar - DEBUG - 从 aibot_sentimental_sugar_manager 读取 dataframe 数据, 执行分区读取
+2025-07-03 11:38:11 - dbfile_sugar - INFO - 成功从 aibot_sentimental_sugar_manager 读取 dataframe 数据，数据大小: (20, 16)
+2025-07-03 11:38:11 - dbfile_sugar - DEBUG - 读取 dataframe 数据, 表名: aibot_sentimental_sugar_researcher
+2025-07-03 11:38:11 - dbfile_sugar - DEBUG - 从 aibot_sentimental_sugar_researcher 读取 dataframe 数据, 加载 metadata
+2025-07-03 11:38:11 - dbfile_sugar - DEBUG - 从 aibot_sentimental_sugar_researcher 读取 dataframe 数据, 执行分区读取
+2025-07-03 11:38:11 - dbfile_sugar - INFO - 成功从 aibot_sentimental_sugar_researcher 读取 dataframe 数据，数据大小: (143, 9)
+2025-07-03 11:38:11 - dbfile_sugar - DEBUG - 存储 dataframe 数据至 aibot_sentimental_sugar_manager, 开始存储 pd.DataFrame 数据
+2025-07-03 11:38:11 - dbfile_sugar - WARNING - 存储 dataframe 数据至 aibot_sentimental_sugar_manager, 待存储的数据为空: (0, 17), 跳过!
+2025-07-03 11:38:11 - dbfile_sugar - DEBUG - 读取 dataframe 数据, 表名: aibot_sentimental_sugar_manager
+2025-07-03 11:38:11 - dbfile_sugar - DEBUG - 从 aibot_sentimental_sugar_manager 读取 dataframe 数据, 加载 metadata
+2025-07-03 11:38:11 - dbfile_sugar - DEBUG - 从 aibot_sentimental_sugar_manager 读取 dataframe 数据, 执行分区读取
+2025-07-03 11:38:11 - dbfile_sugar - INFO - 成功从 aibot_sentimental_sugar_manager 读取 dataframe 数据，数据大小: (20, 16)
+2025-07-03 11:38:11 - dbfile_sugar - DEBUG - 存储 dataframe 数据至 aibot_sentimental_sugar_manager, 开始存储 pd.DataFrame 数据
+2025-07-03 11:38:11 - dbfile_sugar - WARNING - 存储 dataframe 数据至 aibot_sentimental_sugar_manager, 待存储的数据为空: (0, 17), 跳过!
+2025-07-03 11:38:11 - DBFile - INFO - 初始化文件数据库, 根路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/DataBase
+2025-07-03 11:38:11 - DBFile - INFO - 成功从 aibot_sentimental_sugar_manager 读取 dataframe 数据，数据大小: (2, 16)
+2025-07-03 11:38:11 - DBFile - INFO - 初始化文件数据库, 根路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/DataBase
+2025-07-03 11:38:11 - DBFile - INFO - 成功从 future_bar1d 读取 dataframe 数据，数据大小: (115, 6)
+2025-07-03 11:38:11 - DBFile - INFO - 初始化文件数据库, 根路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/DataBase
+2025-07-03 11:38:11 - DBFile - INFO - 成功从 aibot_sentimental_sugar_manager 读取 dataframe 数据，数据大小: (126, 16)
+2025-07-03 11:38:11 - dbfile_sugar - INFO - 初始化文件数据库, 根路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/DataBase
+2025-07-03 11:38:11 - dbfile_sugar - DEBUG - 读取 dataframe 数据, 表名: aibot_sentimental_sugar_manager
+2025-07-03 11:38:11 - dbfile_sugar - DEBUG - 从 aibot_sentimental_sugar_manager 读取 dataframe 数据, 加载 metadata
+2025-07-03 11:38:11 - dbfile_sugar - DEBUG - 从 aibot_sentimental_sugar_manager 读取 dataframe 数据, 执行分区读取
+2025-07-03 11:38:11 - dbfile_sugar - INFO - 成功从 aibot_sentimental_sugar_manager 读取 dataframe 数据，数据大小: (18, 16)
+2025-07-03 11:38:11 - dbfile_sugar - DEBUG - 读取 dataframe 数据, 表名: aibot_sentimental_sugar_researcher
+2025-07-03 11:38:11 - dbfile_sugar - DEBUG - 从 aibot_sentimental_sugar_researcher 读取 dataframe 数据, 加载 metadata
+2025-07-03 11:38:11 - dbfile_sugar - DEBUG - 从 aibot_sentimental_sugar_researcher 读取 dataframe 数据, 执行分区读取
+2025-07-03 11:38:11 - dbfile_sugar - INFO - 成功从 aibot_sentimental_sugar_researcher 读取 dataframe 数据，数据大小: (128, 9)
+2025-07-03 11:38:11 - dbfile_sugar - DEBUG - 存储 dataframe 数据至 aibot_sentimental_sugar_manager, 开始存储 pd.DataFrame 数据
+2025-07-03 11:38:11 - dbfile_sugar - WARNING - 存储 dataframe 数据至 aibot_sentimental_sugar_manager, 待存储的数据为空: (0, 17), 跳过!
+2025-07-03 11:38:11 - dbfile_sugar - DEBUG - 读取 dataframe 数据, 表名: aibot_sentimental_sugar_manager
+2025-07-03 11:38:11 - dbfile_sugar - DEBUG - 从 aibot_sentimental_sugar_manager 读取 dataframe 数据, 加载 metadata
+2025-07-03 11:38:11 - dbfile_sugar - DEBUG - 从 aibot_sentimental_sugar_manager 读取 dataframe 数据, 执行分区读取
+2025-07-03 11:38:11 - dbfile_sugar - INFO - 成功从 aibot_sentimental_sugar_manager 读取 dataframe 数据，数据大小: (18, 16)
+2025-07-03 11:38:11 - dbfile_sugar - DEBUG - 存储 dataframe 数据至 aibot_sentimental_sugar_manager, 开始存储 pd.DataFrame 数据
+2025-07-03 11:38:11 - dbfile_sugar - WARNING - 存储 dataframe 数据至 aibot_sentimental_sugar_manager, 待存储的数据为空: (0, 17), 跳过!
+2025-07-03 11:38:11 - DBFile - INFO - 初始化文件数据库, 根路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/DataBase
+2025-07-03 11:38:11 - DBFile - INFO - 成功从 aibot_sentimental_sugar_manager 读取 dataframe 数据，数据大小: (0, 16)
+2025-07-03 11:38:11 - DBFile - INFO - 初始化文件数据库, 根路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/DataBase
+2025-07-03 11:38:11 - DBFile - INFO - 成功从 future_bar1d 读取 dataframe 数据，数据大小: (116, 6)
+2025-07-03 11:38:11 - DBFile - INFO - 初始化文件数据库, 根路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/DataBase
+2025-07-03 11:38:11 - DBFile - INFO - 成功从 aibot_sentimental_sugar_manager 读取 dataframe 数据，数据大小: (126, 16)
+2025-07-03 11:38:11 - dbfile_sugar - INFO - 初始化文件数据库, 根路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/DataBase
+2025-07-03 11:38:11 - dbfile_sugar - DEBUG - 读取 dataframe 数据, 表名: aibot_sentimental_sugar_manager
+2025-07-03 11:38:11 - dbfile_sugar - DEBUG - 从 aibot_sentimental_sugar_manager 读取 dataframe 数据, 加载 metadata
+2025-07-03 11:38:11 - dbfile_sugar - DEBUG - 从 aibot_sentimental_sugar_manager 读取 dataframe 数据, 执行分区读取
+2025-07-03 11:38:11 - dbfile_sugar - INFO - 成功从 aibot_sentimental_sugar_manager 读取 dataframe 数据，数据大小: (16, 16)
+2025-07-03 11:38:11 - dbfile_sugar - DEBUG - 读取 dataframe 数据, 表名: aibot_sentimental_sugar_researcher
+2025-07-03 11:38:11 - dbfile_sugar - DEBUG - 从 aibot_sentimental_sugar_researcher 读取 dataframe 数据, 加载 metadata
+2025-07-03 11:38:11 - dbfile_sugar - DEBUG - 从 aibot_sentimental_sugar_researcher 读取 dataframe 数据, 执行分区读取
+2025-07-03 11:38:11 - dbfile_sugar - INFO - 成功从 aibot_sentimental_sugar_researcher 读取 dataframe 数据，数据大小: (103, 9)
+2025-07-03 11:38:11 - dbfile_sugar - DEBUG - 存储 dataframe 数据至 aibot_sentimental_sugar_manager, 开始存储 pd.DataFrame 数据
+2025-07-03 11:38:11 - dbfile_sugar - WARNING - 存储 dataframe 数据至 aibot_sentimental_sugar_manager, 待存储的数据为空: (0, 17), 跳过!
+2025-07-03 11:38:11 - dbfile_sugar - DEBUG - 读取 dataframe 数据, 表名: aibot_sentimental_sugar_manager
+2025-07-03 11:38:11 - dbfile_sugar - DEBUG - 从 aibot_sentimental_sugar_manager 读取 dataframe 数据, 加载 metadata
+2025-07-03 11:38:11 - dbfile_sugar - DEBUG - 从 aibot_sentimental_sugar_manager 读取 dataframe 数据, 执行分区读取
+2025-07-03 11:38:11 - dbfile_sugar - INFO - 成功从 aibot_sentimental_sugar_manager 读取 dataframe 数据，数据大小: (16, 16)
+2025-07-03 11:38:11 - dbfile_sugar - DEBUG - 存储 dataframe 数据至 aibot_sentimental_sugar_manager, 开始存储 pd.DataFrame 数据
+2025-07-03 11:38:11 - dbfile_sugar - WARNING - 存储 dataframe 数据至 aibot_sentimental_sugar_manager, 待存储的数据为空: (0, 17), 跳过!
+2025-07-03 11:38:11 - DBFile - INFO - 初始化文件数据库, 根路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/DataBase
+2025-07-03 11:38:11 - DBFile - INFO - 成功从 aibot_sentimental_sugar_manager 读取 dataframe 数据，数据大小: (0, 16)
+2025-07-03 11:38:11 - DBFile - INFO - 初始化文件数据库, 根路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/DataBase
+2025-07-03 11:38:11 - DBFile - INFO - 成功从 future_bar1d 读取 dataframe 数据，数据大小: (116, 6)
+2025-07-03 11:38:11 - DBFile - INFO - 初始化文件数据库, 根路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/DataBase
+2025-07-03 11:38:11 - DBFile - INFO - 成功从 aibot_sentimental_sugar_manager 读取 dataframe 数据，数据大小: (126, 16)
+2025-07-03 11:38:11 - dbfile_sugar - INFO - 初始化文件数据库, 根路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/DataBase
+2025-07-03 11:38:11 - dbfile_sugar - DEBUG - 读取 dataframe 数据, 表名: aibot_sentimental_sugar_manager
+2025-07-03 11:38:11 - dbfile_sugar - DEBUG - 从 aibot_sentimental_sugar_manager 读取 dataframe 数据, 加载 metadata
+2025-07-03 11:38:11 - dbfile_sugar - DEBUG - 从 aibot_sentimental_sugar_manager 读取 dataframe 数据, 执行分区读取
+2025-07-03 11:38:11 - dbfile_sugar - INFO - 成功从 aibot_sentimental_sugar_manager 读取 dataframe 数据，数据大小: (16, 16)
+2025-07-03 11:38:11 - dbfile_sugar - DEBUG - 读取 dataframe 数据, 表名: aibot_sentimental_sugar_researcher
+2025-07-03 11:38:11 - dbfile_sugar - DEBUG - 从 aibot_sentimental_sugar_researcher 读取 dataframe 数据, 加载 metadata
+2025-07-03 11:38:11 - dbfile_sugar - DEBUG - 从 aibot_sentimental_sugar_researcher 读取 dataframe 数据, 执行分区读取
+2025-07-03 11:38:11 - dbfile_sugar - INFO - 成功从 aibot_sentimental_sugar_researcher 读取 dataframe 数据，数据大小: (111, 9)
+2025-07-03 11:38:11 - dbfile_sugar - DEBUG - 存储 dataframe 数据至 aibot_sentimental_sugar_manager, 开始存储 pd.DataFrame 数据
+2025-07-03 11:38:11 - dbfile_sugar - WARNING - 存储 dataframe 数据至 aibot_sentimental_sugar_manager, 待存储的数据为空: (0, 17), 跳过!
+2025-07-03 11:38:11 - dbfile_sugar - DEBUG - 读取 dataframe 数据, 表名: aibot_sentimental_sugar_manager
+2025-07-03 11:38:11 - dbfile_sugar - DEBUG - 从 aibot_sentimental_sugar_manager 读取 dataframe 数据, 加载 metadata
+2025-07-03 11:38:11 - dbfile_sugar - DEBUG - 从 aibot_sentimental_sugar_manager 读取 dataframe 数据, 执行分区读取
+2025-07-03 11:38:11 - dbfile_sugar - INFO - 成功从 aibot_sentimental_sugar_manager 读取 dataframe 数据，数据大小: (16, 16)
+2025-07-03 11:38:11 - dbfile_sugar - DEBUG - 存储 dataframe 数据至 aibot_sentimental_sugar_manager, 开始存储 pd.DataFrame 数据
+2025-07-03 11:38:11 - dbfile_sugar - WARNING - 存储 dataframe 数据至 aibot_sentimental_sugar_manager, 待存储的数据为空: (0, 17), 跳过!
+2025-07-03 11:38:11 - DBFile - INFO - 初始化文件数据库, 根路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/DataBase
+2025-07-03 11:38:11 - DBFile - INFO - 成功从 aibot_sentimental_sugar_manager 读取 dataframe 数据，数据大小: (2, 16)
+2025-07-03 11:38:11 - DBFile - INFO - 初始化文件数据库, 根路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/DataBase
+2025-07-03 11:38:11 - DBFile - INFO - 成功从 future_bar1d 读取 dataframe 数据，数据大小: (116, 6)
+2025-07-03 11:38:11 - DBFile - INFO - 初始化文件数据库, 根路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/DataBase
+2025-07-03 11:38:11 - DBFile - INFO - 成功从 aibot_sentimental_sugar_manager 读取 dataframe 数据，数据大小: (128, 16)
+2025-07-03 11:38:11 - dbfile_sugar - INFO - 初始化文件数据库, 根路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/DataBase
+2025-07-03 11:38:11 - dbfile_sugar - DEBUG - 读取 dataframe 数据, 表名: aibot_sentimental_sugar_manager
+2025-07-03 11:38:11 - dbfile_sugar - DEBUG - 从 aibot_sentimental_sugar_manager 读取 dataframe 数据, 加载 metadata
+2025-07-03 11:38:11 - dbfile_sugar - DEBUG - 从 aibot_sentimental_sugar_manager 读取 dataframe 数据, 执行分区读取
+2025-07-03 11:38:11 - dbfile_sugar - INFO - 成功从 aibot_sentimental_sugar_manager 读取 dataframe 数据，数据大小: (16, 16)
+2025-07-03 11:38:11 - dbfile_sugar - DEBUG - 读取 dataframe 数据, 表名: aibot_sentimental_sugar_researcher
+2025-07-03 11:38:11 - dbfile_sugar - DEBUG - 从 aibot_sentimental_sugar_researcher 读取 dataframe 数据, 加载 metadata
+2025-07-03 11:38:11 - dbfile_sugar - DEBUG - 从 aibot_sentimental_sugar_researcher 读取 dataframe 数据, 执行分区读取
+2025-07-03 11:38:11 - dbfile_sugar - INFO - 成功从 aibot_sentimental_sugar_researcher 读取 dataframe 数据，数据大小: (113, 9)
+2025-07-03 11:38:11 - dbfile_sugar - DEBUG - 存储 dataframe 数据至 aibot_sentimental_sugar_manager, 开始存储 pd.DataFrame 数据
+2025-07-03 11:38:11 - dbfile_sugar - WARNING - 存储 dataframe 数据至 aibot_sentimental_sugar_manager, 待存储的数据为空: (0, 17), 跳过!
+2025-07-03 11:38:11 - dbfile_sugar - DEBUG - 读取 dataframe 数据, 表名: aibot_sentimental_sugar_manager
+2025-07-03 11:38:11 - dbfile_sugar - DEBUG - 从 aibot_sentimental_sugar_manager 读取 dataframe 数据, 加载 metadata
+2025-07-03 11:38:11 - dbfile_sugar - DEBUG - 从 aibot_sentimental_sugar_manager 读取 dataframe 数据, 执行分区读取
+2025-07-03 11:38:11 - dbfile_sugar - INFO - 成功从 aibot_sentimental_sugar_manager 读取 dataframe 数据，数据大小: (16, 16)
+2025-07-03 11:38:11 - dbfile_sugar - DEBUG - 存储 dataframe 数据至 aibot_sentimental_sugar_manager, 开始存储 pd.DataFrame 数据
+2025-07-03 11:38:11 - dbfile_sugar - WARNING - 存储 dataframe 数据至 aibot_sentimental_sugar_manager, 待存储的数据为空: (0, 17), 跳过!
+2025-07-03 11:38:11 - DBFile - INFO - 初始化文件数据库, 根路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/DataBase
+2025-07-03 11:38:11 - DBFile - INFO - 成功从 aibot_sentimental_sugar_manager 读取 dataframe 数据，数据大小: (2, 16)
+2025-07-03 11:38:11 - DBFile - INFO - 初始化文件数据库, 根路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/DataBase
+2025-07-03 11:38:11 - DBFile - INFO - 成功从 future_bar1d 读取 dataframe 数据，数据大小: (117, 6)
+2025-07-03 11:38:11 - DBFile - INFO - 初始化文件数据库, 根路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/DataBase
+2025-07-03 11:38:11 - DBFile - INFO - 成功从 aibot_sentimental_sugar_manager 读取 dataframe 数据，数据大小: (130, 16)
+2025-07-03 11:38:11 - dbfile_sugar - INFO - 初始化文件数据库, 根路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/DataBase
+2025-07-03 11:38:11 - dbfile_sugar - DEBUG - 读取 dataframe 数据, 表名: aibot_sentimental_sugar_manager
+2025-07-03 11:38:11 - dbfile_sugar - DEBUG - 从 aibot_sentimental_sugar_manager 读取 dataframe 数据, 加载 metadata
+2025-07-03 11:38:11 - dbfile_sugar - DEBUG - 从 aibot_sentimental_sugar_manager 读取 dataframe 数据, 执行分区读取
+2025-07-03 11:38:11 - dbfile_sugar - INFO - 成功从 aibot_sentimental_sugar_manager 读取 dataframe 数据，数据大小: (16, 16)
+2025-07-03 11:38:12 - dbfile_sugar - DEBUG - 读取 dataframe 数据, 表名: aibot_sentimental_sugar_researcher
+2025-07-03 11:38:12 - dbfile_sugar - DEBUG - 从 aibot_sentimental_sugar_researcher 读取 dataframe 数据, 加载 metadata
+2025-07-03 11:38:12 - dbfile_sugar - DEBUG - 从 aibot_sentimental_sugar_researcher 读取 dataframe 数据, 执行分区读取
+2025-07-03 11:38:12 - dbfile_sugar - INFO - 成功从 aibot_sentimental_sugar_researcher 读取 dataframe 数据，数据大小: (114, 9)
+2025-07-03 11:38:12 - dbfile_sugar - DEBUG - 存储 dataframe 数据至 aibot_sentimental_sugar_manager, 开始存储 pd.DataFrame 数据
+2025-07-03 11:38:12 - dbfile_sugar - WARNING - 存储 dataframe 数据至 aibot_sentimental_sugar_manager, 待存储的数据为空: (0, 17), 跳过!
+2025-07-03 11:38:12 - dbfile_sugar - DEBUG - 读取 dataframe 数据, 表名: aibot_sentimental_sugar_manager
+2025-07-03 11:38:12 - dbfile_sugar - DEBUG - 从 aibot_sentimental_sugar_manager 读取 dataframe 数据, 加载 metadata
+2025-07-03 11:38:12 - dbfile_sugar - DEBUG - 从 aibot_sentimental_sugar_manager 读取 dataframe 数据, 执行分区读取
+2025-07-03 11:38:12 - dbfile_sugar - INFO - 成功从 aibot_sentimental_sugar_manager 读取 dataframe 数据，数据大小: (16, 16)
+2025-07-03 11:38:12 - dbfile_sugar - DEBUG - 存储 dataframe 数据至 aibot_sentimental_sugar_manager, 开始存储 pd.DataFrame 数据
+2025-07-03 11:38:12 - dbfile_sugar - WARNING - 存储 dataframe 数据至 aibot_sentimental_sugar_manager, 待存储的数据为空: (0, 17), 跳过!
+2025-07-03 11:38:12 - DBFile - INFO - 初始化文件数据库, 根路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/DataBase
+2025-07-03 11:38:12 - DBFile - INFO - 成功从 aibot_sentimental_sugar_manager 读取 dataframe 数据，数据大小: (2, 16)
+2025-07-03 11:38:12 - DBFile - INFO - 初始化文件数据库, 根路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/DataBase
+2025-07-03 11:38:12 - DBFile - INFO - 成功从 future_bar1d 读取 dataframe 数据，数据大小: (118, 6)
+2025-07-03 11:38:12 - DBFile - INFO - 初始化文件数据库, 根路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/DataBase
+2025-07-03 11:38:12 - DBFile - INFO - 成功从 aibot_sentimental_sugar_manager 读取 dataframe 数据，数据大小: (132, 16)
+2025-07-03 11:38:12 - dbfile_sugar - INFO - 初始化文件数据库, 根路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/DataBase
+2025-07-03 11:38:12 - dbfile_sugar - DEBUG - 读取 dataframe 数据, 表名: aibot_sentimental_sugar_manager
+2025-07-03 11:38:12 - dbfile_sugar - DEBUG - 从 aibot_sentimental_sugar_manager 读取 dataframe 数据, 加载 metadata
+2025-07-03 11:38:12 - dbfile_sugar - DEBUG - 从 aibot_sentimental_sugar_manager 读取 dataframe 数据, 执行分区读取
+2025-07-03 11:38:12 - dbfile_sugar - INFO - 成功从 aibot_sentimental_sugar_manager 读取 dataframe 数据，数据大小: (16, 16)
+2025-07-03 11:38:12 - dbfile_sugar - DEBUG - 读取 dataframe 数据, 表名: aibot_sentimental_sugar_researcher
+2025-07-03 11:38:12 - dbfile_sugar - DEBUG - 从 aibot_sentimental_sugar_researcher 读取 dataframe 数据, 加载 metadata
+2025-07-03 11:38:12 - dbfile_sugar - DEBUG - 从 aibot_sentimental_sugar_researcher 读取 dataframe 数据, 执行分区读取
+2025-07-03 11:38:12 - dbfile_sugar - INFO - 成功从 aibot_sentimental_sugar_researcher 读取 dataframe 数据，数据大小: (122, 9)
+2025-07-03 11:38:12 - dbfile_sugar - DEBUG - 存储 dataframe 数据至 aibot_sentimental_sugar_manager, 开始存储 pd.DataFrame 数据
+2025-07-03 11:38:12 - dbfile_sugar - WARNING - 存储 dataframe 数据至 aibot_sentimental_sugar_manager, 待存储的数据为空: (0, 17), 跳过!
+2025-07-03 11:38:12 - dbfile_sugar - DEBUG - 读取 dataframe 数据, 表名: aibot_sentimental_sugar_manager
+2025-07-03 11:38:12 - dbfile_sugar - DEBUG - 从 aibot_sentimental_sugar_manager 读取 dataframe 数据, 加载 metadata
+2025-07-03 11:38:12 - dbfile_sugar - DEBUG - 从 aibot_sentimental_sugar_manager 读取 dataframe 数据, 执行分区读取
+2025-07-03 11:38:12 - dbfile_sugar - INFO - 成功从 aibot_sentimental_sugar_manager 读取 dataframe 数据，数据大小: (16, 16)
+2025-07-03 11:38:12 - dbfile_sugar - DEBUG - 存储 dataframe 数据至 aibot_sentimental_sugar_manager, 开始存储 pd.DataFrame 数据
+2025-07-03 11:38:12 - dbfile_sugar - WARNING - 存储 dataframe 数据至 aibot_sentimental_sugar_manager, 待存储的数据为空: (0, 17), 跳过!
+2025-07-03 11:38:12 - DBFile - INFO - 初始化文件数据库, 根路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/DataBase
+2025-07-03 11:38:12 - DBFile - INFO - 成功从 aibot_sentimental_sugar_manager 读取 dataframe 数据，数据大小: (2, 16)
+2025-07-03 11:38:12 - DBFile - INFO - 初始化文件数据库, 根路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/DataBase
+2025-07-03 11:38:12 - DBFile - INFO - 成功从 future_bar1d 读取 dataframe 数据，数据大小: (118, 6)
+2025-07-03 11:38:12 - DBFile - INFO - 初始化文件数据库, 根路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/DataBase
+2025-07-03 11:38:12 - DBFile - INFO - 成功从 aibot_sentimental_sugar_manager 读取 dataframe 数据，数据大小: (134, 16)
+2025-07-03 11:38:12 - dbfile_sugar - INFO - 初始化文件数据库, 根路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/DataBase
+2025-07-03 11:38:12 - dbfile_sugar - DEBUG - 读取 dataframe 数据, 表名: aibot_sentimental_sugar_manager
+2025-07-03 11:38:12 - dbfile_sugar - DEBUG - 从 aibot_sentimental_sugar_manager 读取 dataframe 数据, 加载 metadata
+2025-07-03 11:38:12 - dbfile_sugar - DEBUG - 从 aibot_sentimental_sugar_manager 读取 dataframe 数据, 执行分区读取
+2025-07-03 11:38:12 - dbfile_sugar - INFO - 成功从 aibot_sentimental_sugar_manager 读取 dataframe 数据，数据大小: (18, 16)
+2025-07-03 11:38:12 - dbfile_sugar - DEBUG - 读取 dataframe 数据, 表名: aibot_sentimental_sugar_researcher
+2025-07-03 11:38:12 - dbfile_sugar - DEBUG - 从 aibot_sentimental_sugar_researcher 读取 dataframe 数据, 加载 metadata
+2025-07-03 11:38:12 - dbfile_sugar - DEBUG - 从 aibot_sentimental_sugar_researcher 读取 dataframe 数据, 执行分区读取
+2025-07-03 11:38:12 - dbfile_sugar - INFO - 成功从 aibot_sentimental_sugar_researcher 读取 dataframe 数据，数据大小: (129, 9)
+2025-07-03 11:38:12 - dbfile_sugar - DEBUG - 存储 dataframe 数据至 aibot_sentimental_sugar_manager, 开始存储 pd.DataFrame 数据
+2025-07-03 11:38:12 - dbfile_sugar - WARNING - 存储 dataframe 数据至 aibot_sentimental_sugar_manager, 待存储的数据为空: (0, 17), 跳过!
+2025-07-03 11:38:12 - dbfile_sugar - DEBUG - 读取 dataframe 数据, 表名: aibot_sentimental_sugar_manager
+2025-07-03 11:38:12 - dbfile_sugar - DEBUG - 从 aibot_sentimental_sugar_manager 读取 dataframe 数据, 加载 metadata
+2025-07-03 11:38:12 - dbfile_sugar - DEBUG - 从 aibot_sentimental_sugar_manager 读取 dataframe 数据, 执行分区读取
+2025-07-03 11:38:12 - dbfile_sugar - INFO - 成功从 aibot_sentimental_sugar_manager 读取 dataframe 数据，数据大小: (18, 16)
+2025-07-03 11:38:12 - dbfile_sugar - DEBUG - 存储 dataframe 数据至 aibot_sentimental_sugar_manager, 开始存储 pd.DataFrame 数据
+2025-07-03 11:38:12 - dbfile_sugar - WARNING - 存储 dataframe 数据至 aibot_sentimental_sugar_manager, 待存储的数据为空: (0, 17), 跳过!
+2025-07-03 11:38:12 - DBFile - INFO - 初始化文件数据库, 根路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/DataBase
+2025-07-03 11:38:12 - DBFile - INFO - 成功从 aibot_sentimental_sugar_manager 读取 dataframe 数据，数据大小: (2, 16)
+2025-07-03 11:38:12 - DBFile - INFO - 初始化文件数据库, 根路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/DataBase
+2025-07-03 11:38:12 - DBFile - INFO - 成功从 future_bar1d 读取 dataframe 数据，数据大小: (117, 6)
+2025-07-03 11:38:12 - DBFile - INFO - 初始化文件数据库, 根路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/DataBase
+2025-07-03 11:38:12 - DBFile - INFO - 成功从 aibot_sentimental_sugar_manager 读取 dataframe 数据，数据大小: (136, 16)

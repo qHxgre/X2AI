@@ -449,7 +449,7 @@ class AIBotSentimentalSugarManager(BaseAI, BaseBuilder):
         with open(filepath_markdown, 'w') as file:
             file.write(content)
 
-    def plotting_analyzing(self, today: str) -> None:
+    def plotting_analyzing(self, today: str, method: str='rolling') -> None:
         """画图分析"""
         start_date = (datetime.strptime(today, "%Y-%m-%d") - timedelta(days=180)).strftime("%Y-%m-%d")
         end_date = today
@@ -466,6 +466,7 @@ class AIBotSentimentalSugarManager(BaseAI, BaseBuilder):
             table=self.datasource_id,
             filters={"date": [start_date, end_date]}
         )
+        aibot_suggar = aibot_suggar[aibot_suggar['method']==method]
 
         # 画出k线图和预测值的走势
         plt_df = pd.merge(future_bar1d, aibot_suggar[['date', 'ranking']].rename(columns={'ranking': 'score'}), how="outer", on=["date"])

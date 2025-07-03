@@ -1,0 +1,384 @@
+2025-07-03 11:38:10 - sugar_manager - INFO - =====>>>>> 初始化开始 
+2025-07-03 11:38:10 - sugar_manager - INFO - 表名: aibot_sentimental_sugar_manager, AI 模型: deepseek, 数据获取周期：2025-06-15 至 2025-06-15, 向前获取日期: 2025-06-05
+2025-07-03 11:38:10 - sugar_manager - INFO - 项目路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI
+2025-07-03 11:38:10 - sugar_manager - INFO - 图片存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/WebServer/app/static/images
+2025-07-03 11:38:10 - sugar_manager - INFO - 报告存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/WebServer/app/static/reports
+2025-07-03 11:38:10 - sugar_manager - INFO - =====<<<<< 初始化完毕
+2025-07-03 11:38:10 - sugar_manager - INFO - 数据获取成功: (148, 9), 耗时: 0:00:00.004414
+2025-07-03 11:38:10 - sugar_manager - INFO - 数据清洗, 待分析的文章数量: 129, 耗时: 0:00:00.000725
+2025-07-03 11:38:10 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-05
+2025-07-03 11:38:10 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-06
+2025-07-03 11:38:10 - sugar_manager - WARNING - [单日研究] 缺少当日数据：2025-06-07！每日报告: 0; 简单统计值：0; 分组统计值: 0。跳过！
+2025-07-03 11:38:10 - sugar_manager - WARNING - [单日研究] 缺少当日数据：2025-06-08！每日报告: 0; 简单统计值：0; 分组统计值: 0。跳过！
+2025-07-03 11:38:10 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-09
+2025-07-03 11:38:10 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-10
+2025-07-03 11:38:10 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-11
+2025-07-03 11:38:10 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-12
+2025-07-03 11:38:10 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-13
+2025-07-03 11:38:10 - sugar_manager - WARNING - [单日研究] 缺少当日数据：2025-06-14！每日报告: 0; 简单统计值：0; 分组统计值: 0。跳过！
+2025-07-03 11:38:10 - sugar_manager - WARNING - [单日研究] 缺少当日数据：2025-06-15！每日报告: 0; 简单统计值：0; 分组统计值: 0。跳过！
+2025-07-03 11:38:10 - sugar_manager - WARNING - [滚动分析] 缺少当日数据：2025-06-15 跳过!
+2025-07-03 11:38:10 - sugar_manager - WARNING - [生成 markdown] 失败: 2025-06-15, 缺乏数据！
+2025-07-03 11:38:10 - sugar_manager - INFO - =====>>>>> 初始化开始 
+2025-07-03 11:38:10 - sugar_manager - INFO - 表名: aibot_sentimental_sugar_manager, AI 模型: deepseek, 数据获取周期：2025-06-16 至 2025-06-16, 向前获取日期: 2025-06-06
+2025-07-03 11:38:10 - sugar_manager - INFO - 项目路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI
+2025-07-03 11:38:10 - sugar_manager - INFO - 图片存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/WebServer/app/static/images
+2025-07-03 11:38:10 - sugar_manager - INFO - 报告存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/WebServer/app/static/reports
+2025-07-03 11:38:10 - sugar_manager - INFO - =====<<<<< 初始化完毕
+2025-07-03 11:38:10 - sugar_manager - INFO - 数据获取成功: (143, 9), 耗时: 0:00:00.003354
+2025-07-03 11:38:10 - sugar_manager - INFO - 数据清洗, 待分析的文章数量: 127, 耗时: 0:00:00.000512
+2025-07-03 11:38:10 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-06
+2025-07-03 11:38:10 - sugar_manager - WARNING - [单日研究] 缺少当日数据：2025-06-07！每日报告: 0; 简单统计值：0; 分组统计值: 0。跳过！
+2025-07-03 11:38:10 - sugar_manager - WARNING - [单日研究] 缺少当日数据：2025-06-08！每日报告: 0; 简单统计值：0; 分组统计值: 0。跳过！
+2025-07-03 11:38:10 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-09
+2025-07-03 11:38:10 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-10
+2025-07-03 11:38:10 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-11
+2025-07-03 11:38:10 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-12
+2025-07-03 11:38:10 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-13
+2025-07-03 11:38:10 - sugar_manager - WARNING - [单日研究] 缺少当日数据：2025-06-14！每日报告: 0; 简单统计值：0; 分组统计值: 0。跳过！
+2025-07-03 11:38:10 - sugar_manager - WARNING - [单日研究] 缺少当日数据：2025-06-15！每日报告: 0; 简单统计值：0; 分组统计值: 0。跳过！
+2025-07-03 11:38:10 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-16
+2025-07-03 11:38:10 - sugar_manager - INFO - [滚动分析] 2025-06-16 命中缓存
+2025-07-03 11:38:10 - sugar_manager - INFO - =====>>>>> 初始化开始 
+2025-07-03 11:38:10 - sugar_manager - INFO - 表名: aibot_sentimental_sugar_manager, AI 模型: deepseek, 数据获取周期：2025-06-17 至 2025-06-17, 向前获取日期: 2025-06-07
+2025-07-03 11:38:10 - sugar_manager - INFO - 项目路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI
+2025-07-03 11:38:10 - sugar_manager - INFO - 图片存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/WebServer/app/static/images
+2025-07-03 11:38:10 - sugar_manager - INFO - 报告存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/WebServer/app/static/reports
+2025-07-03 11:38:10 - sugar_manager - INFO - =====<<<<< 初始化完毕
+2025-07-03 11:38:10 - sugar_manager - INFO - 数据获取成功: (145, 9), 耗时: 0:00:00.003439
+2025-07-03 11:38:10 - sugar_manager - INFO - 数据清洗, 待分析的文章数量: 134, 耗时: 0:00:00.000493
+2025-07-03 11:38:10 - sugar_manager - WARNING - [单日研究] 缺少当日数据：2025-06-07！每日报告: 0; 简单统计值：0; 分组统计值: 0。跳过！
+2025-07-03 11:38:10 - sugar_manager - WARNING - [单日研究] 缺少当日数据：2025-06-08！每日报告: 0; 简单统计值：0; 分组统计值: 0。跳过！
+2025-07-03 11:38:10 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-09
+2025-07-03 11:38:10 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-10
+2025-07-03 11:38:10 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-11
+2025-07-03 11:38:10 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-12
+2025-07-03 11:38:10 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-13
+2025-07-03 11:38:10 - sugar_manager - WARNING - [单日研究] 缺少当日数据：2025-06-14！每日报告: 0; 简单统计值：0; 分组统计值: 0。跳过！
+2025-07-03 11:38:10 - sugar_manager - WARNING - [单日研究] 缺少当日数据：2025-06-15！每日报告: 0; 简单统计值：0; 分组统计值: 0。跳过！
+2025-07-03 11:38:10 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-16
+2025-07-03 11:38:10 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-17
+2025-07-03 11:38:10 - sugar_manager - INFO - [滚动分析] 2025-06-17 命中缓存
+2025-07-03 11:38:10 - sugar_manager - INFO - =====>>>>> 初始化开始 
+2025-07-03 11:38:10 - sugar_manager - INFO - 表名: aibot_sentimental_sugar_manager, AI 模型: deepseek, 数据获取周期：2025-06-18 至 2025-06-18, 向前获取日期: 2025-06-08
+2025-07-03 11:38:10 - sugar_manager - INFO - 项目路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI
+2025-07-03 11:38:10 - sugar_manager - INFO - 图片存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/WebServer/app/static/images
+2025-07-03 11:38:10 - sugar_manager - INFO - 报告存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/WebServer/app/static/reports
+2025-07-03 11:38:10 - sugar_manager - INFO - =====<<<<< 初始化完毕
+2025-07-03 11:38:10 - sugar_manager - INFO - 数据获取成功: (155, 9), 耗时: 0:00:00.002968
+2025-07-03 11:38:10 - sugar_manager - INFO - 数据清洗, 待分析的文章数量: 144, 耗时: 0:00:00.000477
+2025-07-03 11:38:10 - sugar_manager - WARNING - [单日研究] 缺少当日数据：2025-06-08！每日报告: 0; 简单统计值：0; 分组统计值: 0。跳过！
+2025-07-03 11:38:10 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-09
+2025-07-03 11:38:10 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-10
+2025-07-03 11:38:10 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-11
+2025-07-03 11:38:10 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-12
+2025-07-03 11:38:10 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-13
+2025-07-03 11:38:10 - sugar_manager - WARNING - [单日研究] 缺少当日数据：2025-06-14！每日报告: 0; 简单统计值：0; 分组统计值: 0。跳过！
+2025-07-03 11:38:10 - sugar_manager - WARNING - [单日研究] 缺少当日数据：2025-06-15！每日报告: 0; 简单统计值：0; 分组统计值: 0。跳过！
+2025-07-03 11:38:10 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-16
+2025-07-03 11:38:10 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-17
+2025-07-03 11:38:10 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-18
+2025-07-03 11:38:10 - sugar_manager - INFO - [滚动分析] 2025-06-18 命中缓存
+2025-07-03 11:38:10 - sugar_manager - INFO - =====>>>>> 初始化开始 
+2025-07-03 11:38:10 - sugar_manager - INFO - 表名: aibot_sentimental_sugar_manager, AI 模型: deepseek, 数据获取周期：2025-06-19 至 2025-06-19, 向前获取日期: 2025-06-09
+2025-07-03 11:38:10 - sugar_manager - INFO - 项目路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI
+2025-07-03 11:38:10 - sugar_manager - INFO - 图片存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/WebServer/app/static/images
+2025-07-03 11:38:10 - sugar_manager - INFO - 报告存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/WebServer/app/static/reports
+2025-07-03 11:38:10 - sugar_manager - INFO - =====<<<<< 初始化完毕
+2025-07-03 11:38:10 - sugar_manager - INFO - 数据获取成功: (168, 9), 耗时: 0:00:00.003013
+2025-07-03 11:38:10 - sugar_manager - INFO - 数据清洗, 待分析的文章数量: 157, 耗时: 0:00:00.000515
+2025-07-03 11:38:10 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-09
+2025-07-03 11:38:10 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-10
+2025-07-03 11:38:10 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-11
+2025-07-03 11:38:10 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-12
+2025-07-03 11:38:10 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-13
+2025-07-03 11:38:10 - sugar_manager - WARNING - [单日研究] 缺少当日数据：2025-06-14！每日报告: 0; 简单统计值：0; 分组统计值: 0。跳过！
+2025-07-03 11:38:10 - sugar_manager - WARNING - [单日研究] 缺少当日数据：2025-06-15！每日报告: 0; 简单统计值：0; 分组统计值: 0。跳过！
+2025-07-03 11:38:10 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-16
+2025-07-03 11:38:10 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-17
+2025-07-03 11:38:10 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-18
+2025-07-03 11:38:10 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-19
+2025-07-03 11:38:10 - sugar_manager - INFO - [滚动分析] 2025-06-19 命中缓存
+2025-07-03 11:38:10 - sugar_manager - INFO - =====>>>>> 初始化开始 
+2025-07-03 11:38:10 - sugar_manager - INFO - 表名: aibot_sentimental_sugar_manager, AI 模型: deepseek, 数据获取周期：2025-06-20 至 2025-06-20, 向前获取日期: 2025-06-10
+2025-07-03 11:38:10 - sugar_manager - INFO - 项目路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI
+2025-07-03 11:38:10 - sugar_manager - INFO - 图片存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/WebServer/app/static/images
+2025-07-03 11:38:10 - sugar_manager - INFO - 报告存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/WebServer/app/static/reports
+2025-07-03 11:38:10 - sugar_manager - INFO - =====<<<<< 初始化完毕
+2025-07-03 11:38:10 - sugar_manager - INFO - 数据获取成功: (160, 9), 耗时: 0:00:00.002818
+2025-07-03 11:38:10 - sugar_manager - INFO - 数据清洗, 待分析的文章数量: 149, 耗时: 0:00:00.000465
+2025-07-03 11:38:11 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-10
+2025-07-03 11:38:11 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-11
+2025-07-03 11:38:11 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-12
+2025-07-03 11:38:11 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-13
+2025-07-03 11:38:11 - sugar_manager - WARNING - [单日研究] 缺少当日数据：2025-06-14！每日报告: 0; 简单统计值：0; 分组统计值: 0。跳过！
+2025-07-03 11:38:11 - sugar_manager - WARNING - [单日研究] 缺少当日数据：2025-06-15！每日报告: 0; 简单统计值：0; 分组统计值: 0。跳过！
+2025-07-03 11:38:11 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-16
+2025-07-03 11:38:11 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-17
+2025-07-03 11:38:11 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-18
+2025-07-03 11:38:11 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-19
+2025-07-03 11:38:11 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-20
+2025-07-03 11:38:11 - sugar_manager - INFO - [滚动分析] 2025-06-20 命中缓存
+2025-07-03 11:38:11 - sugar_manager - INFO - =====>>>>> 初始化开始 
+2025-07-03 11:38:11 - sugar_manager - INFO - 表名: aibot_sentimental_sugar_manager, AI 模型: deepseek, 数据获取周期：2025-06-21 至 2025-06-21, 向前获取日期: 2025-06-11
+2025-07-03 11:38:11 - sugar_manager - INFO - 项目路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI
+2025-07-03 11:38:11 - sugar_manager - INFO - 图片存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/WebServer/app/static/images
+2025-07-03 11:38:11 - sugar_manager - INFO - 报告存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/WebServer/app/static/reports
+2025-07-03 11:38:11 - sugar_manager - INFO - =====<<<<< 初始化完毕
+2025-07-03 11:38:11 - sugar_manager - INFO - 数据获取成功: (133, 9), 耗时: 0:00:00.003165
+2025-07-03 11:38:11 - sugar_manager - INFO - 数据清洗, 待分析的文章数量: 129, 耗时: 0:00:00.000490
+2025-07-03 11:38:11 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-11
+2025-07-03 11:38:11 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-12
+2025-07-03 11:38:11 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-13
+2025-07-03 11:38:11 - sugar_manager - WARNING - [单日研究] 缺少当日数据：2025-06-14！每日报告: 0; 简单统计值：0; 分组统计值: 0。跳过！
+2025-07-03 11:38:11 - sugar_manager - WARNING - [单日研究] 缺少当日数据：2025-06-15！每日报告: 0; 简单统计值：0; 分组统计值: 0。跳过！
+2025-07-03 11:38:11 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-16
+2025-07-03 11:38:11 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-17
+2025-07-03 11:38:11 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-18
+2025-07-03 11:38:11 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-19
+2025-07-03 11:38:11 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-20
+2025-07-03 11:38:11 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-21
+2025-07-03 11:38:11 - sugar_manager - INFO - [滚动分析] 2025-06-21 命中缓存
+2025-07-03 11:38:11 - sugar_manager - INFO - =====>>>>> 初始化开始 
+2025-07-03 11:38:11 - sugar_manager - INFO - 表名: aibot_sentimental_sugar_manager, AI 模型: deepseek, 数据获取周期：2025-06-22 至 2025-06-22, 向前获取日期: 2025-06-12
+2025-07-03 11:38:11 - sugar_manager - INFO - 项目路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI
+2025-07-03 11:38:11 - sugar_manager - INFO - 图片存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/WebServer/app/static/images
+2025-07-03 11:38:11 - sugar_manager - INFO - 报告存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/WebServer/app/static/reports
+2025-07-03 11:38:11 - sugar_manager - INFO - =====<<<<< 初始化完毕
+2025-07-03 11:38:11 - sugar_manager - INFO - 数据获取成功: (120, 9), 耗时: 0:00:00.003158
+2025-07-03 11:38:11 - sugar_manager - INFO - 数据清洗, 待分析的文章数量: 116, 耗时: 0:00:00.000926
+2025-07-03 11:38:11 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-12
+2025-07-03 11:38:11 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-13
+2025-07-03 11:38:11 - sugar_manager - WARNING - [单日研究] 缺少当日数据：2025-06-14！每日报告: 0; 简单统计值：0; 分组统计值: 0。跳过！
+2025-07-03 11:38:11 - sugar_manager - WARNING - [单日研究] 缺少当日数据：2025-06-15！每日报告: 0; 简单统计值：0; 分组统计值: 0。跳过！
+2025-07-03 11:38:11 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-16
+2025-07-03 11:38:11 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-17
+2025-07-03 11:38:11 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-18
+2025-07-03 11:38:11 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-19
+2025-07-03 11:38:11 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-20
+2025-07-03 11:38:11 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-21
+2025-07-03 11:38:11 - sugar_manager - WARNING - [单日研究] 缺少当日数据：2025-06-22！每日报告: 0; 简单统计值：0; 分组统计值: 0。跳过！
+2025-07-03 11:38:11 - sugar_manager - WARNING - [滚动分析] 缺少当日数据：2025-06-22 跳过!
+2025-07-03 11:38:11 - sugar_manager - WARNING - [生成 markdown] 失败: 2025-06-22, 缺乏数据！
+2025-07-03 11:38:11 - sugar_manager - INFO - =====>>>>> 初始化开始 
+2025-07-03 11:38:11 - sugar_manager - INFO - 表名: aibot_sentimental_sugar_manager, AI 模型: deepseek, 数据获取周期：2025-06-23 至 2025-06-23, 向前获取日期: 2025-06-13
+2025-07-03 11:38:11 - sugar_manager - INFO - 项目路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI
+2025-07-03 11:38:11 - sugar_manager - INFO - 图片存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/WebServer/app/static/images
+2025-07-03 11:38:11 - sugar_manager - INFO - 报告存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/WebServer/app/static/reports
+2025-07-03 11:38:11 - sugar_manager - INFO - =====<<<<< 初始化完毕
+2025-07-03 11:38:11 - sugar_manager - INFO - 数据获取成功: (119, 9), 耗时: 0:00:00.003019
+2025-07-03 11:38:11 - sugar_manager - INFO - 数据清洗, 待分析的文章数量: 115, 耗时: 0:00:00.000476
+2025-07-03 11:38:11 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-13
+2025-07-03 11:38:11 - sugar_manager - WARNING - [单日研究] 缺少当日数据：2025-06-14！每日报告: 0; 简单统计值：0; 分组统计值: 0。跳过！
+2025-07-03 11:38:11 - sugar_manager - WARNING - [单日研究] 缺少当日数据：2025-06-15！每日报告: 0; 简单统计值：0; 分组统计值: 0。跳过！
+2025-07-03 11:38:11 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-16
+2025-07-03 11:38:11 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-17
+2025-07-03 11:38:11 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-18
+2025-07-03 11:38:11 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-19
+2025-07-03 11:38:11 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-20
+2025-07-03 11:38:11 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-21
+2025-07-03 11:38:11 - sugar_manager - WARNING - [单日研究] 缺少当日数据：2025-06-22！每日报告: 0; 简单统计值：0; 分组统计值: 0。跳过！
+2025-07-03 11:38:11 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-23
+2025-07-03 11:38:11 - sugar_manager - INFO - [滚动分析] 2025-06-23 命中缓存
+2025-07-03 11:38:11 - sugar_manager - INFO - =====>>>>> 初始化开始 
+2025-07-03 11:38:11 - sugar_manager - INFO - 表名: aibot_sentimental_sugar_manager, AI 模型: deepseek, 数据获取周期：2025-06-24 至 2025-06-24, 向前获取日期: 2025-06-14
+2025-07-03 11:38:11 - sugar_manager - INFO - 项目路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI
+2025-07-03 11:38:11 - sugar_manager - INFO - 图片存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/WebServer/app/static/images
+2025-07-03 11:38:11 - sugar_manager - INFO - 报告存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/WebServer/app/static/reports
+2025-07-03 11:38:11 - sugar_manager - INFO - =====<<<<< 初始化完毕
+2025-07-03 11:38:11 - sugar_manager - INFO - 数据获取成功: (107, 9), 耗时: 0:00:00.002875
+2025-07-03 11:38:11 - sugar_manager - INFO - 数据清洗, 待分析的文章数量: 105, 耗时: 0:00:00.000600
+2025-07-03 11:38:11 - sugar_manager - WARNING - [单日研究] 缺少当日数据：2025-06-14！每日报告: 0; 简单统计值：0; 分组统计值: 0。跳过！
+2025-07-03 11:38:11 - sugar_manager - WARNING - [单日研究] 缺少当日数据：2025-06-15！每日报告: 0; 简单统计值：0; 分组统计值: 0。跳过！
+2025-07-03 11:38:11 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-16
+2025-07-03 11:38:11 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-17
+2025-07-03 11:38:11 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-18
+2025-07-03 11:38:11 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-19
+2025-07-03 11:38:11 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-20
+2025-07-03 11:38:11 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-21
+2025-07-03 11:38:11 - sugar_manager - WARNING - [单日研究] 缺少当日数据：2025-06-22！每日报告: 0; 简单统计值：0; 分组统计值: 0。跳过！
+2025-07-03 11:38:11 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-23
+2025-07-03 11:38:11 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-24
+2025-07-03 11:38:11 - sugar_manager - INFO - [滚动分析] 2025-06-24 命中缓存
+2025-07-03 11:38:11 - sugar_manager - INFO - =====>>>>> 初始化开始 
+2025-07-03 11:38:11 - sugar_manager - INFO - 表名: aibot_sentimental_sugar_manager, AI 模型: deepseek, 数据获取周期：2025-06-25 至 2025-06-25, 向前获取日期: 2025-06-15
+2025-07-03 11:38:11 - sugar_manager - INFO - 项目路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI
+2025-07-03 11:38:11 - sugar_manager - INFO - 图片存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/WebServer/app/static/images
+2025-07-03 11:38:11 - sugar_manager - INFO - 报告存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/WebServer/app/static/reports
+2025-07-03 11:38:11 - sugar_manager - INFO - =====<<<<< 初始化完毕
+2025-07-03 11:38:11 - sugar_manager - INFO - 数据获取成功: (119, 9), 耗时: 0:00:00.002921
+2025-07-03 11:38:11 - sugar_manager - INFO - 数据清洗, 待分析的文章数量: 117, 耗时: 0:00:00.000465
+2025-07-03 11:38:11 - sugar_manager - WARNING - [单日研究] 缺少当日数据：2025-06-15！每日报告: 0; 简单统计值：0; 分组统计值: 0。跳过！
+2025-07-03 11:38:11 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-16
+2025-07-03 11:38:11 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-17
+2025-07-03 11:38:11 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-18
+2025-07-03 11:38:11 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-19
+2025-07-03 11:38:11 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-20
+2025-07-03 11:38:11 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-21
+2025-07-03 11:38:11 - sugar_manager - WARNING - [单日研究] 缺少当日数据：2025-06-22！每日报告: 0; 简单统计值：0; 分组统计值: 0。跳过！
+2025-07-03 11:38:11 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-23
+2025-07-03 11:38:11 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-24
+2025-07-03 11:38:11 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-25
+2025-07-03 11:38:11 - sugar_manager - INFO - [滚动分析] 2025-06-25 命中缓存
+2025-07-03 11:38:11 - sugar_manager - INFO - =====>>>>> 初始化开始 
+2025-07-03 11:38:11 - sugar_manager - INFO - 表名: aibot_sentimental_sugar_manager, AI 模型: deepseek, 数据获取周期：2025-06-26 至 2025-06-26, 向前获取日期: 2025-06-16
+2025-07-03 11:38:11 - sugar_manager - INFO - 项目路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI
+2025-07-03 11:38:11 - sugar_manager - INFO - 图片存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/WebServer/app/static/images
+2025-07-03 11:38:11 - sugar_manager - INFO - 报告存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/WebServer/app/static/reports
+2025-07-03 11:38:11 - sugar_manager - INFO - =====<<<<< 初始化完毕
+2025-07-03 11:38:11 - sugar_manager - INFO - 数据获取成功: (143, 9), 耗时: 0:00:00.003251
+2025-07-03 11:38:11 - sugar_manager - INFO - 数据清洗, 待分析的文章数量: 138, 耗时: 0:00:00.000539
+2025-07-03 11:38:11 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-16
+2025-07-03 11:38:11 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-17
+2025-07-03 11:38:11 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-18
+2025-07-03 11:38:11 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-19
+2025-07-03 11:38:11 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-20
+2025-07-03 11:38:11 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-21
+2025-07-03 11:38:11 - sugar_manager - WARNING - [单日研究] 缺少当日数据：2025-06-22！每日报告: 0; 简单统计值：0; 分组统计值: 0。跳过！
+2025-07-03 11:38:11 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-23
+2025-07-03 11:38:11 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-24
+2025-07-03 11:38:11 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-25
+2025-07-03 11:38:11 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-26
+2025-07-03 11:38:11 - sugar_manager - INFO - [滚动分析] 2025-06-26 命中缓存
+2025-07-03 11:38:11 - sugar_manager - INFO - =====>>>>> 初始化开始 
+2025-07-03 11:38:11 - sugar_manager - INFO - 表名: aibot_sentimental_sugar_manager, AI 模型: deepseek, 数据获取周期：2025-06-27 至 2025-06-27, 向前获取日期: 2025-06-17
+2025-07-03 11:38:11 - sugar_manager - INFO - 项目路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI
+2025-07-03 11:38:11 - sugar_manager - INFO - 图片存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/WebServer/app/static/images
+2025-07-03 11:38:11 - sugar_manager - INFO - 报告存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/WebServer/app/static/reports
+2025-07-03 11:38:11 - sugar_manager - INFO - =====<<<<< 初始化完毕
+2025-07-03 11:38:11 - sugar_manager - INFO - 数据获取成功: (128, 9), 耗时: 0:00:00.003487
+2025-07-03 11:38:11 - sugar_manager - INFO - 数据清洗, 待分析的文章数量: 123, 耗时: 0:00:00.000481
+2025-07-03 11:38:11 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-17
+2025-07-03 11:38:11 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-18
+2025-07-03 11:38:11 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-19
+2025-07-03 11:38:11 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-20
+2025-07-03 11:38:11 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-21
+2025-07-03 11:38:11 - sugar_manager - WARNING - [单日研究] 缺少当日数据：2025-06-22！每日报告: 0; 简单统计值：0; 分组统计值: 0。跳过！
+2025-07-03 11:38:11 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-23
+2025-07-03 11:38:11 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-24
+2025-07-03 11:38:11 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-25
+2025-07-03 11:38:11 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-26
+2025-07-03 11:38:11 - sugar_manager - WARNING - [单日研究] 缺少当日数据：2025-06-27！每日报告: 0; 简单统计值：0; 分组统计值: 0。跳过！
+2025-07-03 11:38:11 - sugar_manager - WARNING - [滚动分析] 缺少当日数据：2025-06-27 跳过!
+2025-07-03 11:38:11 - sugar_manager - WARNING - [生成 markdown] 失败: 2025-06-27, 缺乏数据！
+2025-07-03 11:38:11 - sugar_manager - INFO - =====>>>>> 初始化开始 
+2025-07-03 11:38:11 - sugar_manager - INFO - 表名: aibot_sentimental_sugar_manager, AI 模型: deepseek, 数据获取周期：2025-06-28 至 2025-06-28, 向前获取日期: 2025-06-18
+2025-07-03 11:38:11 - sugar_manager - INFO - 项目路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI
+2025-07-03 11:38:11 - sugar_manager - INFO - 图片存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/WebServer/app/static/images
+2025-07-03 11:38:11 - sugar_manager - INFO - 报告存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/WebServer/app/static/reports
+2025-07-03 11:38:11 - sugar_manager - INFO - =====<<<<< 初始化完毕
+2025-07-03 11:38:11 - sugar_manager - INFO - 数据获取成功: (103, 9), 耗时: 0:00:00.003041
+2025-07-03 11:38:11 - sugar_manager - INFO - 数据清洗, 待分析的文章数量: 98, 耗时: 0:00:00.000496
+2025-07-03 11:38:11 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-18
+2025-07-03 11:38:11 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-19
+2025-07-03 11:38:11 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-20
+2025-07-03 11:38:11 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-21
+2025-07-03 11:38:11 - sugar_manager - WARNING - [单日研究] 缺少当日数据：2025-06-22！每日报告: 0; 简单统计值：0; 分组统计值: 0。跳过！
+2025-07-03 11:38:11 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-23
+2025-07-03 11:38:11 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-24
+2025-07-03 11:38:11 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-25
+2025-07-03 11:38:11 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-26
+2025-07-03 11:38:11 - sugar_manager - WARNING - [单日研究] 缺少当日数据：2025-06-27！每日报告: 0; 简单统计值：0; 分组统计值: 0。跳过！
+2025-07-03 11:38:11 - sugar_manager - WARNING - [单日研究] 缺少当日数据：2025-06-28！每日报告: 0; 简单统计值：0; 分组统计值: 0。跳过！
+2025-07-03 11:38:11 - sugar_manager - WARNING - [滚动分析] 缺少当日数据：2025-06-28 跳过!
+2025-07-03 11:38:11 - sugar_manager - WARNING - [生成 markdown] 失败: 2025-06-28, 缺乏数据！
+2025-07-03 11:38:11 - sugar_manager - INFO - =====>>>>> 初始化开始 
+2025-07-03 11:38:11 - sugar_manager - INFO - 表名: aibot_sentimental_sugar_manager, AI 模型: deepseek, 数据获取周期：2025-06-29 至 2025-06-29, 向前获取日期: 2025-06-19
+2025-07-03 11:38:11 - sugar_manager - INFO - 项目路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI
+2025-07-03 11:38:11 - sugar_manager - INFO - 图片存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/WebServer/app/static/images
+2025-07-03 11:38:11 - sugar_manager - INFO - 报告存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/WebServer/app/static/reports
+2025-07-03 11:38:11 - sugar_manager - INFO - =====<<<<< 初始化完毕
+2025-07-03 11:38:11 - sugar_manager - INFO - 数据获取成功: (111, 9), 耗时: 0:00:00.002978
+2025-07-03 11:38:11 - sugar_manager - INFO - 数据清洗, 待分析的文章数量: 104, 耗时: 0:00:00.000482
+2025-07-03 11:38:11 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-19
+2025-07-03 11:38:11 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-20
+2025-07-03 11:38:11 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-21
+2025-07-03 11:38:11 - sugar_manager - WARNING - [单日研究] 缺少当日数据：2025-06-22！每日报告: 0; 简单统计值：0; 分组统计值: 0。跳过！
+2025-07-03 11:38:11 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-23
+2025-07-03 11:38:11 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-24
+2025-07-03 11:38:11 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-25
+2025-07-03 11:38:11 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-26
+2025-07-03 11:38:11 - sugar_manager - WARNING - [单日研究] 缺少当日数据：2025-06-27！每日报告: 0; 简单统计值：0; 分组统计值: 0。跳过！
+2025-07-03 11:38:11 - sugar_manager - WARNING - [单日研究] 缺少当日数据：2025-06-28！每日报告: 0; 简单统计值：0; 分组统计值: 0。跳过！
+2025-07-03 11:38:11 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-29
+2025-07-03 11:38:11 - sugar_manager - INFO - [滚动分析] 2025-06-29 命中缓存
+2025-07-03 11:38:11 - sugar_manager - INFO - =====>>>>> 初始化开始 
+2025-07-03 11:38:11 - sugar_manager - INFO - 表名: aibot_sentimental_sugar_manager, AI 模型: deepseek, 数据获取周期：2025-06-30 至 2025-06-30, 向前获取日期: 2025-06-20
+2025-07-03 11:38:11 - sugar_manager - INFO - 项目路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI
+2025-07-03 11:38:11 - sugar_manager - INFO - 图片存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/WebServer/app/static/images
+2025-07-03 11:38:11 - sugar_manager - INFO - 报告存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/WebServer/app/static/reports
+2025-07-03 11:38:11 - sugar_manager - INFO - =====<<<<< 初始化完毕
+2025-07-03 11:38:11 - sugar_manager - INFO - 数据获取成功: (113, 9), 耗时: 0:00:00.002884
+2025-07-03 11:38:11 - sugar_manager - INFO - 数据清洗, 待分析的文章数量: 106, 耗时: 0:00:00.000480
+2025-07-03 11:38:11 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-20
+2025-07-03 11:38:11 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-21
+2025-07-03 11:38:11 - sugar_manager - WARNING - [单日研究] 缺少当日数据：2025-06-22！每日报告: 0; 简单统计值：0; 分组统计值: 0。跳过！
+2025-07-03 11:38:11 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-23
+2025-07-03 11:38:11 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-24
+2025-07-03 11:38:11 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-25
+2025-07-03 11:38:11 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-26
+2025-07-03 11:38:11 - sugar_manager - WARNING - [单日研究] 缺少当日数据：2025-06-27！每日报告: 0; 简单统计值：0; 分组统计值: 0。跳过！
+2025-07-03 11:38:11 - sugar_manager - WARNING - [单日研究] 缺少当日数据：2025-06-28！每日报告: 0; 简单统计值：0; 分组统计值: 0。跳过！
+2025-07-03 11:38:11 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-29
+2025-07-03 11:38:11 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-30
+2025-07-03 11:38:11 - sugar_manager - INFO - [滚动分析] 2025-06-30 命中缓存
+2025-07-03 11:38:12 - sugar_manager - INFO - =====>>>>> 初始化开始 
+2025-07-03 11:38:12 - sugar_manager - INFO - 表名: aibot_sentimental_sugar_manager, AI 模型: deepseek, 数据获取周期：2025-07-01 至 2025-07-01, 向前获取日期: 2025-06-21
+2025-07-03 11:38:12 - sugar_manager - INFO - 项目路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI
+2025-07-03 11:38:12 - sugar_manager - INFO - 图片存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/WebServer/app/static/images
+2025-07-03 11:38:12 - sugar_manager - INFO - 报告存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/WebServer/app/static/reports
+2025-07-03 11:38:12 - sugar_manager - INFO - =====<<<<< 初始化完毕
+2025-07-03 11:38:12 - sugar_manager - INFO - 数据获取成功: (114, 9), 耗时: 0:00:00.002846
+2025-07-03 11:38:12 - sugar_manager - INFO - 数据清洗, 待分析的文章数量: 107, 耗时: 0:00:00.000459
+2025-07-03 11:38:12 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-21
+2025-07-03 11:38:12 - sugar_manager - WARNING - [单日研究] 缺少当日数据：2025-06-22！每日报告: 0; 简单统计值：0; 分组统计值: 0。跳过！
+2025-07-03 11:38:12 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-23
+2025-07-03 11:38:12 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-24
+2025-07-03 11:38:12 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-25
+2025-07-03 11:38:12 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-26
+2025-07-03 11:38:12 - sugar_manager - WARNING - [单日研究] 缺少当日数据：2025-06-27！每日报告: 0; 简单统计值：0; 分组统计值: 0。跳过！
+2025-07-03 11:38:12 - sugar_manager - WARNING - [单日研究] 缺少当日数据：2025-06-28！每日报告: 0; 简单统计值：0; 分组统计值: 0。跳过！
+2025-07-03 11:38:12 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-29
+2025-07-03 11:38:12 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-30
+2025-07-03 11:38:12 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-07-01
+2025-07-03 11:38:12 - sugar_manager - INFO - [滚动分析] 2025-07-01 命中缓存
+2025-07-03 11:38:12 - sugar_manager - INFO - =====>>>>> 初始化开始 
+2025-07-03 11:38:12 - sugar_manager - INFO - 表名: aibot_sentimental_sugar_manager, AI 模型: deepseek, 数据获取周期：2025-07-02 至 2025-07-02, 向前获取日期: 2025-06-22
+2025-07-03 11:38:12 - sugar_manager - INFO - 项目路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI
+2025-07-03 11:38:12 - sugar_manager - INFO - 图片存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/WebServer/app/static/images
+2025-07-03 11:38:12 - sugar_manager - INFO - 报告存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/WebServer/app/static/reports
+2025-07-03 11:38:12 - sugar_manager - INFO - =====<<<<< 初始化完毕
+2025-07-03 11:38:12 - sugar_manager - INFO - 数据获取成功: (122, 9), 耗时: 0:00:00.003036
+2025-07-03 11:38:12 - sugar_manager - INFO - 数据清洗, 待分析的文章数量: 116, 耗时: 0:00:00.000466
+2025-07-03 11:38:12 - sugar_manager - WARNING - [单日研究] 缺少当日数据：2025-06-22！每日报告: 0; 简单统计值：0; 分组统计值: 0。跳过！
+2025-07-03 11:38:12 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-23
+2025-07-03 11:38:12 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-24
+2025-07-03 11:38:12 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-25
+2025-07-03 11:38:12 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-26
+2025-07-03 11:38:12 - sugar_manager - WARNING - [单日研究] 缺少当日数据：2025-06-27！每日报告: 0; 简单统计值：0; 分组统计值: 0。跳过！
+2025-07-03 11:38:12 - sugar_manager - WARNING - [单日研究] 缺少当日数据：2025-06-28！每日报告: 0; 简单统计值：0; 分组统计值: 0。跳过！
+2025-07-03 11:38:12 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-29
+2025-07-03 11:38:12 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-30
+2025-07-03 11:38:12 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-07-01
+2025-07-03 11:38:12 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-07-02
+2025-07-03 11:38:12 - sugar_manager - INFO - [滚动分析] 2025-07-02 命中缓存
+2025-07-03 11:38:12 - sugar_manager - INFO - =====>>>>> 初始化开始 
+2025-07-03 11:38:12 - sugar_manager - INFO - 表名: aibot_sentimental_sugar_manager, AI 模型: deepseek, 数据获取周期：2025-07-03 至 2025-07-03, 向前获取日期: 2025-06-23
+2025-07-03 11:38:12 - sugar_manager - INFO - 项目路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI
+2025-07-03 11:38:12 - sugar_manager - INFO - 图片存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/WebServer/app/static/images
+2025-07-03 11:38:12 - sugar_manager - INFO - 报告存储路径: /Users/xiehao/Desktop/workspace/X2AI/FinAI/WebServer/app/static/reports
+2025-07-03 11:38:12 - sugar_manager - INFO - =====<<<<< 初始化完毕
+2025-07-03 11:38:12 - sugar_manager - INFO - 数据获取成功: (129, 9), 耗时: 0:00:00.003085
+2025-07-03 11:38:12 - sugar_manager - INFO - 数据清洗, 待分析的文章数量: 123, 耗时: 0:00:00.000560
+2025-07-03 11:38:12 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-23
+2025-07-03 11:38:12 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-24
+2025-07-03 11:38:12 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-25
+2025-07-03 11:38:12 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-26
+2025-07-03 11:38:12 - sugar_manager - WARNING - [单日研究] 缺少当日数据：2025-06-27！每日报告: 0; 简单统计值：0; 分组统计值: 0。跳过！
+2025-07-03 11:38:12 - sugar_manager - WARNING - [单日研究] 缺少当日数据：2025-06-28！每日报告: 0; 简单统计值：0; 分组统计值: 0。跳过！
+2025-07-03 11:38:12 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-29
+2025-07-03 11:38:12 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-06-30
+2025-07-03 11:38:12 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-07-01
+2025-07-03 11:38:12 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-07-02
+2025-07-03 11:38:12 - sugar_manager - INFO - [单日研究] 命中缓存: 2025-07-03
+2025-07-03 11:38:12 - sugar_manager - INFO - [滚动分析] 2025-07-03 命中缓存
