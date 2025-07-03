@@ -94,7 +94,7 @@ class AIBotSentimentalSugarResearcher(BaseAI, BaseBuilder):
         cache_data = self.handler.read_dataframe(self.datasource_id, filters={"date": [self.start_date, self.end_date]})
         cache_data["date"] = cache_data["date"].dt.strftime("%Y-%m-%d")
         merged_df = data[self.unique_together].merge(cache_data, on=self.unique_together, how='left', indicator=True)
-        result = merged_df[merged_df['_merge'] == 'left_only']
+        result = data[merged_df['_merge'] == 'left_only']
         return result
 
     def write_data(self, data: pd.DataFrame) -> None:
