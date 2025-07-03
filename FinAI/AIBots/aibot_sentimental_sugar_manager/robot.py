@@ -397,7 +397,7 @@ class AIBotSentimentalSugarManager(BaseAI, BaseBuilder):
             )
             if msg == 'success':
                 self.logger.info(f'[滚动分析] {today} AI 分析成功：{sd} 至 {ed}, 耗时: {datetime.now() - now}')
-                result[ed] = today_report
+                result[today] = today_report
             else:
                 self.logger.warning(f'[滚动分析] {today} AI 分析失败: {sd} 至 {ed}, 耗时: {datetime.now() - now}, 失败原因: {msg}')
 
