@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>AI分析平台</title>
+    <link rel="stylesheet" href="/static/styles/base.css">
+    {% block extra_css %}{% endblock %}
+</head>
+
+<body>
+    <div class="base-container" style="max-width: 1200px; margin: 20px auto;">
+        <div class="tab-container">
+            <div class="tab-header">
+                <a href="/auto" class="tab-button {% if request.path == '/auto' %}active{% endif %}">自动分析</a>
+                <a href="/manual" class="tab-button {% if request.path == '/manual' %}active{% endif %}">手动分析</a>
+                <a href="/stock" class="tab-button {% if request.path == '/stock' %}active{% endif %}">股票分析</a>
+            </div>
+            
+            <div class="content">
+                {% block content %}{% endblock %}
+            </div>
+        </div>
+    </div>
+    
+    <script src="/static/scripts/base.js"></script>
+    <script src="/static/vendor/echarts.min.js"></script>
+    <script src="/static/vendor/marked.min.js"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

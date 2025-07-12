@@ -75,8 +75,8 @@ class AIBotSentimentalSugarManager(BaseAI, BaseBuilder):
         self.result = {}
 
         # 获取原属数据
-        if cache is True:
-            self.cache = cache
+        self.cache = cache
+        if self.cache is True:
             self.raw_data = self.handler.read_dataframe(
                 table=self.datasource_id,
                 filters={'date': [self.before_start_date, self.end_date]}
@@ -471,6 +471,7 @@ class AIBotSentimentalSugarManager(BaseAI, BaseBuilder):
         # 画出k线图和预测值的走势
         plt_df = pd.merge(future_bar1d, aibot_suggar[['date', 'ranking']].rename(columns={'ranking': 'score'}), how="outer", on=["date"])
         plt_df['date'] = plt_df['date'].dt.strftime('%Y-%m-%d')
+        plt_df = plt_df.sort_values('date')
         filepath_image = f"{self.path_image}/{today.replace('-', '')}_klines.html"
         plt_klines_rank(data=plt_df, filepath=filepath_image)
 

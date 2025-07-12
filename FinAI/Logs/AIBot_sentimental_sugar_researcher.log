@@ -1,0 +1,30 @@
+2025-07-12 15:21:07 - sugar_researcher - INFO - =====>>>>> [初始化] 表名: aibot_sentimental_sugar_researcher, AI 模型: deepseek, 数据获取周期：2025-07-05 至 2025-07-05
+2025-07-12 15:21:07 - sugar_researcher - WARNING - 数据获取失败: (0, 7), 请检查！
+2025-07-12 15:21:07 - sugar_researcher - INFO - =====>>>>> [初始化] 表名: aibot_sentimental_sugar_researcher, AI 模型: deepseek, 数据获取周期：2025-07-06 至 2025-07-06
+2025-07-12 15:21:07 - sugar_researcher - WARNING - 数据获取失败: (0, 7), 请检查！
+2025-07-12 15:21:07 - sugar_researcher - INFO - =====>>>>> [初始化] 表名: aibot_sentimental_sugar_researcher, AI 模型: deepseek, 数据获取周期：2025-07-07 至 2025-07-07
+2025-07-12 15:21:07 - sugar_researcher - INFO - 数据获取成功: (38, 7), 耗时: 0:00:00.008341
+2025-07-12 15:21:09 - sugar_researcher - INFO - 读取缓存成功, 剔除后已分析文章后, 剩余数据大小: (20, 7), 耗时: 0:00:02.130589
+2025-07-12 15:21:09 - sugar_researcher - WARNING - 再次筛选数据后，没有可分析的文章: 0 !
+2025-07-12 15:21:09 - sugar_researcher - INFO - =====>>>>> [初始化] 表名: aibot_sentimental_sugar_researcher, AI 模型: deepseek, 数据获取周期：2025-07-08 至 2025-07-08
+2025-07-12 15:21:09 - sugar_researcher - INFO - 数据获取成功: (46, 7), 耗时: 0:00:00.008403
+2025-07-12 15:21:09 - sugar_researcher - INFO - 读取缓存成功, 剔除后已分析文章后, 剩余数据大小: (20, 7), 耗时: 0:00:00.005498
+2025-07-12 15:21:09 - sugar_researcher - WARNING - 再次筛选数据后，没有可分析的文章: 0 !
+2025-07-12 15:21:09 - sugar_researcher - INFO - =====>>>>> [初始化] 表名: aibot_sentimental_sugar_researcher, AI 模型: deepseek, 数据获取周期：2025-07-09 至 2025-07-09
+2025-07-12 15:21:09 - sugar_researcher - INFO - 数据获取成功: (29, 7), 耗时: 0:00:00.006875
+2025-07-12 15:21:09 - sugar_researcher - INFO - 读取缓存成功, 剔除后已分析文章后, 剩余数据大小: (12, 7), 耗时: 0:00:00.004994
+2025-07-12 15:21:09 - sugar_researcher - WARNING - 再次筛选数据后，没有可分析的文章: 0 !
+2025-07-12 15:21:09 - sugar_researcher - INFO - =====>>>>> [初始化] 表名: aibot_sentimental_sugar_researcher, AI 模型: deepseek, 数据获取周期：2025-07-10 至 2025-07-10
+2025-07-12 15:21:09 - sugar_researcher - INFO - 数据获取成功: (28, 7), 耗时: 0:00:00.007354
+2025-07-12 15:21:09 - sugar_researcher - INFO - 读取缓存成功, 剔除后已分析文章后, 剩余数据大小: (14, 7), 耗时: 0:00:00.004533
+2025-07-12 15:21:09 - sugar_researcher - WARNING - 再次筛选数据后，没有可分析的文章: 0 !
+2025-07-12 15:21:09 - sugar_researcher - INFO - =====>>>>> [初始化] 表名: aibot_sentimental_sugar_researcher, AI 模型: deepseek, 数据获取周期：2025-07-11 至 2025-07-11
+2025-07-12 15:21:09 - sugar_researcher - INFO - 数据获取成功: (19, 7), 耗时: 0:00:00.007548
+2025-07-12 15:21:09 - sugar_researcher - INFO - 读取缓存成功, 剔除后已分析文章后, 剩余数据大小: (11, 7), 耗时: 0:00:00.004960
+2025-07-12 15:21:09 - sugar_researcher - INFO - 数据清洗, 待分析的文章数量: 5, 耗时: 0:00:00.000655
+2025-07-12 15:21:09 - sugar_researcher - INFO - 共计 5 篇文章，并行处理！
+2025-07-12 15:21:24 - sugar_researcher - INFO - 并行处理完成! 分析失败占比: 0 / 5
+2025-07-12 15:21:24 - sugar_researcher - INFO - AI分析, 报告数据: 5, 耗时: 0:00:14.540549
+2025-07-12 15:21:24 - sugar_researcher - INFO - 存储分析结果: (5, 10), 耗时: 0:00:00.020319
+2025-07-12 15:21:24 - sugar_researcher - INFO - =====>>>>> [初始化] 表名: aibot_sentimental_sugar_researcher, AI 模型: deepseek, 数据获取周期：2025-07-12 至 2025-07-12
+2025-07-12 15:21:24 - sugar_researcher - WARNING - 数据获取失败: (0, 7), 请检查！

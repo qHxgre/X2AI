@@ -1,0 +1,185 @@
+/* 期货页面专用样式 - 三行布局 */
+.futures-container {
+    display: grid;
+    grid-template-areas:
+        "config chart"
+        "report report";
+    grid-template-columns: minmax(250px, 300px) 1fr;
+    grid-template-rows: 1fr auto;
+    gap: 20px;
+    height: calc(100vh - 120px);
+    padding: 20px;
+    max-width: 100%; /* 确保不超过视口宽度 */
+    background-color: #f0f2f5;
+    box-sizing: border-box; /* 包含padding在宽度内 */
+}
+
+/* 配置区域样式 */
+.config-section {
+    grid-area: config;
+    display: flex;
+    flex-direction: column;
+    gap: 20x;
+    min-width: 0; /* 防止内容溢出 */
+}
+
+/* 图表区域样式 */
+.chart-section {
+    grid-area: chart;
+    padding: 10px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    border: 1px solid #e0e3e7;
+    min-width: 0; /* 防止内容溢出 */
+}
+
+.chart-section h2 {
+    margin: 0 0 15px 0;
+    color: #2c3e50;
+    font-size: 1.3rem;
+    font-weight: 500;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #f0f2f5;
+}
+
+.chart-content {
+    height: 96%;
+    width: 96%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f8fafc;
+    border-radius: 8px;
+    border: 1px dashed #d1d9e0;
+    padding: 10px;
+    overflow: hidden;
+}
+
+/* 报告区域样式（全宽底部） */
+.report-section {
+    grid-area: report;
+    padding: 20px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    border: 1px solid #e0e3e7;
+}
+
+.report-section h2 {
+    margin: 0 0 15px 0;
+    color: #2c3e50;
+    font-size: 1.3rem;
+    font-weight: 500;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #f0f2f5;
+}
+
+.report-content {
+    height: 300px;
+    overflow-y: auto;
+    padding: 15px;
+    background-color: #f8fafc;
+    border-radius: 8px;
+    border: 1px solid #e0e3e7;
+}
+
+/* 期货选择器样式 */
+.futures-selector {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 20px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    border: 1px solid #e0e3e7;
+}
+
+.exchange-selector, .variety-selector {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.exchange-selector label, .variety-selector label {
+    font-weight: 500;
+    color: #2c3e50;
+    font-size: 0.95rem;
+}
+
+.exchange-select, .variety-select {
+    padding: 8px 12px;
+    border: 2px solid #e0e3e7;
+    border-radius: 6px;
+    font-size: 1rem;
+    background-color: white;
+    color: #2c3e50;
+    transition: border-color 0.3s;
+    width: 100%;
+}
+
+/* 日期选择区域样式 */
+.date-selection {
+    padding: 20px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    border: 1px solid #e0e3e7;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.date-selection h2 {
+    margin: 0 0 15px 0;
+    color: #2c3e50;
+    font-size: 1.3rem;
+    font-weight: 500;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #f0f2f5;
+}
+
+.date-picker {
+    padding: 10px;
+    border: 2px solid #e0e3e7;
+    border-radius: 6px;
+    font-size: 1rem;
+    transition: border-color 0.3s;
+    width: 95%;
+}
+
+.fetch-btn {
+    padding: 12px;
+    background: linear-gradient(to right, #3498db, #2980b9);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: all 0.3s;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    width: 100%;
+}
+
+/* 其他样式保持不变... */
+
+/* 响应式调整 */
+@media (max-width: 992px) {
+    .futures-container {
+        grid-template-areas:
+            "config"
+            "chart"
+            "report";
+        grid-template-columns: 1fr;
+    }
+    
+    .chart-content {
+        height: 350px;
+    }
+    
+    .report-content {
+        height: 250px;
+    }
+}

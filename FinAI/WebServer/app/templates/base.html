@@ -2,26 +2,24 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <title>AI分析平台</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XAI金融分析平台</title>
     <link rel="stylesheet" href="/static/styles/base.css">
     {% block extra_css %}{% endblock %}
 </head>
-
 <body>
-    <div class="base-container" style="max-width: 1200px; margin: 20px auto;">
-        <div class="tab-container">
-            <div class="tab-header">
-                <a href="/auto" class="tab-button {% if request.path == '/auto' %}active{% endif %}">自动分析</a>
-                <a href="/manual" class="tab-button {% if request.path == '/manual' %}active{% endif %}">手动分析</a>
-                <a href="/stock" class="tab-button {% if request.path == '/stock' %}active{% endif %}">股票分析</a>
-            </div>
-            
-            <div class="content">
-                {% block content %}{% endblock %}
-            </div>
-        </div>
+    <nav>
+        <ul>
+            <li><a href="{{ url_for('views.home') }}" class="{% if request.endpoint == 'views.home' %}active{% endif %}">首页</a></li>
+            <li><a href="{{ url_for('views.stock_page') }}" class="{% if request.endpoint == 'views.stock_page' %}active{% endif %}">股票</a></li>
+            <li><a href="{{ url_for('views.future_page') }}" class="{% if request.endpoint == 'views.future_page' %}active{% endif %}">期货</a></li>
+        </ul>
+    </nav>
+
+    <div class="content">
+        {% block content %}{% endblock %}
     </div>
-    
+
     <script src="/static/scripts/base.js"></script>
     <script src="/static/vendor/echarts.min.js"></script>
     <script src="/static/vendor/marked.min.js"></script>

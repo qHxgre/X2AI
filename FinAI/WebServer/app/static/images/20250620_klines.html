@@ -8,11 +8,16 @@
     
 </head>
 <body >
-    <div id="6ec8bef24d6c49498b439e55555f3f9f" class="chart-container" style="width:1000px; height:600px; "></div>
+    <div id="8342fdf9e2564d7a915d180934137f2d" class="chart-container" style="width:100%; height:100%; "></div>
     <script>
-        var chart_6ec8bef24d6c49498b439e55555f3f9f = echarts.init(
-            document.getElementById('6ec8bef24d6c49498b439e55555f3f9f'), 'white', {renderer: 'canvas'});
-        var option_6ec8bef24d6c49498b439e55555f3f9f = {
+        var chart_8342fdf9e2564d7a915d180934137f2d = echarts.init(
+            document.getElementById('8342fdf9e2564d7a915d180934137f2d'), 'white', {renderer: 'canvas'});
+            
+        window.addEventListener('resize', function() {
+            chart.resize();
+        });
+        
+        var option_8342fdf9e2564d7a915d180934137f2d = {
     "animation": true,
     "animationThreshold": 2000,
     "animationDuration": 1000,
@@ -893,7 +898,7 @@
                 "K\u7ebf"
             ],
             "selected": {},
-            "show": true,
+            "show": false,
             "padding": 5,
             "itemGap": 10,
             "itemWidth": 25,
@@ -918,8 +923,7 @@
                 "AI\u8bc4\u7ea7"
             ],
             "selected": {},
-            "show": true,
-            "right": "10%",
+            "show": false,
             "padding": 5,
             "itemGap": 10,
             "itemWidth": 25,
@@ -1300,19 +1304,17 @@
             "animationDelayUpdate": 0
         },
         {
-            "name": "AI\u8bc4\u7ea7",
             "show": true,
-            "scale": true,
+            "scale": false,
             "nameLocation": "end",
             "nameGap": 15,
             "gridIndex": 1,
             "inverse": false,
-            "position": "right",
             "offset": 0,
             "splitNumber": 5,
             "minInterval": 0,
             "splitLine": {
-                "show": false,
+                "show": true,
                 "lineStyle": {
                     "show": true,
                     "width": 1,
@@ -1334,7 +1336,6 @@
     "title": [
         {
             "show": true,
-            "text": "K\u7ebf\u56fe&AI\u8bc4\u7ea7(\u7ea2\u8272=\u4e0a\u6da8 | \u84dd\u8272=\u9707\u8361 | \u7eff\u8272=\u770b\u8dcc)",
             "target": "blank",
             "subtarget": "blank",
             "padding": 5,
@@ -1439,9 +1440,9 @@
             "show": false,
             "zlevel": 0,
             "z": 2,
-            "left": "5%",
+            "left": "3%",
             "top": "10%",
-            "right": "20%",
+            "right": "3%",
             "height": "60%",
             "containLabel": false,
             "backgroundColor": "transparent",
@@ -1454,9 +1455,9 @@
             "show": false,
             "zlevel": 0,
             "z": 2,
-            "left": "5%",
+            "left": "3%",
             "top": "75%",
-            "right": "20%",
+            "right": "3%",
             "height": "15%",
             "containLabel": false,
             "backgroundColor": "transparent",
@@ -1467,7 +1468,10 @@
         }
     ]
 };
-        chart_6ec8bef24d6c49498b439e55555f3f9f.setOption(option_6ec8bef24d6c49498b439e55555f3f9f);
+        chart_8342fdf9e2564d7a915d180934137f2d.setOption(option_8342fdf9e2564d7a915d180934137f2d);
+            window.addEventListener('resize', function(){
+                chart_8342fdf9e2564d7a915d180934137f2d.resize();
+            })
     </script>
 </body>
 </html>

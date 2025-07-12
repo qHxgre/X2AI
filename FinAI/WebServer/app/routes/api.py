@@ -1,12 +1,9 @@
+import os
 from flask import Blueprint, jsonify, request, Response
 from pathlib import Path
-from datetime import datetime, timedelta
 from Base import DBFile, LoggerController
-from AIBots.SentimentalBot.robot import SentimentalBot
-from AIBots.StockBot.robot import StockBot
-from WebServer.app.services.analyzing import AnalysisService
-from WebServer.app.services.reporting import ReportService
-from WebServer.app.services.stockAnalyzer import stockService
+from WebServer.app.services.future import FutureService
+from datetime import datetime
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent.parent
 
@@ -21,55 +18,43 @@ logger = LoggerController(
     when='D'
 )
 
-aibot = SentimentalBot(db=DBFile())
-stock_bot = StockBot(db=DBFile())
+analysis_service = FutureService(logger)
 
-analysis_service = AnalysisService(aibot, logger)
-report_service = ReportService(aibot, logger)
-stock_service = stockService(aibot, logger)
-
-@api_bp.route('/get_article', methods=['POST'])
-def get_article():
+@api_bp.route('/get_klines', methods=['POST'])
+def get_klines():
     data = request.json
-    start_date = data.get('startDate')
-    end_date = data.get('endDate')
-    return analysis_service.get_articles(start_date, end_date)
+    date = data.get('date', '')
+    # 验证日期格式
+    if isinstance(date, str):
+        date = date if '-' not in date else date.replace('-', '')
+    if isinstance(date, datetime):
+        date = datetime.strftime(date, '%Y%m%d')
+    parent_path = os.path.join(PROJECT_ROOT, 'WebServer', 'app', 'static', 'images')
+    filename = f'{parent_path}/{date}_klines.html'
 
-@api_bp.route('/get_chart')
-def get_chart():
-    return report_service.get_chart(f"{PROJECT_ROOT}/WebServer/app/static/images")
+    if not filename:
+        return jsonify({
+            'status': 'error',
+            'message': '无效的日期格式'
+        })
+        
+    return analysis_service.get_klines(filename)
 
-@api_bp.route('/get_reports')
+@api_bp.route('/get_reports', methods=['POST'])
 def get_reports():
-    return report_service.get_reports(f"{PROJECT_ROOT}/WebServer/app/static/reports")
-
-@api_bp.route('/analyze', methods=['POST'])
-def analyze_articles():
     data = request.json
-    articles = data.get('articles', [])
-    user_opinion = data.get('userOpinion', '')
-    return Response(analysis_service.analyze_articles(articles), mimetype='text/event-stream')
-
-@api_bp.route('/analyzing_stocks')
-def analyzing_stocks():
-    results = stock_service.get_results()
-    return jsonify(results)
-
-@api_bp.route('/api/logging', methods=['POST'])
-def log_message():
-    data = request.get_json()
-    message = data.get('message', '')
-    level = data.get('level', '')
-    
-    if level == 'debug':
-        logger.debug(message)
-    elif level == 'info':
-        logger.info(message)
-    elif level == 'warning':
-        logger.warning(message)
-    elif level == 'error':
-        logger.error(message)
-    elif level == 'critical':
-        logger.critical(message)
-    else:
-        raise ValueError("Invalid log level provided")
+    date = data.get('date', '')
+    # 验证日期格式
+    if isinstance(date, str):
+        date = date if '-' not in date else date.replace('-', '')
+    if isinstance(date, datetime):
+        date = datetime.strftime(date, '%Y%m%d')
+    parent_path = os.path.join(PROJECT_ROOT, 'WebServer', 'app', 'static', 'reports')
+    filename = f'{parent_path}/{date}_report.markdown'
+    if not filename:
+        return jsonify({
+            'status': 'error',
+            'message': '无效的日期格式'
+        })
+        
+    return analysis_service.get_reports(filename)

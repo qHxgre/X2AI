@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="/static/styles/future.css">
+{% endblock %}
+
+{% block content %}
+<div class="futures-container">
+    <!-- 左侧配置区域 -->
+    <div class="config-section">
+        <!-- 期货选择器 -->
+        <div class="futures-selector">
+            <div class="exchange-selector">
+                <label for="exchange">交易所:</label>
+                <select id="exchange" class="exchange-select">
+                    <option value="CZCE">郑州商品交易所</option>
+                    <option value="DCE">大连商品交易所</option>
+                    <option value="SHFE">上海期货交易所</option>
+                </select>
+            </div>
+            <div class="variety-selector">
+                <label for="variety">品种:</label>
+                <select id="variety" class="variety-select">
+                    <option value="SR">白糖</option>
+                    <option value="LH">生猪</option>
+                    <option value="RB">螺纹钢</option>
+                </select>
+            </div>
+        </div>
+        
+        <!-- 日期选择区域 -->
+        <div class="date-selection">
+            <input type="date" id="currentDate" class="date-picker">
+            <button id="fetchDataBtn" class="fetch-btn">获取数据</button>
+            <div class="instructions">
+                <p><strong>使用说明：</strong></p>
+                <ol>
+                    <li>展示近一年K线图和AI评级</li>
+                    <li>AI预测值范围为[-1, 1]</li>
+                    <li>看涨：值越接近1，预期越强</li> 
+                    <li>看跌：值越接近-1，预期越强</li> 
+                    <li>震荡：预测值接近0</li> 
+                    <li>置信区间：区间为[0, 1]，值越大说明结论的可靠程度越高</li> 
+                </ol>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 右侧图表区域 -->
+    <div class="chart-section">
+        <div id="chartContent" class="chart-content">
+            <p class="placeholder">请先选择查询条件并获取数据</p>
+        </div>
+    </div>
+    
+    <!-- 底部报告区域（全宽） -->
+    <div class="report-section">
+        <div id="reportContent" class="report-content">
+            <p class="placeholder">请先选择查询条件并获取数据</p>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="/static/scripts/future.js"></script>
+{% endblock %}

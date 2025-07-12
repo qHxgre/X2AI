@@ -1,0 +1,74 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+}
+h1 {
+    text-align: center;
+    color: #333;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+th {
+    background-color: #f2f2f2;
+    position: sticky;
+    top: 0;
+}
+tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+tr:hover {
+    background-color: #f1f1f1;
+}
+.recommendation-btn {
+    color: blue;
+    cursor: pointer;
+    text-decoration: underline;
+}
+.recommendation-detail {
+    display: none;
+    padding: 10px;
+    background-color: #f8f8f8;
+    border: 1px solid #ddd;
+    border-top: none;
+}
+.expanded {
+    display: table-row;
+}
+
+.recommendation-detail td {
+    padding: 15px;
+    background-color: #f8f9fa;
+    border-top: none;
+}
+
+.recommendation-content {
+    white-space: pre-wrap;
+    word-break: break-word;
+    line-height: 1.6;
+    padding: 10px;
+    background-color: #fff;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+}
+
+.recommendation-detail {
+    display: none;
+}
+
+.recommendation-detail.expanded {
+    display: table-row;
+    animation: fadeIn 0.2s ease-in;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}

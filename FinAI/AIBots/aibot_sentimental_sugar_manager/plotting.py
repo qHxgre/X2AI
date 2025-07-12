@@ -22,7 +22,7 @@ def plt_klines_rank(data: pd.DataFrame, filepath: str) -> None:
             ),
         )
         .set_global_opts(
-            title_opts=opts.TitleOpts(title="K线图&AI评级(红色=上涨 | 蓝色=震荡 | 绿色=看跌)"),
+            legend_opts=opts.LegendOpts(is_show=False),  # 隐藏图例
             xaxis_opts=opts.AxisOpts(
                 type_="category",
                 is_scale=True,
@@ -74,32 +74,37 @@ def plt_klines_rank(data: pd.DataFrame, filepath: str) -> None:
             ),
         )
         .set_global_opts(
-            yaxis_opts=opts.AxisOpts(
-                name="AI评级",
-                position="right",  # 右侧显示
-                is_scale=True,
-                splitline_opts=opts.SplitLineOpts(is_show=False),
-            ),
-            legend_opts=opts.LegendOpts(pos_right="10%"),  # 调整图例位置
+            legend_opts=opts.LegendOpts(is_show=False),  # 隐藏图例
         )
     )
 
-    # 使用Grid组合图表
+
+    # 使用Grid组合图表 - 移除固定尺寸，使用百分比布局
     grid = (
-        Grid(init_opts=opts.InitOpts(width="1000px", height="600px"))
+        Grid(init_opts=opts.InitOpts(width="100%", height="100%"))  # 使用百分比而非固定像素
         .add(
             kline,
             grid_opts=opts.GridOpts(
-                pos_left="5%", pos_right="20%", pos_top="10%", height="60%"
+                pos_left="3%", pos_right="3%", pos_top="10%", height="60%"
             ),
         )
         .add(
             bar,
             grid_opts=opts.GridOpts(
-                pos_left="5%", pos_right="20%", pos_top="75%", height="15%"
+                pos_left="3%", pos_right="3%", pos_top="75%", height="15%"
             ),
         )
     )
+
+    # 添加响应式配置
+    grid.add_js_funcs(
+        """
+        window.addEventListener('resize', function() {
+            chart.resize();
+        });
+        """
+    )
+
 
     # grid.render_notebook()
     grid.render(filepath)

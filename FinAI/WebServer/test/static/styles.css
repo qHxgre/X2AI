@@ -1,0 +1,23 @@
+/* 导航栏样式 */
+nav {
+    background: #2c3e50;
+    padding: 10px;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    margin: 0 15px;
+    padding: 5px 10px;
+    border-radius: 3px;
+}
+
+nav a.active {
+    background: #3498db;
+}
+
+/* 内容区域 */
+#content-container {
+    padding: 20px;
+    min-height: 80vh;
+}
