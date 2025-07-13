@@ -1,0 +1,15 @@
+.home-container {
+    position: fixed; /* 使用固定定位确保覆盖整个视口 */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: 0;
+    padding: 0;
+    background-image: url('/static/images/X2AI 量化投资首页图片.png');
+    background-size: cover;
+    background-position: center center; /* 明确指定水平和垂直居中 */
+    background-repeat: no-repeat;
+    background-color: #f0f0f0; /* 备用背景色 */
+    z-index: -1; /* 确保背景在内容下方 */
+}

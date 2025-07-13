@@ -2,10 +2,11 @@
 
 {% block title %}首页{% endblock %}
 
+{% block extra_css %}
+<link rel="stylesheet" href="/static/styles/home.css">
+{% endblock %}
+
 {% block content %}
-<div class="home-container">
-    <div class="home-image">
-        <img src="{{ url_for('static', filename='images/X2AI 量化投资首页图片.png') }}" alt="X2AI 量化投资" class="responsive-image">
-    </div>
+<div class="home-container" style="background-image: url('/static/images/X2AI 量化投资首页图片.png');">
 </div>
 {% endblock %}

@@ -6,59 +6,26 @@ const datePicker = document.getElementById('currentDate');
 const fetchDataBtn = document.getElementById('fetchDataBtn');
 const chartContent = document.getElementById('chartContent');
 const reportContent = document.getElementById('reportContent');
+const instructions = document.querySelector('.instructions');
 
 // Event listeners
 document.addEventListener('DOMContentLoaded', function() {
-    // Initial data fetch with default values
-    fetchData();
+    // 获取K线图
+    fetchKlines();
     
+    // 获取分析报告
+    fetchReports();
+
     // Setup event listeners
-    fetchDataBtn.addEventListener('click', fetchData);
+    fetchDataBtn.addEventListener('click', fetchReports);
 });
 
-// Main function to fetch all data
-async function fetchData() {
-    try {
-        // Show loading states
-        chartContent.innerHTML = '<p class="placeholder">正在加载图表数据...</p>';
-        reportContent.innerHTML = '<p class="placeholder">正在加载分析报告...</p>';
-        
-        // Get current selections
-        const date = datePicker.value;
-        
-        // Validate date
-        if (!date) {
-            throw new Error('请选择有效日期');
-        }
-        
-        // Prepare payload
-        const payload = {
-            date: date
-        };
-        
-        // Fetch data in parallel
-        await Promise.all([
-            fetchKlines(payload),
-            fetchReports(payload)
-        ]);
-        
-    } catch (error) {
-        console.error('Error fetching data:', error);
-        chartContent.innerHTML = `<p class="error">数据加载失败: ${error.message}</p>`;
-        reportContent.innerHTML = `<p class="error">数据加载失败: ${error.message}</p>`;
-    }
-}
-
 // Fetch K-line data
-async function fetchKlines(payload) {
+async function fetchKlines() {
+    chartContent.innerHTML = '<p class="placeholder">正在加载图表数据...</p>';
+
     try {
-        const response = await fetch('/api/get_klines', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(payload)
-        });
+        const response = await fetch('/api/get_klines');
         
         const result = await response.json();
         if (result.status === 'success') {
@@ -106,7 +73,22 @@ function renderKlines(htmlContent) {
 }
 
 // Fetch reports data
-async function fetchReports(payload) {
+async function fetchReports() {
+    reportContent.innerHTML = '<p class="placeholder">正在加载分析报告...</p>';
+    
+    // Get current selections
+    const date = datePicker.value;
+    
+    // Validate date
+    if (!date) {
+        throw new Error('请选择有效日期');
+    }
+    
+    // Prepare payload
+    const payload = {
+        date: date
+    };
+
     try {
         const response = await fetch('/api/get_reports', {
             method: 'POST',

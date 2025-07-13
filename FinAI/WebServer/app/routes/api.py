@@ -20,25 +20,10 @@ logger = LoggerController(
 
 analysis_service = FutureService(logger)
 
-@api_bp.route('/get_klines', methods=['POST'])
+@api_bp.route('/get_klines')
 def get_klines():
-    data = request.json
-    date = data.get('date', '')
-    # 验证日期格式
-    if isinstance(date, str):
-        date = date if '-' not in date else date.replace('-', '')
-    if isinstance(date, datetime):
-        date = datetime.strftime(date, '%Y%m%d')
     parent_path = os.path.join(PROJECT_ROOT, 'WebServer', 'app', 'static', 'images')
-    filename = f'{parent_path}/{date}_klines.html'
-
-    if not filename:
-        return jsonify({
-            'status': 'error',
-            'message': '无效的日期格式'
-        })
-        
-    return analysis_service.get_klines(filename)
+    return analysis_service.get_klines(parent_path)
 
 @api_bp.route('/get_reports', methods=['POST'])
 def get_reports():
