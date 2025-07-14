@@ -8,6 +8,7 @@ class AIBotSentimentalSugarManagerSchema(BaseSchema):
     """AI机器人-舆情分析-白糖基金经理"""
 
     date: np.datetime64 = Field(description="发布日期", default=np.nan)
+    llms: pd.StringDtype = Field(description="AI模型", default='')
     method: pd.StringDtype = Field(description="分析方式", default='')
     rating: pd.StringDtype = Field(description="投资评级", default='')
     ranking: np.double = Field(description="预测值", default=np.nan)

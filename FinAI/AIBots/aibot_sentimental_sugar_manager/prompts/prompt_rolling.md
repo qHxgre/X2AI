@@ -1,26 +1,8 @@
-{prompt_fundation}
+{prompt_base}
 
 # 输入数据 (Input Data)
 
-你将收到两部分数据：
-
-* 时序衰减统计 (Timedecay Weighted Forecast): 综合了过去5日的舆情数据，赋予近期新闻更高权重，反映了市场的基本趋势和基调。
-* 过去5日的分析报告 (Pass 5 days Report Details): 过去5日的报告合集，当日报告仅根据单日的新闻舆情生成。
-
-1. 第一部分是过去5日的时序衰减统计
-
-* short_forecast_timeweighted：短期预测值近5日时间衰减加权值，其算法为：首先将每篇文章的预测值与置信度相乘得到该篇文章的得分，再把当日所有文章的得分汇总为今日得分，最后计算最近5日的时间衰减平均得到当日的最终预测值。
-* long_forecast_timeweighted：长期预测值近5日时间衰减加权值，其算法为：首先将每篇文章的预测值与置信度相乘得到该篇文章的得分，再把当日所有文章的得分汇总为今日得分，最后计算最近5日的时间衰减平均得到当日的最终预测值。
-
-输入数据例子：
-
-```
-| date       |   short_forecast_timeweighted |   long_forecast_timeweighted |
-|:-----------|------------------------------:|-----------------------------:|
-| 2025-05-23 |                       -0.0236 |                      -0.1191 |
-```
-
-2. 第二部分是过去5日的报告合集
+过去5日的报告合集：
 
 ```
 ### 日期
@@ -62,11 +44,7 @@
 
 你的目标是生成一份体现动态演变视角的结构化JSON研判报告。请严格遵循以下思考步骤，确保分析的系统性、深度和时效性.
 
-### 第一步：宏观趋势定位 (Macro Trend Positioning)
-
-* 审阅量化基调: 分析 short_forecast_timeweighted 和 long_forecast_timeweighted。这两个指标的数值正负和大小，为你提供了基于时间加权的、对市场整体情绪的初步量化判断。这是你分析的起点和基准。
-
-### 第二步：核心论据的动态演变分析 (Dynamic Evolution Analysis of Core Arguments)
+### 第一步：核心论据的动态演变分析 (Dynamic Evolution Analysis of Core Arguments)
 
 这是分析的核心。不要将五天的报告视为一个静态的信息池，而要将其视为一个动态演变的叙事。
 
@@ -82,7 +60,7 @@
 4. 识别未来催化剂 (Identify Future Catalysts): 
   * 主动思考和推演未来1-2周内影响市场走势的因素。
 
-### 第三步：赋予时间权重，综合研判 (Apply Time Weighting & Synthesize Judgment)
+### 第二步：赋予时间权重，综合研判 (Apply Time Weighting & Synthesize Judgment)
 
 现在，整合前两步的发现，进行最终决策，必须在头脑中构建一个加权模型。你的思考模型应该是：时间权重 × 置信度权重，并基于分析结论推演出未来市场（1-2周内）的走势。
 
@@ -96,14 +74,14 @@
     * 确定置信度 (confidence): 如果核心叙事清晰、持续增强且近期无重大矛盾信号，则置信度高。如果关键论据缺乏新数据支撑，则置信度较低。
     * 提炼利多/利空逻辑 (bullish/bearish): 从你识别出的、至今仍然有效的、且权重较高的论据中，分别归纳总结。
 
-### 第四步：构建具备预测性和批判性结论 (Construct a Predictive and Critical Conclusion)
+### 第三步：构建具备预测性和批判性结论 (Construct a Predictive and Critical Conclusion)
 
 * 构建结论 (conclusion): 你的结论必须反映出第三步的动态研判过程。
     * 立场先行: 明确给出最终评级，给出对未来市场走向的核心判断，比如：（“我们预测...将会...“）。
     * 动态论证: 解释为什么会做出这样的预测。论证应基于输入内容的分析总结，并聚焦于你认为在未来一段时间内最具影响力的1-2个核心因素，并解释它们将如何驱动市场。
     * 解释权衡: 说明为何是当前评级，而不是更强或更弱的评级。这部分应体现出你对不同因素权重的考量结果（例如：“短期消费支撑限制了下跌空间，故评级为‘下跌’而非‘大幅下跌’。”）
 
-### 第五步：生成结构化报告 (Generate Structured Report)
+### 第四步：生成结构化报告 (Generate Structured Report)
 
 * 生成JSON报告: 严格按照指定的JSON格式输出，确保 conclusion、bullish 和 bearish 的内容与你在第三步的加权研判结果完全一致。
 

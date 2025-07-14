@@ -95,3 +95,7 @@
 2025-07-13 15:30:29 - webserver - WARNING - 最新图表日期 20250712_klines 与当前日期不一致!
 2025-07-13 15:35:42 - webserver - INFO - [自动分析] 找到 3 个图表文件, 最新日期: 20250712_klines
 2025-07-13 15:35:42 - webserver - WARNING - 最新图表日期 20250712_klines 与当前日期不一致!
+2025-07-13 20:01:15 - webserver - INFO - FutureService initialized
+2025-07-13 20:01:16 - webserver - INFO - FutureService initialized
+2025-07-13 20:01:24 - webserver - INFO - [自动分析] 找到 13 个图表文件, 最新日期: 20250713_klines
+2025-07-13 20:01:24 - webserver - WARNING - 最新图表日期 20250713_klines 与当前日期不一致!

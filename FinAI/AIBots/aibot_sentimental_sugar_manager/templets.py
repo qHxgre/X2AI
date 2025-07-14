@@ -8,21 +8,6 @@ TEMPLET_INPUT_REPORT_DAILY = """
 * 分析观点：{opinion}
 """
 
-TEMPLET_USER_PROMPT_DAILY = """
-# 简单统计
-
-{simple_static}
-
-# 分组统计
-
-{group_static}
-
-# 当日报告列表
-
-{reports_list}
-
-"""
-
 
 TEMPLET_INPUT_REPORT_ROLLING = """
 # 日期：{date}
@@ -38,18 +23,6 @@ TEMPLET_INPUT_REPORT_ROLLING = """
 
 * 看空因素
 {bearish}
-
-"""
-
-
-TEMPLET_USER_PROMPT_ROLLING = """
-# 时间衰减加权平均统计值
-
-{timedecay_static}
-
-# 每日报告列表
-
-{reports_list}
 
 """
 

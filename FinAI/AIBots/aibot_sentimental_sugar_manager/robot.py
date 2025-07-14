@@ -6,7 +6,7 @@ from datetime import datetime, timedelta
 from typing import Optional
 from Base import BaseAI, DBFile, DBSQL, LoggerController, BaseBuilder
 from AIBots.aibot_sentimental_sugar_manager.plotting import plt_klines_rank
-from AIBots.aibot_sentimental_sugar_manager.templets import TEMPLET_INPUT_REPORT_DAILY, TEMPLET_USER_PROMPT_DAILY, TEMPLET_INPUT_REPORT_ROLLING, TEMPLET_USER_PROMPT_ROLLING, TEMPLET_OUTPUT
+from AIBots.aibot_sentimental_sugar_manager.templets import TEMPLET_INPUT_REPORT_DAILY, TEMPLET_INPUT_REPORT_ROLLING, TEMPLET_OUTPUT
 from AIBots.aibot_sentimental_sugar_manager.schema import AIBotSentimentalSugarManagerSchema
 
 pd.options.mode.chained_assignment = None  # 完全关闭警告
@@ -45,8 +45,22 @@ class AIBotSentimentalSugarManager(BaseAI, BaseBuilder):
         self.path_image = os.path.join(self.parent_path, 'WebServer', 'app', 'static', 'images')     # 图片存储路径
         self.path_markdown = os.path.join(self.parent_path, 'WebServer', 'app', 'static', 'reports')      # 报告存储路径
 
+        # 获取提示词
+        # -- 白糖期货研究体系
+        self.prompt_suggar = self.read_md(os.path.join(self.filepath_prompt, "sugar_logic.md"))       # 白糖期货研究体系
+        # -- 基础提示词
+        prompt_base = self.read_md(os.path.join(self.filepath_prompt, "prompt_base.md"))
+        self.prompt_base = prompt_base.format(sugar_logic=self.prompt_suggar)
+        # -- 单日研究系统提示词
+        prompt_daily = self.read_md(os.path.join(self.filepath_prompt, "prompt_daily.md"))
+        self.sys_prompt_daily = prompt_daily.format(prompt_base=prompt_base)
+        # -- 滚动多日研究系统提示词
+        prompt_rolling = self.read_md(os.path.join(self.filepath_prompt, "prompt_rolling.md"))
+        self.sys_prompt_rolling = prompt_rolling.format(prompt_base=prompt_base)
+
         # 初始化ai
-        self.init_ai(llms_api=llms)
+        self.ai_llms = llms
+        self.init_ai(llms_api=self.ai_llms)
 
         # 初始化数据库
         if db is None:
@@ -74,15 +88,6 @@ class AIBotSentimentalSugarManager(BaseAI, BaseBuilder):
         self.static_timedecay = None
         self.result = {}
 
-        # 获取原属数据
-        self.cache = cache
-        if self.cache is True:
-            self.raw_data = self.handler.read_dataframe(
-                table=self.datasource_id,
-                filters={'date': [self.before_start_date, self.end_date]}
-            )
-            self.raw_data['date'] = self.raw_data['date'].dt.strftime('%Y-%m-%d')
-
         # 初始化的日志
         self.logger.info(f"=====>>>>> 初始化开始 ")
         self.logger.info(f"表名: {self.datasource_id}, AI 模型: {llms}, 数据获取周期：{self.start_date} 至 {self.end_date}, 向前获取日期: {self.before_start_date}")
@@ -90,6 +95,19 @@ class AIBotSentimentalSugarManager(BaseAI, BaseBuilder):
         self.logger.info(f"图片存储路径: {self.path_image}")
         self.logger.info(f"报告存储路径: {self.path_markdown}")
         self.logger.info(f"=====<<<<< 初始化完毕")
+
+        # 获取原属数据
+        self.cache = cache
+        if self.cache is True:
+            try:
+                self.raw_data = self.handler.read_dataframe(
+                    table=self.datasource_id,
+                    filters={'date': [self.before_start_date, self.end_date]}
+                )
+                self.raw_data['date'] = self.raw_data['date'].dt.strftime('%Y-%m-%d')
+            except Exception as e:
+                self.raw_data = None
+                self.logger.warning("无法读取历史数据: {e}")
 
     def get_reports(self, table: str) -> pd.DataFrame:
         """获取研究报告"""
@@ -117,6 +135,8 @@ class AIBotSentimentalSugarManager(BaseAI, BaseBuilder):
 
     def hit_cache(self, today: str, method: str) -> bool:
         """获取已分析的文章数据数据"""
+        if self.raw_data is None:
+            return False
         dates = self.raw_data[self.raw_data['method']==method]['date'].unique().tolist()
         if today in dates:
             return True
@@ -149,6 +169,8 @@ class AIBotSentimentalSugarManager(BaseAI, BaseBuilder):
         df = pd.DataFrame(rows)
         # 确定分析方式
         df['method'] = method
+        # 确定AI模型
+        df['llms'] = self.ai_llms
         normalized_df = self.normalize(df)
         normalized_df[self.handler.DEFAULT_PARTITION_FIELD] = normalized_df['date'].dt.strftime('%Y')
         self.write(normalized_df)
@@ -236,11 +258,11 @@ class AIBotSentimentalSugarManager(BaseAI, BaseBuilder):
         result = pd.DataFrame(result).T.reset_index().rename(columns={"index": "date"})
         return result
 
-    def analyzing_daily(self, date_series: list, reports_list: pd.DataFrame, static_simple: pd.DataFrame, static_group: pd.DataFrame) -> None:
-        """分析当日数据"""
-        def _analyzing(system_prompt: str, today_reports: pd.DataFrame, today_ssimple: pd.DataFrame, today_sgroup: pd.DataFrame):
+    def analyzing_daily(self, date_series: list, reports_list: pd.DataFrame) -> None:
+        """分析当日报告"""
+        def _analyzing(system_prompt: str, today_reports: pd.DataFrame):
             # 获取拼接用户提示词
-            reports_list = ""       # 报告列表
+            user_prompt = ""       # 报告列表
             for i in range(0, today_reports.shape[0]):
                 row = today_reports.iloc[i, :]
                 input_report = TEMPLET_INPUT_REPORT_DAILY.format(
@@ -252,12 +274,7 @@ class AIBotSentimentalSugarManager(BaseAI, BaseBuilder):
                     summary=row["summary"],
                     opinion=row["opinion"]
                 )
-                reports_list += input_report
-            user_prompt = TEMPLET_USER_PROMPT_DAILY.format(
-                simple_static=today_ssimple.to_markdown(),
-                group_static=today_sgroup.to_markdown(),
-                reports_list=reports_list
-            )
+                user_prompt += input_report
 
             # AI分析
             try:
@@ -266,13 +283,6 @@ class AIBotSentimentalSugarManager(BaseAI, BaseBuilder):
                 return result, "success"
             except Exception as e:
                 return None, e
-        
-        # 获取拼接系统提示词
-        input_sugar = self.read_md(os.path.join(self.filepath_prompt, "sugar_logic.md"))       # 白糖期货研究体系
-        PROMPT_FUNDATION = self.read_md(os.path.join(self.filepath_prompt, "foundation.md"))     # 基础提示词
-        PROMPT_TODAY = self.read_md(os.path.join(self.filepath_prompt, "prompt_today.md"))     # 分析当日的提示词
-        input_fundation = PROMPT_FUNDATION.format(sugar_logic=input_sugar)
-        system_prompt = PROMPT_TODAY.format(prompt_fundation=input_fundation)
 
         result = {}
         for today in date_series:
@@ -282,18 +292,14 @@ class AIBotSentimentalSugarManager(BaseAI, BaseBuilder):
                 self.logger.info(f"[单日研究] 命中缓存: {today}")
                 continue
             today_reports = reports_list[reports_list['date']==today]
-            today_ssimple = static_simple[static_simple['date']==today]
-            today_sgroup = static_group[static_group['date']==today]
-            reports_size, simple_size, group_size = today_reports.shape[0], today_ssimple.shape[0], today_sgroup.shape[0]
-            if (reports_size == 0) | (simple_size == 0) | (group_size == 0):
-                self.logger.warning(f"[单日研究] 缺少当日数据：{today}！每日报告: {reports_size}; 简单统计值：{simple_size}; 分组统计值: {group_size}。跳过！")
+            reports_size = today_reports.shape[0]
+            if reports_size == 0:
+                self.logger.warning(f"[单日研究] {today} 当日无新的舆情新闻报告：{reports_size}。跳过！")
                 continue
         
             today_report, msg = _analyzing(
-                system_prompt=system_prompt,
-                today_reports=today_reports,
-                today_ssimple=today_ssimple.drop(columns=['date'], axis=1).set_index('type') ,
-                today_sgroup=today_sgroup.drop(columns=['date'], axis=1).set_index('type')
+                system_prompt=self.sys_prompt_daily,
+                today_reports=today_reports
             )
 
             if msg == 'success':
@@ -305,11 +311,11 @@ class AIBotSentimentalSugarManager(BaseAI, BaseBuilder):
         # 存储数据
         self.save_reports(result, 'daily')
 
-    def analyzing_rolling(self, date_series: list, daily_reports: pd.DataFrame, static_timedecay: pd.DataFrame) -> None:
+    def analyzing_rolling(self, date_series: list, daily_reports: pd.DataFrame, rolling_n: int=7) -> None:
         """分析多日数据"""
-        def _analyzing(system_prompt: str, rolling_repots: pd.DataFrame, rolling_stimedecay: pd.DataFrame):
+        def _analyzing(system_prompt: str, rolling_repots: pd.DataFrame):
             # 用户提示词
-            reports_list = ""
+            user_prompt = ""
             emapping_reverse = {
                 'supply': '全球供应',
                 'demand': '全球需求',
@@ -336,11 +342,7 @@ class AIBotSentimentalSugarManager(BaseAI, BaseBuilder):
                     bullish=bullish_elements,
                     bearish=bearish_elements,
                 )
-                reports_list += daily_report
-            user_prompt = TEMPLET_USER_PROMPT_ROLLING.format(
-                timedecay_static=rolling_stimedecay.to_markdown(),
-                reports_list=reports_list
-            )
+                user_prompt += daily_report
 
             # AI分析
             try:
@@ -350,56 +352,31 @@ class AIBotSentimentalSugarManager(BaseAI, BaseBuilder):
             except Exception as e:
                 return None, e
 
-
-        # 系统提示词
-        input_sugar = self.read_md(os.path.join(self.filepath_prompt, "sugar_logic.md"))       # 白糖期货研究体系
-        PROMPT_FUNDATION = self.read_md(os.path.join(self.filepath_prompt, "foundation.md"))     # 基础提示词
-        PROMPT_ROLLING = self.read_md(os.path.join(self.filepath_prompt, "prompt_rolling.md"))     # 滚动分析提示词
-        input_fundation = PROMPT_FUNDATION.format(sugar_logic=input_sugar)
-        system_prompt = PROMPT_ROLLING.format(prompt_fundation=input_fundation)
-
         result = {}
-        k = 5       # 5天一个滚动
         for today in date_series:
-            today = today.strftime('%Y-%m-%d')
             now = datetime.now()
+            sd = (today - timedelta(days=rolling_n)).strftime('%Y-%m-%d')
+            today = today.strftime('%Y-%m-%d')
             # 命中缓存
             if (self.cache is True) and (self.hit_cache(today, method='rolling')):
                 self.logger.info(f"[滚动分析] {today} 命中缓存")
                 continue
-            # 截取有效数据
-            temp = daily_reports[daily_reports['date']==today]
-            if temp.shape[0] == 0:
-                self.logger.warning(f"[滚动分析] 缺少当日数据：{today} 跳过!")
-                continue
-            index = temp.index[0]
-            part_reports = daily_reports.iloc[max(index-k+1, 0): index+1, :]
-            sd, ed = part_reports['date'].min(), part_reports['date'].max()
-
-            # 检查 时序报告列表的数据是否足够
-            reports_size = part_reports.shape[0]
-            if reports_size < 5:
-                self.logger.warning(f"[滚动分析] {today} 分析失败: {sd} 至 {ed}，数据！每日报告: {reports_size}。跳过！")
+            # 获取滚动日期的报告
+            rolling_repots = daily_reports[(daily_reports['date']>=sd) & (daily_reports['date']<=today)]
+            if rolling_repots.shape[0] < 5:
+                self.logger.warning(f'[滚动分析] {today} 缺少5天的分析报告，无法滚动分析！跳过！')
                 continue
 
-            # 检查当日时间衰减加权值是否
-            part_stimedecay = static_timedecay[static_timedecay['date']==today]
-            static_size = part_stimedecay.shape[0]
-            if static_size == 0:
-                self.logger.warning(f"[滚动分析] {today} 分析失败，时间衰减统计值缺失：{static_size}。跳过！")
-                continue
-        
             # AI 分析
             today_report, msg = _analyzing(
-                system_prompt=system_prompt,
-                rolling_repots=part_reports,
-                rolling_stimedecay=part_stimedecay
+                system_prompt=self.sys_prompt_rolling,
+                rolling_repots=rolling_repots
             )
             if msg == 'success':
-                self.logger.info(f'[滚动分析] {today} AI 分析成功：{sd} 至 {ed}, 耗时: {datetime.now() - now}')
+                self.logger.info(f'[滚动分析] {today} AI 分析成功！耗时: {datetime.now() - now}')
                 result[today] = today_report
             else:
-                self.logger.warning(f'[滚动分析] {today} AI 分析失败: {sd} 至 {ed}, 耗时: {datetime.now() - now}, 失败原因: {msg}')
+                self.logger.warning(f'[滚动分析] {today} AI 分析失败！耗时: {datetime.now() - now}, 失败原因: {msg}')
 
         # 存储数据
         self.save_reports(result, 'rolling')
@@ -478,42 +455,32 @@ class AIBotSentimentalSugarManager(BaseAI, BaseBuilder):
 
     def ai_analyzing(self, start_date: Optional[str]=None, end_date: Optional[str]=None) -> None:
         """AI 分析
-        # STEP 1: 分析当日数据
-        # STEP 2: 分析多日数据
+        # STEP 1: 单日AI分析
+        # STEP 2: 滚动多日AI分析
         # STEP 3: 结合实际走势验证
         """
         start_date = self.start_date if start_date is None else start_date
         end_date = self.end_date if end_date is None else end_date
-        before_start_date = (datetime.strptime(start_date, "%Y-%m-%d") - timedelta(days=10)).strftime("%Y-%m-%d")
+        before_start_date = (datetime.strptime(start_date, "%Y-%m-%d") - timedelta(days=20)).strftime("%Y-%m-%d")
 
-        # STEP 1: 分析当日数据
-        # notice: 因为分析多日数据需要向前获取一定天数，因此保证有前10的单日分析数据
+        # STEP 1: 单日AI分析
         self.analyzing_daily(
-            date_series=pd.date_range(start=before_start_date, end=end_date),
-            reports_list=self.reports[(self.reports['date']>=before_start_date) & (self.reports['date']<=end_date)],
-            static_simple=self.static_simple[(self.static_simple['date']>=before_start_date) & (self.static_simple['date']<=end_date)],
-            static_group=self.static_group[(self.static_group['date']>=before_start_date) & (self.static_group['date']<=end_date)],
+            date_series=pd.date_range(start=start_date, end=end_date),
+            reports_list=self.reports[(self.reports['date']>=start_date) & (self.reports['date']<=end_date)]
         )
 
-        # STEP 2: 分析多日数据
-        # 每日报告数据
+        # STEP 2: 滚动多日AI分析
         daily_reports = self.handler.read_dataframe(
             table=self.datasource_id,
-            filters={'date': [before_start_date, end_date]}
-        )
-        daily_reports = daily_reports[daily_reports['method']=='daily']
+            filters={
+                'date': [before_start_date, end_date],
+                'method': ['daily']
+        })
         daily_reports['date'] = daily_reports['date'].dt.strftime('%Y-%m-%d')
         daily_reports = daily_reports.sort_values('date').reset_index(drop=True)
-        # 时间衰减加权平均
-        static_timedecay = self.static_timedecay.copy()
-        static_timedecay['date'] = static_timedecay['date'].dt.strftime('%Y-%m-%d')
-        cols = ['short_forecast_timeweighted', 'long_forecast_timeweighted']
-        static_timedecay[cols] = static_timedecay[cols].round(4)
-        # 滚动AI分析
         self.analyzing_rolling(
             date_series=pd.date_range(start=start_date, end=end_date),
-            daily_reports=daily_reports,
-            static_timedecay=static_timedecay[(static_timedecay['date']>=start_date) & (static_timedecay['date']<=end_date)]
+            daily_reports=daily_reports
         )
 
         # STEP 3: 结合实际走势验证
