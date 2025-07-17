@@ -303,7 +303,7 @@ class AIBotSentimentalSugarManager(BaseAI, BaseBuilder):
             )
 
             if msg == 'success':
-                self.logger.info(f'[单日研究] {today} AI 分析成功, 耗时: {datetime.now() - now} ')
+                self.logger.info(f'[单日研究] {today} AI 分析成功, 报告数量: {reports_size}, 耗时: {datetime.now() - now} ')
                 result[today] = today_report
             else:
                 self.logger.warning(f'[单日研究] {today} AI 分析失败, 失败原因: {msg}')
@@ -373,7 +373,7 @@ class AIBotSentimentalSugarManager(BaseAI, BaseBuilder):
                 rolling_repots=rolling_repots
             )
             if msg == 'success':
-                self.logger.info(f'[滚动分析] {today} AI 分析成功！耗时: {datetime.now() - now}')
+                self.logger.info(f'[滚动分析] {today} AI 分析成功！报告数量: {rolling_repots.shape[0]}, 耗时: {datetime.now() - now}')
                 result[today] = today_report
             else:
                 self.logger.warning(f'[滚动分析] {today} AI 分析失败！耗时: {datetime.now() - now}, 失败原因: {msg}')
@@ -462,6 +462,7 @@ class AIBotSentimentalSugarManager(BaseAI, BaseBuilder):
         start_date = self.start_date if start_date is None else start_date
         end_date = self.end_date if end_date is None else end_date
         before_start_date = (datetime.strptime(start_date, "%Y-%m-%d") - timedelta(days=20)).strftime("%Y-%m-%d")
+        self.logger.info(f"开始 AI 分析, 开始日期: {start_date}, 结束日期: {end_date}, 向前获取日期: {before_start_date}")
 
         # STEP 1: 单日AI分析
         self.analyzing_daily(
