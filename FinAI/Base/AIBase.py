@@ -22,29 +22,44 @@ class BaseAI:
         # 默认为文件数据库
         self.handler = None
 
-        # ai初始化
-        self.client = None
-        self.model = None
-        self.init_ai()
+        # 初始化变量
+        self.llms_api = None        # LLM API 模型
+        self.client = None      # OpenAI 客户端
+        self.model = None       # 底层模型
+        self.by_json = False    # 是否以 JSON 格式输出
 
-    def init_ai(self, llms_api: str="deepseek") -> None:
-        if llms_api == "deepseek":
+    def set_ai(self, llms: str='deepseek', model: str='deepseek-chat', by_json: bool=True) -> None:
+        """重新设置设置模型参数
+        # Parameters:
+        * by_json (bool): 是否以 JSON 格式输出
+        * model (str): 使用的 AI 模型名称
+            * 'deepseek-chat'
+            * 'deepseek-reasoner'
+            * 'gemini-2.0-flash-thinking-exp-01-21'
+        """
+        # 设置 LLMs 底座
+        if llms == "deepseek":
             self.client = OpenAI(api_key="sk-7e0d7d183ae84e08b8579a537feff921", base_url="https://api.deepseek.com")
-            self.model = "deepseek-chat"
-        elif llms_api == "gemini":
+            if model not in ["deepseek-chat", "deepseek-reasoner"]:
+                raise ValueError("Unsupported DeepSeek model. Please choose 'deepseek-chat' or 'deepseek-reasoner'.")
+            self.model = model
+        elif llms == "gemini":
             self.client = OpenAI(
                 api_key="AIzaSyAuNZ8x72O-lzIeoa_OZKSjlg48P6YBA8E",
                 base_url="https://generativelanguage.googleapis.com/v1beta/openai/",
                 http_client=httpx.Client(proxy="http://39.104.58.112:31701"),
             )
-            self.model = "gemini-2.0-flash-thinking-exp-01-21"
+            if model not in ["gemini-2.0-flash-thinking-exp-01-21"]:
+                raise ValueError("Unsupported Gemini model. Please choose 'gemini-2.0-flash-thinking-exp-01-21'.")
+            self.model = model
         else:
             raise ValueError("Unsupported LLM API. Please choose 'deepseek' or 'gemini'.")
+        
+        # 是否用json格式输出
+        self.by_json = by_json
 
-    def ai_api(self, user_prompt: str, system_prompt: str, json_output: bool=False, model: Optional[str]=None) -> str:
-        if model is not None:
-            self.model = model
-        if json_output is True:
+    def ai_api(self, user_prompt: str, system_prompt: str) -> str:
+        if self.by_json is True:
             response = self.client.chat.completions.create(
                 model=self.model,
                 messages=[

@@ -8,6 +8,8 @@ class AIBotSentimentalSugarResearcherSchema(BaseSchema):
     """AI机器人-舆情分析-白糖研究员"""
 
     date: np.datetime64 = Field(description="发布日期", default=np.nan)
+    llms: pd.StringDtype = Field(description="LLMsAPI", default='')
+    model: pd.StringDtype = Field(description="LLMsModel", default='')
     title: pd.StringDtype = Field(description="文章标题", default='')
     category: pd.StringDtype = Field(description="分类", default='')
     sub_category: pd.StringDtype = Field(description="子分类", default='')

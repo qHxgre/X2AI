@@ -24,7 +24,7 @@ class AIBotSentimentalSugarResearcher(BaseAI, BaseBuilder):
         end_date: Optional[str]=None,
         n_days: int=7,
         db: Optional[DBFile]=None,
-        llms: str="deepseek",
+        llms_params: Dict={'llms': "deepseek", 'model': "deepseek-chat", 'by_json': True},
         cache: bool=True,
     ) -> None:
         super().__init__()
@@ -39,7 +39,12 @@ class AIBotSentimentalSugarResearcher(BaseAI, BaseBuilder):
         )
 
         # 初始化ai
-        self.init_ai(llms_api=llms)
+        self.llms_params = llms_params
+        self.set_ai(
+            llms=self.llms_params['llms'],
+            model=self.llms_params['model'],
+            by_json=self.llms_params['by_json']
+        )
 
         # 数据库
         if db is None:
@@ -68,7 +73,7 @@ class AIBotSentimentalSugarResearcher(BaseAI, BaseBuilder):
         self.system_prompt = self.read_md(os.path.join(self.filepath_prompt, "prompt.md"))
 
         # 初始化的日志
-        self.logger.info(f"=====>>>>> [初始化] 表名: {self.datasource_id}, AI 模型: {llms}, 数据获取周期：{self.start_date} 至 {self.end_date}")
+        self.logger.info(f"=====>>>>> [初始化] 表名: {self.datasource_id}, AI 模型: {self.llms_params['llms']}, 数据获取周期：{self.start_date} 至 {self.end_date}")
 
     def get_articles(self, table: str) -> pd.DataFrame:
         """获取文章数据"""
@@ -97,12 +102,13 @@ class AIBotSentimentalSugarResearcher(BaseAI, BaseBuilder):
         result = data[merged_df['_merge'] == 'left_only']
         return result
 
-    def write_data(self, data: pd.DataFrame) -> None:
-        """保存分析结构"""
-        data["date"] = pd.to_datetime(data["date"])
-        data[self.handler.DEFAULT_PARTITION_FIELD] = data["date"].dt.strftime("%Y%m")
-        data = data.sort_values(self.unique_together).reset_index(drop=True)
-        self.write(data)
+    def write_data(self, df: pd.DataFrame) -> None:
+        """存储数据到数据库"""
+        df['llms'] = self.llms_params['llms']
+        df['model'] = self.llms_params['model']
+        normalized_df = self.normalize(df)
+        normalized_df[self.handler.DEFAULT_PARTITION_FIELD] = normalized_df["date"].dt.strftime("%Y%m")
+        self.write(normalized_df)
 
     def analyzing_article(self, article: dict) -> Tuple[Dict, str]:
         """分析一篇文章"""
@@ -113,7 +119,7 @@ class AIBotSentimentalSugarResearcher(BaseAI, BaseBuilder):
             content = article["content"],
         )
         try:
-            answer = self.ai_api(user_prompt=user_prompt, system_prompt=self.system_prompt, json_output=True)
+            answer = self.ai_api(user_prompt=user_prompt, system_prompt=self.system_prompt)
             report = json.loads(answer)
             for col in ["short_forecast", "long_forecast", "confidence"]:
                 if report[col] == "":
@@ -124,13 +130,6 @@ class AIBotSentimentalSugarResearcher(BaseAI, BaseBuilder):
         except Exception as e:
             # 若 AI 无法回答，则为空
             report = {}
-            for col in ["date", "title", "category", "sub_category"]:
-                report[col] = article[col]
-            report["summary"] = "AI 分析失败, 详见 opinion"
-            report["opinion"] = e
-            report["short_forecast"] = np.nan
-            report["long_forecast"] = np.nan
-            report["confidence"] = np.nan
             msg = e
         return report, msg
 
@@ -213,8 +212,10 @@ class AIBotSentimentalSugarResearcher(BaseAI, BaseBuilder):
         self.logger.info(f"AI分析, 报告数据: {len(reports)}, 耗时: {t4-t3}")
         
         # STEP 5: 存储分析结果
-        normalized_df = self.normalize(pd.DataFrame(reports))
-        normalized_df[self.handler.DEFAULT_PARTITION_FIELD] = normalized_df["date"].dt.strftime("%Y%m")
-        self.write(normalized_df)
+        df = pd.DataFrame(reports)
+        if df.empty:
+            self.logger.warning("分析结果为空, 无需存储!")
+            return
+        self.write_data(df)
         t5 = datetime.now()
-        self.logger.info(f"存储分析结果: {normalized_df.shape}, 耗时: {t5-t4}") 
+        self.logger.info(f"存储分析结果: {df.shape}, 耗时: {t5-t4}") 

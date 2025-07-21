@@ -12,6 +12,8 @@
   "schema": {
     "names": [
       "date",
+      "llms",
+      "model",
       "title",
       "category",
       "sub_category",
@@ -28,11 +30,13 @@
       "string",
       "string",
       "string",
+      "string",
+      "string",
       "double",
       "double",
       "double"
     ]
   },
-  "created_at": "2025-07-17T17:06:48.556279",
+  "created_at": "2025-07-21T14:15:20.034639",
   "metadata_version": "1.1"
 }

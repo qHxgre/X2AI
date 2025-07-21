@@ -5,7 +5,7 @@ import pandas as pd
 from datetime import datetime, timedelta
 from typing import Optional
 from Base import BaseAI, DBFile, DBSQL, LoggerController, BaseBuilder
-from AIBots.aibot_sentimental_sugar_manager.plotting import plt_klines_rank
+from AIBots.aibot_sentimental_sugar_manager.tools import simple_static, group_static, simple_weighted, timedecay_weighted, plt_klines_rank
 from AIBots.aibot_sentimental_sugar_manager.templets import TEMPLET_INPUT_REPORT_DAILY, TEMPLET_INPUT_REPORT_ROLLING, TEMPLET_OUTPUT
 from AIBots.aibot_sentimental_sugar_manager.schema import AIBotSentimentalSugarManagerSchema
 
@@ -175,88 +175,46 @@ class AIBotSentimentalSugarManager(BaseAI, BaseBuilder):
         normalized_df[self.handler.DEFAULT_PARTITION_FIELD] = normalized_df['date'].dt.strftime('%Y')
         self.write(normalized_df)
 
-    def simple_static(self, data: pd.DataFrame) -> pd.DataFrame:
-        """简单统计平均数、中位数、分位数"""
-        def static(today: str, df: pd.DataFrame) -> pd.DataFrame:
-            stats = df[['short_forecast', 'long_forecast', 'confidence']].agg(
-                ['mean', 'median', lambda x: x.quantile(0.3), lambda x: x.quantile(0.5), lambda x: x.quantile(0.8)]
-            ).T
-            stats.columns = ['mean', 'median', 'quantile_30', 'quantile_50', 'quantile_80']
-            stats = stats.reset_index().rename(columns={'index': 'type'})
-            stats['date'] = today
-            return stats
+    def generate_markdown(self, today: str, method: str='rolling') -> None:
+        """生成markdown"""
+        df = DBFile().read_dataframe(table='aibot_sentimental_sugar_manager', filters={'date': [today, today]})
+        temp = df[df['method']==method]
+        if temp.shape[0] == 0:
+            self.logger.warning(f"[生成 markdown] 失败: {today}, 缺乏数据！")
+            return
+        row = temp.iloc[0]
 
-        static_df = (
-            data.groupby("date")
-            .apply(lambda g: static(g.name, g))
-            .reset_index(drop=True)
+        emapping_reverse = {
+            'supply': '全球供应',
+            'demand': '全球需求',
+            'energy': '能源政策与原油价格',
+            'domestic': '国内因素',
+            'market': '市场宏观与情绪'
+        }
+
+        bullish_str, bearish_str = '', ''
+        for k, v in row.items():
+            if v == '':
+                continue
+            if 'bullish' in k:
+                bullish_str += f"\n    * {emapping_reverse[k.replace('bullish_', '')]}: {v}"
+            elif 'bearish' in k:
+                bearish_str += f"\n    * {emapping_reverse[k.replace('bearish_', '')]}: {v}"
+
+
+        content = TEMPLET_OUTPUT.format(
+            today=row['date'].strftime('%Y-%m-%d'),
+            rating=row['rating'],
+            ranking=row['ranking'],
+            confidence=row['confidence'],
+            conclusion=row['conclusion'],
+            bullish=bullish_str,
+            bearish=bearish_str
         )
-        cols = ['mean', 'median', 'quantile_30', 'quantile_50', 'quantile_80']
-        static_df[cols] = static_df[cols].round(4)
-        return static_df
 
-    def group_static(self, data: pd.DataFrame) -> pd.DataFrame:
-        """分组统计，包含置信度均值"""
-        def static(today: str, df: pd.DataFrame) -> pd.DataFrame:
-            def _group_static(series: pd.Series, conf: pd.Series) -> dict:
-                bullish = series > 0
-                bearish = series < 0
-                total = len(series)
-                return {
-                    'bullish_count': int(bullish.sum()),
-                    'bearish_count': int(bearish.sum()),
-                    'bullish_ratio': round(bullish.sum() / total if total else None, 4),
-                    'bearish_ratio': round(bearish.sum() / total if total else None, 4),
-                    'bullish_mean': round(series[bullish].mean(), 4),
-                    'bearish_mean': round(series[bearish].mean(), 4),
-                    'bullish_std': round(series[bullish].std(), 4),
-                    'bearish_std': round(series[bearish].std(), 4),
-                    'bullish_conf_mean': round(conf[bullish].mean(), 4),
-                    'bearish_conf_mean': round(conf[bearish].mean(), 4)
-                }
-            records = []
-            for field in ['short_forecast', 'long_forecast']:
-                stats = _group_static(df[field], df['confidence'])
-                stats['type'] = field
-                records.append(stats)
-            result = pd.DataFrame(records)
-            result["date"] = today
-            return result
-
-        static_df = (
-            data.groupby("date")
-            .apply(lambda g: static(g.name, g))
-            .reset_index(drop=True)
-        )
-        return static_df
-
-    def simple_weighted(self, data: pd.DataFrame) -> pd.DataFrame:
-        """加权平均"""
-        df = data.dropna()
-        df["short_forecast_weighted"] = df["short_forecast"] * df["confidence"]
-        df["long_forecast_weighted"] = df["long_forecast"] * df["confidence"]
-        weighted_forecast = df.groupby("date", as_index=False)[["short_forecast_weighted", "long_forecast_weighted"]].mean()
-        return weighted_forecast
-
-    def timedecay_weighted(self, data: pd.DataFrame, window: int=5, decay_rate: float=0.5) -> pd.DataFrame:
-        """时间衰减加权平均"""
-        df = data.sort_values('date')
-        df['date'] = pd.to_datetime(df['date'])
-        result = {}
-        for i in range(window, df.shape[0]+1):
-            recent = df.iloc[i-window: i, :]
-            max_date = recent['date'].max()
-            recent['days_passed'] = (max_date - recent['date']).dt.days
-            # 计算权重
-            recent['weight'] = np.exp(-decay_rate * recent['days_passed'])
-            # 归一化权重
-            recent['weight'] = recent['weight'] / recent['weight'].sum()
-            result[max_date] = {
-                "short_forecast_timeweighted": (recent["short_forecast_weighted"] * recent["weight"]).sum(),
-                "long_forecast_timeweighted": (recent["long_forecast_weighted"] * recent["weight"]).sum()
-            }
-        result = pd.DataFrame(result).T.reset_index().rename(columns={"index": "date"})
-        return result
+        filepath_markdown = f"{self.path_markdown}/{today.replace('-', '')}_report.markdown"
+        with open(filepath_markdown, 'w') as file:
+            file.write(content)
 
     def analyzing_daily(self, date_series: list, reports_list: pd.DataFrame) -> None:
         """分析当日报告"""
@@ -385,47 +343,6 @@ class AIBotSentimentalSugarManager(BaseAI, BaseBuilder):
         """结合实际走势验证"""
         pass
 
-    def generate_markdown(self, today: str, method: str='rolling') -> None:
-        """生成markdown"""
-        df = DBFile().read_dataframe(table='aibot_sentimental_sugar_manager', filters={'date': [today, today]})
-        temp = df[df['method']==method]
-        if temp.shape[0] == 0:
-            self.logger.warning(f"[生成 markdown] 失败: {today}, 缺乏数据！")
-            return
-        row = temp.iloc[0]
-
-        emapping_reverse = {
-            'supply': '全球供应',
-            'demand': '全球需求',
-            'energy': '能源政策与原油价格',
-            'domestic': '国内因素',
-            'market': '市场宏观与情绪'
-        }
-
-        bullish_str, bearish_str = '', ''
-        for k, v in row.items():
-            if v == '':
-                continue
-            if 'bullish' in k:
-                bullish_str += f"\n    * {emapping_reverse[k.replace('bullish_', '')]}: {v}"
-            elif 'bearish' in k:
-                bearish_str += f"\n    * {emapping_reverse[k.replace('bearish_', '')]}: {v}"
-
-
-        content = TEMPLET_OUTPUT.format(
-            today=row['date'].strftime('%Y-%m-%d'),
-            rating=row['rating'],
-            ranking=row['ranking'],
-            confidence=row['confidence'],
-            conclusion=row['conclusion'],
-            bullish=bullish_str,
-            bearish=bearish_str
-        )
-
-        filepath_markdown = f"{self.path_markdown}/{today.replace('-', '')}_report.markdown"
-        with open(filepath_markdown, 'w') as file:
-            file.write(content)
-
     def plotting_analyzing(self, today: str, method: str='rolling') -> None:
         """画图分析"""
         start_date = (datetime.strptime(today, "%Y-%m-%d") - timedelta(days=180)).strftime("%Y-%m-%d")
@@ -451,7 +368,6 @@ class AIBotSentimentalSugarManager(BaseAI, BaseBuilder):
         plt_df = plt_df.sort_values('date')
         filepath_image = f"{self.path_image}/{today.replace('-', '')}_klines.html"
         plt_klines_rank(data=plt_df, filepath=filepath_image)
-
 
     def ai_analyzing(self, start_date: Optional[str]=None, end_date: Optional[str]=None) -> None:
         """AI 分析
@@ -508,10 +424,10 @@ class AIBotSentimentalSugarManager(BaseAI, BaseBuilder):
         self.logger.info(f"数据清洗, 待分析的文章数量: {len(self.reports)}, 耗时: {t2-t1}")
 
         # STEP 3: 分析数据 & 画图
-        self.static_simple = self.simple_static(self.reports.copy())
-        self.static_group = self.group_static(self.reports.copy())
-        self.static_weighted = self.simple_weighted(self.reports.copy())
-        self.static_timedecay = self.timedecay_weighted(self.static_weighted.copy())
+        self.static_simple = simple_static(self.reports.copy())
+        self.static_group = group_static(self.reports.copy())
+        self.static_weighted = simple_weighted(self.reports.copy())
+        self.static_timedecay = timedecay_weighted(self.static_weighted.copy())
 
         # STEP 4: AI 分析
         self.ai_analyzing()
